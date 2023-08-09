@@ -18,6 +18,8 @@ import { RootState } from './redux/app/store';
 import { FeatureKeys } from './redux/features/app/AppState';
 import { addAlert, setActiveUserInfo, setServiceOptions } from './redux/features/app/appSlice';
 import { semanticKernelDarkTheme, semanticKernelLightTheme } from './styles';
+//import { ModelSelector } from './components/chat/ModelSelector';
+import PennLogo from './assets/pennmedlogo.png';
 
 export const useClasses = makeStyles({
     container: {
@@ -29,7 +31,7 @@ export const useClasses = makeStyles({
     },
     header: {
         alignItems: 'center',
-        backgroundColor: tokens.colorBrandForeground2,
+        backgroundColor: tokens.colorNeutralForegroundOnBrand,
         color: tokens.colorNeutralForegroundOnBrand,
         display: 'flex',
         '& h1': {
@@ -39,6 +41,12 @@ export const useClasses = makeStyles({
         height: '48px',
         justifyContent: 'space-between',
         width: '100%',
+    },
+    logo: {
+        backgroundImage: `url(${PennLogo})`,
+        backgroundRepeat: 'no-repeat',
+        width: '230px',
+        height: '50px'
     },
     persona: {
         marginRight: tokens.spacingHorizontalXXL,
@@ -118,7 +126,7 @@ const App: FC = () => {
             <UnauthenticatedTemplate>
                 <div className={classes.container}>
                     <div className={classes.header}>
-                        <Subtitle1 as="h1">Chat Copilot</Subtitle1>
+                        <Subtitle1 as="h1" className={classes.logo}></Subtitle1>
                     </div>
                     {appState === AppState.SigningOut && <Loading text="Signing you out..." />}
                     {appState !== AppState.SigningOut && <Login />}
@@ -127,10 +135,11 @@ const App: FC = () => {
             <AuthenticatedTemplate>
                 <div className={classes.container}>
                     <div className={classes.header}>
-                        <Subtitle1 as="h1">Chat Copilot</Subtitle1>
+                        <Subtitle1 as="h1" className={classes.logo}></Subtitle1>
                         <div className={classes.cornerItems}>
                             <div data-testid="logOutMenuList" className={classes.cornerItems}>
                                 <PluginGallery />
+                            {/* <ModelSelector/> */}
                                 <UserSettingsMenu
                                     setLoadingState={() => {
                                         setAppState(AppState.SigningOut);

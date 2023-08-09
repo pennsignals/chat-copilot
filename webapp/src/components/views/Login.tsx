@@ -10,16 +10,16 @@ export const Login: React.FC = () => {
 
     return (
         <div style={{ padding: 40, gap: 10, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <Title3>Login with your Microsoft Account</Title3>
-            <Body1>
+            <Title3>Sign in the Penn AI Chat</Title3>
+            {/* <Body1>
                 {'Don\'t have an account? Create one for free at'}{' '}
-                <a href="https://account.microsoft.com/" target="_blank" rel="noreferrer">
+                <a href="https://account.microsoft.com/" target="_blank" rel="noreferrer noopener">
                     https://account.microsoft.com/
                 </a>
-            </Body1>
+            </Body1> */}
 
-            <Button style={{ padding: 0 }} appearance="transparent" onClick={() => { instance.loginRedirect().catch(() => { }); }}>
-                <Image src={signInLogo} />
+            <Button style={{ padding: "10px",background: "#084D8E", color: "white",fontWeight: "bold",fontSize: "15px" }} appearance="outline" onClick={() => { instance.loginRedirect().catch(() => { }); }}>
+               Sign In {/* <Image src={signInLogo} /> */}
             </Button>
         </div>
     );

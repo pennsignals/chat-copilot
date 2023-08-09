@@ -71,9 +71,9 @@ export const PluginGallery: React.FC = () => {
             <DialogTrigger>
                 <Button
                     data-testid="pluginButton"
-                    style={{ color: 'white' }}
+                    style={{ color: 'black' }}
                     appearance="transparent"
-                    icon={<AppsAddIn24 color="white" />}
+                    icon={<AppsAddIn24 color="black" />}
                 >
                     Plugins
                 </Button>
@@ -93,7 +93,7 @@ export const PluginGallery: React.FC = () => {
                         }
                     >
                         <Subtitle1 block className={classes.title}>
-                            Enable Chat Copilot Plugins
+                            Enable Chat Plugins
                         </Subtitle1>
                         <Body1 as="p" block className={classes.description}>
                             Authorize plugins and have more powerful bots!
