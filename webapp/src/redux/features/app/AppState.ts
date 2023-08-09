@@ -91,10 +91,10 @@ export const Features = {
         inactive: true,
     },
     [FeatureKeys.DeleteChats]: {
-        enabled: false,
+        enabled: true,
         label: 'Delete Chat Sessions',
         // TODO: [sk Issue #1642] Implement delete chats
-        inactive: true,
+        //inactive: true,
     },
 };
 
@@ -126,7 +126,7 @@ export const initialState: AppState = {
     alerts: [
         {
             message:
-                'By using Chat Copilot, you agree to protect sensitive data, not store it in chat, and allow chat history collection for service improvements. This tool is for internal use only.',
+                'By using Penn AI Chat, you agree to protect sensitive data, not store it in chat, and allow chat history collection for service improvements. This tool is for internal use only.',
             type: AlertType.Info,
         },
     ],
