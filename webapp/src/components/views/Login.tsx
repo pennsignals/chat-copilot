@@ -10,7 +10,7 @@ export const Login: React.FC = () => {
 
     return (
         <div style={{ padding: 40, gap: 10, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <Title3>Sign in the Penn AI Chat</Title3>
+            <Title3>Sign in to Penn AI Chat</Title3>
             {/* <Body1>
                 {'Don\'t have an account? Create one for free at'}{' '}
                 <a href="https://account.microsoft.com/" target="_blank" rel="noreferrer noopener">
