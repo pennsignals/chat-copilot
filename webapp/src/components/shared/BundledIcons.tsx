@@ -29,11 +29,14 @@ import {
     ThumbDislike16Regular,
     ThumbLike16Filled,
     ThumbLike16Regular,
+    PersonFeedback24Regular,
+    PersonFeedback24Filled,
     bundleIcon,
 } from '@fluentui/react-icons';
 
 export const Add20 = bundleIcon(Add20Filled, Add20Regular);
 export const AppsAddIn24 = bundleIcon(AppsAddIn24Filled, AppsAddIn24Regular);
+export const FeedbackAddIn24 = bundleIcon(PersonFeedback24Filled, PersonFeedback24Regular);
 export const ArrowDownload16 = bundleIcon(ArrowDownload16Filled, ArrowDownload16Regular);
 export const BotAdd20 = bundleIcon(BotAdd20Filled, BotAdd20Regular);
 export const Checkmark20 = bundleIcon(Checkmark20Filled, Checkmark20Regular);

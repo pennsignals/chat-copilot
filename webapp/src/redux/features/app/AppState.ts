@@ -126,7 +126,7 @@ export const initialState: AppState = {
     alerts: [
         {
             message:
-                'By using Penn AI Chat, you agree to protect sensitive data, not store it in chat, and allow chat history collection for service improvements. This tool is for internal use only.',
+                'Use Penn AI Chat to protect sensitive data, and allow chat history collection for service improvements. This tool is for internal use only.',
             type: AlertType.Info,
         },
     ],

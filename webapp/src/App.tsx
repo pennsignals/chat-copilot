@@ -19,7 +19,9 @@ import { FeatureKeys } from './redux/features/app/AppState';
 import { addAlert, setActiveUserInfo, setServiceOptions } from './redux/features/app/appSlice';
 import { semanticKernelDarkTheme, semanticKernelLightTheme } from './styles';
 //import { ModelSelector } from './components/chat/ModelSelector';
-import PennLogo from './assets/pennmedlogo.png';
+import PennLogo from './assets/PennDNA.png';
+import { FeedbackAddIn24 } from './components/shared/BundledIcons';
+import { FeedbackLink } from './components/chat/FeedbackLink';
 
 export const useClasses = makeStyles({
     container: {
@@ -45,7 +47,7 @@ export const useClasses = makeStyles({
     logo: {
         backgroundImage: `url(${PennLogo})`,
         backgroundRepeat: 'no-repeat',
-        width: '230px',
+        width: '430px',
         height: '50px'
     },
     persona: {
@@ -140,6 +142,7 @@ const App: FC = () => {
                             <div data-testid="logOutMenuList" className={classes.cornerItems}>
                                 <PluginGallery />
                             {/* <ModelSelector/> */}
+                            <FeedbackLink/>
                                 <UserSettingsMenu
                                     setLoadingState={() => {
                                         setAppState(AppState.SigningOut);
