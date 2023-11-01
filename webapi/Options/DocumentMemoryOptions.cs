@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CopilotChat.WebApi.Options;
@@ -10,6 +11,11 @@ namespace CopilotChat.WebApi.Options;
 public class DocumentMemoryOptions
 {
     public const string PropertyName = "DocumentMemory";
+
+    /// <summary>
+    /// Global documents will be tagged by an empty Guid as chat-id ("00000000-0000-0000-0000-000000000000").
+    /// </summary>
+    internal static readonly Guid GlobalDocumentChatId = Guid.Empty;
 
     /// <summary>
     /// Gets or sets the name of the global document collection.
@@ -24,20 +30,20 @@ public class DocumentMemoryOptions
     public string ChatDocumentCollectionNamePrefix { get; set; } = "chat-documents-";
 
     /// <summary>
-    /// Gets or sets the maximum number of tokens to use when splitting a document into lines.
-    /// Default token limits are suggested by OpenAI:
+    /// Gets or sets the maximum number of tokens to use when splitting a document into "lines".
+    /// For more details on tokens and how to count them, see:
     /// https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them
     /// </summary>
     [Range(0, int.MaxValue)]
     public int DocumentLineSplitMaxTokens { get; set; } = 30;
 
     /// <summary>
-    /// Gets or sets the maximum number of lines to use when combining lines into paragraphs.
-    /// Default token limits are suggested by OpenAI:
+    /// Gets or sets the maximum number of tokens to use when splitting documents for embeddings.
+    /// For more details on tokens and how to count them, see:
     /// https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them
     /// </summary>
     [Range(0, int.MaxValue)]
-    public int DocumentParagraphSplitMaxLines { get; set; } = 100;
+    public int DocumentChunkMaxTokens { get; set; } = 100;
 
     /// <summary>
     /// Maximum size in bytes of a document to be allowed for importing.

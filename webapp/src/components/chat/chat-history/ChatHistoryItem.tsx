@@ -1,13 +1,21 @@
 // Copyright (c) Microsoft. All rights reserved.
 
-import { Persona, Text, makeStyles, mergeClasses, shorthands } from '@fluentui/react-components';
-import { ThumbDislike24Filled, ThumbLike16Filled } from '@fluentui/react-icons';
-import React from 'react';
-import { GetResponseOptions, useChat } from '../../../libs/hooks/useChat';
+import {
+    AvatarProps,
+    Persona,
+    Text,
+    ToggleButton,
+    makeStyles,
+    mergeClasses,
+    shorthands,
+} from '@fluentui/react-components';
+import { ChevronDown20Regular, ChevronUp20Regular, ThumbDislikeFilled, ThumbLikeFilled } from '@fluentui/react-icons';
+import React, { useState } from 'react';
+import { useChat } from '../../../libs/hooks/useChat';
 import { AuthorRoles, ChatMessageType, IChatMessage, UserFeedback } from '../../../libs/models/ChatMessage';
 import { useAppSelector } from '../../../redux/app/hooks';
 import { RootState } from '../../../redux/app/store';
-import { FeatureKeys } from '../../../redux/features/app/AppState';
+import { DefaultChatUser, FeatureKeys } from '../../../redux/features/app/AppState';
 import { Breakpoints, customTokens } from '../../../styles';
 import { timestampToDateString } from '../../utils/TextUtils';
 import { PlanViewer } from '../plan-viewer/PlanViewer';
@@ -16,6 +24,7 @@ import { TypingIndicator } from '../typing-indicator/TypingIndicator';
 import * as utils from './../../utils/TextUtils';
 import { ChatHistoryDocumentContent } from './ChatHistoryDocumentContent';
 import { ChatHistoryTextContent } from './ChatHistoryTextContent';
+import { CitationCards } from './CitationCards';
 import { UserFeedbackActions } from './UserFeedbackActions';
 
 const useClasses = makeStyles({
@@ -69,33 +78,51 @@ const useClasses = makeStyles({
     blur: {
         filter: 'blur(5px)',
     },
+    controls: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: customTokens.spacingVerticalS,
+        marginBottom: customTokens.spacingVerticalS,
+        ...shorthands.gap(customTokens.spacingHorizontalL),
+    },
+    citationButton: {
+        marginRight: 'auto',
+    },
+    rlhf: {
+        marginLeft: 'auto',
+    },
 });
 
 interface ChatHistoryItemProps {
     message: IChatMessage;
-    getResponse: (options: GetResponseOptions) => Promise<void>;
     messageIndex: number;
 }
 
-export const ChatHistoryItem: React.FC<ChatHistoryItemProps> = ({ message, getResponse, messageIndex }) => {
+export const ChatHistoryItem: React.FC<ChatHistoryItemProps> = ({ message, messageIndex }) => {
     const classes = useClasses();
-
     const chat = useChat();
+
     const { conversations, selectedId } = useAppSelector((state: RootState) => state.conversations);
     const { activeUserInfo, features } = useAppSelector((state: RootState) => state.app);
+    const [showCitationCards, setShowCitationCards] = useState(false);
 
-    const isMe = message.authorRole === AuthorRoles.User && message.userId === activeUserInfo?.id;
+    const isDefaultUser = message.userId === DefaultChatUser.id;
+    const isMe = isDefaultUser || (message.authorRole === AuthorRoles.User && message.userId === activeUserInfo?.id);
     const isBot = message.authorRole === AuthorRoles.Bot;
-    const user = chat.getChatUserById(message.userName, selectedId, conversations[selectedId].users);
+    const user = isDefaultUser
+        ? DefaultChatUser
+        : chat.getChatUserById(message.userName, selectedId, conversations[selectedId].users);
     const fullName = user?.fullName ?? message.userName;
 
-    const avatar = isBot
+    const avatar: AvatarProps = isBot
         ? { image: { src: conversations[selectedId].botProfilePicture } }
-        : { name: fullName, color: 'colorful' as const };
+        : isDefaultUser
+        ? { idForColor: selectedId, color: 'colorful' }
+        : { name: fullName, color: 'colorful' };
 
     let content: JSX.Element;
     if (isBot && message.type === ChatMessageType.Plan) {
-        content = <PlanViewer message={message} messageIndex={messageIndex} getResponse={getResponse} />;
+        content = <PlanViewer message={message} messageIndex={messageIndex} />;
     } else if (message.type === ChatMessageType.Document) {
         content = <ChatHistoryDocumentContent isMe={isMe} message={message} />;
     } else {
@@ -109,7 +136,7 @@ export const ChatHistoryItem: React.FC<ChatHistoryItemProps> = ({ message, getRe
         features[FeatureKeys.RLHF].enabled &&
         message.userFeedback === UserFeedback.Requested &&
         messageIndex === conversations[selectedId].messages.length - 1 &&
-        message.userId === 'bot';
+        message.userId === 'Bot';
 
     return (
         <div
@@ -137,13 +164,33 @@ export const ChatHistoryItem: React.FC<ChatHistoryItemProps> = ({ message, getRe
                     {isBot && <PromptDialog message={message} />}
                 </div>
                 {content}
-                {showShowRLHFMessage && <UserFeedbackActions messageIndex={messageIndex} />}
+                <div className={classes.controls}>
+                    {message.citations && message.citations.length > 0 && (
+                        <ToggleButton
+                            appearance="subtle"
+                            checked={showCitationCards}
+                            className={classes.citationButton}
+                            icon={showCitationCards ? <ChevronUp20Regular /> : <ChevronDown20Regular />}
+                            iconPosition="after"
+                            onClick={() => {
+                                setShowCitationCards(!showCitationCards);
+                            }}
+                            size="small"
+                        >
+                            {`${message.citations.length} ${message.citations.length === 1 ? 'citation' : 'citations'}`}
+                        </ToggleButton>
+                    )}
+                    {showShowRLHFMessage && (
+                        <div className={classes.rlhf}>{<UserFeedbackActions messageIndex={messageIndex} />}</div>
+                    )}
+                </div>
+                {showCitationCards && <CitationCards message={message} />}
             </div>
-            {showShowRLHFMessage && message.userFeedback === UserFeedback.Positive && (
-                <ThumbLike16Filled color="gray" />
+            {features[FeatureKeys.RLHF].enabled && message.userFeedback === UserFeedback.Positive && (
+                <ThumbLikeFilled color="gray" />
             )}
-            {showShowRLHFMessage && message.userFeedback === UserFeedback.Negative && (
-                <ThumbDislike24Filled color="gray" />
+            {features[FeatureKeys.RLHF].enabled && message.userFeedback === UserFeedback.Negative && (
+                <ThumbDislikeFilled color="gray" />
             )}
         </div>
     );

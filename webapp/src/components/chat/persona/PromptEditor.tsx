@@ -12,7 +12,7 @@ import {
 } from '@fluentui/react-components';
 import React from 'react';
 import { AlertType } from '../../../libs/models/AlertType';
-import { useAppDispatch } from '../../../redux/app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/app/hooks';
 import { addAlert } from '../../../redux/features/app/appSlice';
 import { Info16 } from '../../shared/BundledIcons';
 
@@ -30,6 +30,9 @@ const useClasses = makeStyles({
     controls: {
         display: 'flex',
         marginLeft: 'auto',
+    },
+    dialog: {
+        maxWidth: '25%',
     },
 });
 
@@ -57,6 +60,7 @@ export const PromptEditor: React.FC<PromptEditorProps> = ({
     const classes = useClasses();
     const dispatch = useAppDispatch();
     const [value, setValue] = React.useState<string>(prompt);
+    const { conversations } = useAppSelector((state) => state.conversations);
 
     React.useEffect(() => {
         // Taking a dependency on the chatId because the value state needs
@@ -89,7 +93,7 @@ export const PromptEditor: React.FC<PromptEditorProps> = ({
                     <PopoverTrigger disableButtonEnhancement>
                         <Button icon={<Info16 />} appearance="transparent" />
                     </PopoverTrigger>
-                    <PopoverSurface>{info}</PopoverSurface>
+                    <PopoverSurface className={classes.dialog}>{info}</PopoverSurface>
                 </Popover>
             </div>
             <Textarea
@@ -103,7 +107,10 @@ export const PromptEditor: React.FC<PromptEditorProps> = ({
             />
             {isEditable && (
                 <div className={classes.controls}>
-                    <Button onClick={onSaveButtonClick} disabled={value.length <= 0 || value === prompt}>
+                    <Button
+                        onClick={onSaveButtonClick}
+                        disabled={value.length <= 0 || value === prompt || conversations[chatId].disabled}
+                    >
                         Save
                     </Button>
                 </div>

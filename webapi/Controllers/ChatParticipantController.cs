@@ -2,14 +2,15 @@
 
 using System;
 using System.Threading.Tasks;
+using CopilotChat.WebApi.Auth;
+using CopilotChat.WebApi.Hubs;
+using CopilotChat.WebApi.Models.Storage;
+using CopilotChat.WebApi.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
-using CopilotChat.WebApi.Hubs;
-using CopilotChat.WebApi.Storage;
-using CopilotChat.WebApi.Models.Storage;
 
 namespace CopilotChat.WebApi.Controllers;
 
@@ -21,7 +22,6 @@ namespace CopilotChat.WebApi.Controllers;
 /// 3. Managing participants in a chat session.
 /// </summary>
 [ApiController]
-[Authorize]
 public class ChatParticipantController : ControllerBase
 {
     private const string UserJoinedClientCall = "UserJoined";
@@ -46,39 +46,41 @@ public class ChatParticipantController : ControllerBase
     }
 
     /// <summary>
-    /// Join a use to a chat session given a chat id and a user id.
+    /// Join the logged in user to a chat session given a chat ID.
     /// </summary>
     /// <param name="messageRelayHubContext">Message Hub that performs the real time relay service.</param>
-    /// <param name="chatParticipantParam">Contains the user id and chat id.</param>
+    /// <param name="authInfo">The auth info for the current request.</param>
+    /// <param name="chatId">The ID of the chat to join.</param>
     [HttpPost]
-    [Route("chatParticipant/join")]
+    [Route("chats/{chatId:guid}/participants")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> JoinChatAsync(
         [FromServices] IHubContext<MessageRelayHub> messageRelayHubContext,
-        [FromBody] ChatParticipant chatParticipantParam)
+        [FromServices] IAuthInfo authInfo,
+        [FromRoute] Guid chatId)
     {
-        string userId = chatParticipantParam.UserId;
-        string chatId = chatParticipantParam.ChatId;
+        string userId = authInfo.UserId;
 
         // Make sure the chat session exists.
-        if (!await this._chatSessionRepository.TryFindByIdAsync(chatId, v => _ = v))
+        if (!await this._chatSessionRepository.TryFindByIdAsync(chatId.ToString()))
         {
             return this.BadRequest("Chat session does not exist.");
         }
 
         // Make sure the user is not already in the chat session.
-        if (await this._chatParticipantRepository.IsUserInChatAsync(userId, chatId))
+        if (await this._chatParticipantRepository.IsUserInChatAsync(userId, chatId.ToString()))
         {
-            return this.BadRequest("User is already in the chat session.");
+            return this.Conflict("User is already in the chat session.");
         }
 
-        var chatParticipant = new ChatParticipant(userId, chatId);
+        var chatParticipant = new ChatParticipant(userId, chatId.ToString());
         await this._chatParticipantRepository.CreateAsync(chatParticipant);
 
         // Broadcast the user joined event to all the connected clients.
         // Note that the client who initiated the request may not have joined the group.
-        await messageRelayHubContext.Clients.Group(chatId).SendAsync(UserJoinedClientCall, chatId, userId);
+        await messageRelayHubContext.Clients.Group(chatId.ToString()).SendAsync(UserJoinedClientCall, chatId, userId);
 
         return this.Ok(chatParticipant);
     }
@@ -86,20 +88,22 @@ public class ChatParticipantController : ControllerBase
     /// <summary>
     /// Get a list of chat participants that have the same chat id.
     /// </summary>
-    /// <param name="chatId">The Id of the chat to get all the participants from.</param>
+    /// <param name="chatId">The ID of the chat to get all the participants from.</param>
     [HttpGet]
-    [Route("chatParticipant/getAllParticipants/{chatId:guid}")]
+    [Route("chats/{chatId:guid}/participants")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [Authorize(Policy = AuthPolicyName.RequireChatParticipant)]
     public async Task<IActionResult> GetAllParticipantsAsync(Guid chatId)
     {
         // Make sure the chat session exists.
-        if (!await this._chatSessionRepository.TryFindByIdAsync(chatId.ToString(), v => _ = v))
+        if (!await this._chatSessionRepository.TryFindByIdAsync(chatId.ToString()))
         {
             return this.NotFound("Chat session does not exist.");
         }
 
         var chatParticipants = await this._chatParticipantRepository.FindByChatIdAsync(chatId.ToString());
+
         return this.Ok(chatParticipants);
     }
 }

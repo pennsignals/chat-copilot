@@ -13,7 +13,7 @@ import {
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useChat, useFile } from '../../../libs/hooks';
 import { AlertType } from '../../../libs/models/AlertType';
-import { Bot } from '../../../libs/models/Bot';
+import { ChatArchive } from '../../../libs/models/ChatArchive';
 import { useAppDispatch, useAppSelector } from '../../../redux/app/hooks';
 import { RootState } from '../../../redux/app/store';
 import { addAlert } from '../../../redux/features/app/appSlice';
@@ -133,19 +133,15 @@ export const ChatList: FC = () => {
 
     useEffect(() => {
         // Ensure local component state is in line with app state.
-        if (filterText !== '') {
-            // Reapply search string to the updated conversations list.
-            const filteredConversations: Conversations = {};
-            for (const key in conversations) {
-                if (conversations[key].title.toLowerCase().includes(filterText.toLowerCase())) {
-                    filteredConversations[key] = conversations[key];
-                }
+        const nonHiddenConversations: Conversations = {};
+        for (const key in conversations) {
+            const conversation = conversations[key];
+            if (!conversation.hidden && (!filterText || conversation.title.toLowerCase().includes(filterText))) {
+                nonHiddenConversations[key] = conversation;
             }
-            setConversationsView({ filteredConversations: filteredConversations });
-        } else {
-            // If no search string, show full conversations list.
-            setConversationsView(sortConversations(conversations));
         }
+
+        setConversationsView(sortConversations(nonHiddenConversations));
     }, [conversations, filterText]);
 
     const onFilterClick = () => {
@@ -165,8 +161,7 @@ export const ChatList: FC = () => {
     const fileUploaderRef = useRef<HTMLInputElement>(null);
     const onUpload = useCallback(
         (file: File) => {
-            console.log('asdf');
-            fileHandler.loadFile<Bot>(file, chat.uploadBot).catch((error) =>
+            fileHandler.loadFile<ChatArchive>(file, chat.uploadBot).catch((error) =>
                 dispatch(
                     addAlert({
                         message: `Failed to parse uploaded file. ${error instanceof Error ? error.message : ''}`,

@@ -2,31 +2,40 @@
 
 import { IChatMessage } from '../models/ChatMessage';
 import { BaseService } from './BaseService';
+import { ServiceInfo } from '../models/ServiceInfo';
 
 export class DocumentImportService extends BaseService {
     public importDocumentAsync = async (
-        userId: string,
-        userName: string,
         chatId: string,
         documents: File[],
+        useContentSafety: boolean,
         accessToken: string,
     ) => {
         const formData = new FormData();
-        formData.append('userId', userId);
-        formData.append('userName', userName);
-        formData.append('chatId', chatId);
-        formData.append('documentScope', 'Chat');
+        formData.append('useContentSafety', useContentSafety.toString());
         for (const document of documents) {
             formData.append('formFiles', document);
         }
 
         return await this.getResponseAsync<IChatMessage>(
             {
-                commandPath: 'importDocuments',
+                commandPath: `chats/${chatId}/documents`,
                 method: 'POST',
                 body: formData,
             },
             accessToken,
         );
+    };
+
+    public getContentSafetyStatusAsync = async (accessToken: string): Promise<boolean> => {
+        const serviceInfo = await this.getResponseAsync<ServiceInfo>(
+            {
+                commandPath: 'info',
+                method: 'GET',
+            },
+            accessToken,
+        );
+
+        return serviceInfo.isContentSafetyEnabled;
     };
 }

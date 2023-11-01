@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft. All rights reserved.
 
-import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ChatMessageType, IChatMessage, UserFeedback } from '../../../libs/models/ChatMessage';
 import { IChatUser } from '../../../libs/models/ChatUser';
 import { ChatState } from './ChatState';
@@ -11,9 +11,10 @@ import {
     ConversationSystemDescriptionChange,
     ConversationTitleChange,
     initialState,
+    UpdatePluginStatePayload,
 } from './ConversationsState';
 
-export const conversationsSlice: Slice<ConversationsState> = createSlice({
+export const conversationsSlice = createSlice({
     name: 'conversations',
     initialState,
     reducers: {
@@ -49,6 +50,14 @@ export const conversationsSlice: Slice<ConversationsState> = createSlice({
         },
         setSelectedConversation: (state: ConversationsState, action: PayloadAction<string>) => {
             state.selectedId = action.payload;
+        },
+        toggleMultiUserConversations: (state: ConversationsState) => {
+            const keys = Object.keys(state.conversations);
+            keys.forEach((key) => {
+                if (state.conversations[key].users.length > 1) {
+                    state.conversations[key].hidden = !state.conversations[key].hidden;
+                }
+            });
         },
         addConversation: (state: ConversationsState, action: PayloadAction<ChatState>) => {
             const newId = action.payload.id;
@@ -119,7 +128,7 @@ export const conversationsSlice: Slice<ConversationsState> = createSlice({
         },
         updateBotResponseStatus: (
             state: ConversationsState,
-            action: PayloadAction<{ chatId: string; status: string }>,
+            action: PayloadAction<{ chatId: string; status: string | undefined }>,
         ) => {
             const { chatId, status } = action.payload;
             const conversation = state.conversations[chatId];
@@ -152,6 +161,45 @@ export const conversationsSlice: Slice<ConversationsState> = createSlice({
 
             if (frontLoad) {
                 frontLoadChat(state, chatId);
+            }
+        },
+        deleteConversation: (state: ConversationsState, action: PayloadAction<string>) => {
+            const keys = Object.keys(state.conversations);
+            const id = action.payload;
+
+            // If the conversation being deleted is the selected conversation, select the first remaining conversation
+            if (id === state.selectedId) {
+                if (keys.length > 1) {
+                    state.selectedId = id === keys[0] ? keys[1] : keys[0];
+                } else {
+                    state.selectedId = '';
+                }
+            }
+
+            const { [id]: _, ...rest } = state.conversations;
+            state.conversations = rest;
+        },
+        disableConversation: (state: ConversationsState, action: PayloadAction<string>) => {
+            const id = action.payload;
+            state.conversations[id].disabled = true;
+            frontLoadChat(state, id);
+            return;
+        },
+        updatePluginState: (state: ConversationsState, action: PayloadAction<UpdatePluginStatePayload>) => {
+            const { id, pluginName, newState } = action.payload;
+            const isPluginEnabled = state.conversations[id].enabledHostedPlugins.find((p) => p === pluginName);
+            if (newState) {
+                if (isPluginEnabled) {
+                    return;
+                }
+                state.conversations[id].enabledHostedPlugins.push(pluginName);
+            } else {
+                if (!isPluginEnabled) {
+                    return;
+                }
+                state.conversations[id].enabledHostedPlugins = state.conversations[id].enabledHostedPlugins.filter(
+                    (p) => p !== pluginName,
+                );
             }
         },
     },
@@ -187,6 +235,7 @@ export const {
     editConversationSystemDescription,
     editConversationMemoryBalance,
     setSelectedConversation,
+    toggleMultiUserConversations,
     addConversation,
     setImportingDocumentsToConversation,
     addMessageToConversationFromUser,
@@ -196,6 +245,9 @@ export const {
     updateUserIsTypingFromServer,
     updateBotResponseStatus,
     setUsersLoaded,
+    deleteConversation,
+    disableConversation,
+    updatePluginState,
 } = conversationsSlice.actions;
 
 export default conversationsSlice.reducer;

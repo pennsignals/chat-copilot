@@ -29,7 +29,7 @@ public class Repository<T> : IRepository<T> where T : IStorageEntity
     {
         if (string.IsNullOrWhiteSpace(entity.Id))
         {
-            throw new ArgumentOutOfRangeException(nameof(entity.Id), "Entity Id cannot be null or empty.");
+            throw new ArgumentOutOfRangeException(nameof(entity.Id), "Entity ID cannot be null or empty.");
         }
 
         return this.StorageContext.CreateAsync(entity);
@@ -42,22 +42,24 @@ public class Repository<T> : IRepository<T> where T : IStorageEntity
     }
 
     /// <inheritdoc/>
-    public Task<T> FindByIdAsync(string id)
+    public Task<T> FindByIdAsync(string id, string? partition = null)
     {
-        return this.StorageContext.ReadAsync(id);
+        return this.StorageContext.ReadAsync(id, partition ?? id);
     }
 
     /// <inheritdoc/>
-    public async Task<bool> TryFindByIdAsync(string id, Action<T?> entity)
+    public async Task<bool> TryFindByIdAsync(string id, string? partition = null, Action<T?>? callback = null)
     {
         try
         {
-            entity(await this.FindByIdAsync(id));
+            T? found = await this.FindByIdAsync(id, partition ?? id);
+
+            callback?.Invoke(found);
+
             return true;
         }
         catch (Exception ex) when (ex is ArgumentOutOfRangeException || ex is KeyNotFoundException)
         {
-            entity(default);
             return false;
         }
     }

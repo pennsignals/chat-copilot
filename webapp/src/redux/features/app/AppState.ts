@@ -1,8 +1,26 @@
 // Copyright (c) Microsoft. All rights reserved.
 
+import { AuthConfig } from '../../../libs/auth/AuthHelper';
 import { AlertType } from '../../../libs/models/AlertType';
-import { ServiceOptions } from '../../../libs/models/ServiceOptions';
+import { IChatUser } from '../../../libs/models/ChatUser';
+import { ServiceInfo } from '../../../libs/models/ServiceInfo';
 import { TokenUsage } from '../../../libs/models/TokenUsage';
+
+// This is the default user information when authentication is set to 'None'.
+// It must match what is defined in PassthroughAuthenticationHandler.cs on the backend.
+export const DefaultChatUser: IChatUser = {
+    id: 'c05c61eb-65e4-4223-915a-fe72b0c9ece1',
+    emailAddress: 'user@contoso.com',
+    fullName: 'Default User',
+    online: true,
+    isTyping: false,
+};
+
+export const DefaultActiveUserInfo: ActiveUserInfo = {
+    id: DefaultChatUser.id,
+    email: DefaultChatUser.emailAddress,
+    username: DefaultChatUser.fullName,
+};
 
 export interface ActiveUserInfo {
     id: string;
@@ -13,6 +31,8 @@ export interface ActiveUserInfo {
 export interface Alert {
     message: string;
     type: AlertType;
+    id?: string;
+    onRetry?: () => void;
 }
 
 interface Feature {
@@ -33,10 +53,12 @@ export interface Setting {
 export interface AppState {
     alerts: Alert[];
     activeUserInfo?: ActiveUserInfo;
+    authConfig?: AuthConfig | null;
     tokenUsage: TokenUsage;
     features: Record<FeatureKeys, Feature>;
     settings: Setting[];
-    serviceOptions: ServiceOptions;
+    serviceInfo: ServiceInfo;
+    isMaintenance: boolean;
 }
 
 export enum FeatureKeys {
@@ -47,7 +69,6 @@ export enum FeatureKeys {
     AzureCognitiveSearch,
     BotAsDocs,
     MultiUserChat,
-    DeleteChats,
     RLHF, // Reinforcement Learning from Human Feedback
 }
 
@@ -77,24 +98,18 @@ export const Features = {
     },
     [FeatureKeys.BotAsDocs]: {
         enabled: false,
-        label: 'Save/Load Chat Sessions',
+        label: 'Export Chat Sessions',
     },
     [FeatureKeys.MultiUserChat]: {
         enabled: false,
         label: 'Live Chat Session Sharing',
+        description: 'Enable multi-user chat sessions. Not available when authorization is disabled.',
     },
     [FeatureKeys.RLHF]: {
         enabled: false,
         label: 'Reinforcement Learning from Human Feedback',
         description: 'Enable users to vote on model-generated responses. For demonstration purposes only.',
         // TODO: [Issue #42] Send and store feedback in backend
-        inactive: true,
-    },
-    [FeatureKeys.DeleteChats]: {
-        enabled: true,
-        label: 'Delete Chat Sessions',
-        // TODO: [sk Issue #1642] Implement delete chats
-        //inactive: true,
     },
 };
 
@@ -118,7 +133,7 @@ export const Settings = [
     {
         title: 'Experimental',
         description: 'The related icons and menu options are hidden until you turn this on',
-        features: [FeatureKeys.BotAsDocs, FeatureKeys.MultiUserChat, FeatureKeys.DeleteChats, FeatureKeys.RLHF],
+        features: [FeatureKeys.BotAsDocs, FeatureKeys.MultiUserChat, FeatureKeys.RLHF],
     },
 ];
 
@@ -133,5 +148,11 @@ export const initialState: AppState = {
     tokenUsage: {},
     features: Features,
     settings: Settings,
-    serviceOptions: { memoriesStore: { types: [], selectedType: '' } },
+    serviceInfo: {
+        memoryStore: { types: [], selectedType: '' },
+        availablePlugins: [],
+        version: '',
+        isContentSafetyEnabled: false,
+    },
+    isMaintenance: false,
 };

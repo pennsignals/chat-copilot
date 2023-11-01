@@ -47,6 +47,9 @@ const useClasses = makeStyles({
     legend: {
         'flex-flow': 'wrap',
     },
+    divider: {
+        width: '97%',
+    },
 });
 
 interface ITokenUsageGraph {
@@ -63,7 +66,8 @@ const contrastColors = [
 export const TokenUsageGraph: React.FC<ITokenUsageGraph> = ({ promptView, tokenUsage }) => {
     const classes = useClasses();
     const { conversations, selectedId } = useAppSelector((state: RootState) => state.conversations);
-    const loadingResponse = conversations[selectedId].botResponseStatus && Object.entries(tokenUsage).length === 0;
+    const loadingResponse =
+        selectedId !== '' && conversations[selectedId].botResponseStatus && Object.entries(tokenUsage).length === 0;
 
     const responseGenerationView: TokenUsageView = {};
     const memoryGenerationView: TokenUsageView = {};
@@ -91,20 +95,22 @@ export const TokenUsageGraph: React.FC<ITokenUsageGraph> = ({ promptView, tokenU
     };
 
     Object.entries(tokenUsage).forEach(([key, value]) => {
-        const viewDetails: TokenUsageViewDetails = {
-            usageCount: value ?? 0,
-            legendLabel: TokenUsageFunctionNameMap[key],
-            color: semanticKernelBrandRamp[graphColors.brand.index],
-        };
+        if (value && value > 0) {
+            const viewDetails: TokenUsageViewDetails = {
+                usageCount: value,
+                legendLabel: TokenUsageFunctionNameMap[key],
+                color: semanticKernelBrandRamp[graphColors.brand.index],
+            };
 
-        if (key.toLocaleUpperCase().includes('MEMORY')) {
-            memoryGenerationUsage += value ?? 0;
-            viewDetails.color = contrastColors[graphColors.contrast.getNextIndex()];
-            memoryGenerationView[key] = viewDetails;
-        } else {
-            responseGenerationUsage += value ?? 0;
-            graphColors.brand.index = graphColors.brand.getNextIndex();
-            responseGenerationView[key] = viewDetails;
+            if (key.toLocaleUpperCase().includes('MEMORY')) {
+                memoryGenerationUsage += value;
+                viewDetails.color = contrastColors[graphColors.contrast.getNextIndex()];
+                memoryGenerationView[key] = viewDetails;
+            } else {
+                responseGenerationUsage += value;
+                graphColors.brand.index = graphColors.brand.getNextIndex();
+                responseGenerationView[key] = viewDetails;
+            }
         }
     });
 
@@ -122,10 +128,11 @@ export const TokenUsageGraph: React.FC<ITokenUsageGraph> = ({ promptView, tokenU
                         <Body1>
                             Token count for each category is the total sum of tokens used for the prompt template and
                             chat completion for the respective completion functions. For more details about token usage,
-                            see:{' '}
+                            see{' '}
                             <a href="https://learn.microsoft.com/en-us/dotnet/api/azure.ai.openai.completionsusage?view=azure-dotnet-preview">
-                                CompletionsUsage docs here.
-                            </a>
+                                CompletionsUsage
+                            </a>{' '}
+                            docs.
                         </Body1>
                     </PopoverSurface>
                 </Popover>
@@ -167,14 +174,14 @@ export const TokenUsageGraph: React.FC<ITokenUsageGraph> = ({ promptView, tokenU
                                 </div>
                             </>
                         ) : promptView ? (
-                            <Text>No tokens were used. This is a hardcoded response.</Text>
+                            <Text>No tokens were used. This either is a hardcoded response or saved plan.</Text>
                         ) : (
                             <Text>No tokens have been used in this session yet.</Text>
                         )}
                     </>
                 )}
             </div>
-            <Divider />
+            <Divider className={classes.divider} />
         </>
     );
 };

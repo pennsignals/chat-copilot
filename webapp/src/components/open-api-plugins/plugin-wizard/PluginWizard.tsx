@@ -1,4 +1,5 @@
 import {
+    Body2,
     Button,
     Dialog,
     DialogActions,
@@ -17,7 +18,6 @@ import React, { ReactElement, useCallback, useState } from 'react';
 import AddPluginIcon from '../../../assets/plugin-icons/add-plugin.png';
 import { usePlugins } from '../../../libs/hooks';
 import { PluginManifest } from '../../../libs/models/PluginManifest';
-import { useDialogClasses } from '../../../styles';
 import { EnterManifestStep } from './steps/EnterManifestStep';
 import { ValidateManifestStep } from './steps/ValidateManifestStep';
 
@@ -37,6 +37,11 @@ export const useClasses = makeStyles({
         'place-self': 'center',
         width: '90%',
     },
+    content: {
+        display: 'flex',
+        flexDirection: 'column',
+        rowGap: '10px',
+    },
 });
 
 interface IWizardStep {
@@ -54,7 +59,6 @@ enum CreatePluginSteps {
 
 export const PluginWizard: React.FC = () => {
     const classes = useClasses();
-    const dialogClasses = useDialogClasses();
     const plugins = usePlugins();
 
     const [activeStep, setActiveStep] = useState(CreatePluginSteps.EnterManifest);
@@ -140,7 +144,7 @@ export const PluginWizard: React.FC = () => {
             header: <>Verify Plugin</>,
             body: (
                 <ValidateManifestStep
-                    manifestDomain={manifestDomain}
+                    manifestDomain={manifestDomain ?? ''}
                     onPluginValidated={onPluginValidated}
                     pluginManifest={pluginManifest}
                     onManifestValidated={onManifestValidated}
@@ -174,8 +178,11 @@ export const PluginWizard: React.FC = () => {
                 <div className={classes.center}>
                     <CheckmarkCircle48Regular color="green" />
                     <Text size={600} align="center">
-                        Your plugin has been added successfully! Navigate back to the Gallery to enable it.
+                        Your plugin has been added successfully!
                     </Text>
+                    <Body2 align="center">
+                        You have to enable it from the plugin gallery before it can be used in your chats.
+                    </Body2>
                     <DialogTrigger disableButtonEnhancement>
                         <Button data-testid="close-plugin-wizard" aria-label="Close Wizard" appearance="secondary">
                             Close
@@ -218,7 +225,7 @@ export const PluginWizard: React.FC = () => {
                     >
                         {currentStep.header}
                     </DialogTitle>
-                    <DialogContent className={dialogClasses.content}>{currentStep.body}</DialogContent>
+                    <DialogContent className={classes.content}>{currentStep.body}</DialogContent>
                     <DialogActions>{currentStep.buttons}</DialogActions>
                 </DialogBody>
             </DialogSurface>
