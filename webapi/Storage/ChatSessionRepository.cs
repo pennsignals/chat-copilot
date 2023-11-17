@@ -26,6 +26,7 @@ public class ChatSessionRepository : Repository<ChatSession>
     /// <returns>A list of ChatMessages.</returns>
     public Task<IEnumerable<ChatSession>> GetAllChatsAsync()
     {
+
         return base.StorageContext.QueryEntitiesAsync(e => true);
     }
 }

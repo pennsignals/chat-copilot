@@ -175,8 +175,9 @@ export const useChat = () => {
             const chatSessions = await chatService.getAllChatsAsync(accessToken);
 
             if (chatSessions.length > 0) {
+                const nonDeletedChats = chatSessions.filter(c => !c.deleted);
                 const loadedConversations: Conversations = {};
-                for (const chatSession of chatSessions) {
+                for (const chatSession of nonDeletedChats) {
                     const chatUsers = await chatService.getAllChatParticipantsAsync(chatSession.id, accessToken);
                     const chatMessages = await chatService.getChatMessagesAsync(chatSession.id, 0, 100, accessToken);
 
@@ -369,11 +370,12 @@ export const useChat = () => {
         return { success: true, message: '' };
     };
 
-    const editChat = async (chatId: string, title: string, syetemDescription: string, memoryBalance: number) => {
+    const editChat = async (chatId: string, title: string, deleted: boolean, syetemDescription: string, memoryBalance: number) => {
         try {
             await chatService.editChatAsync(
                 chatId,
                 title,
+                deleted,
                 syetemDescription,
                 memoryBalance,
                 await AuthHelper.getSKaaSAccessToken(instance, inProgress),

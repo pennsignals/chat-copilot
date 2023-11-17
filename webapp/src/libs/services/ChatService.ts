@@ -75,12 +75,14 @@ export class ChatService extends BaseService {
     public editChatAsync = async (
         chatId: string,
         title: string,
+        deleted: boolean,
         systemDescription: string,
         memoryBalance: number,
         accessToken: string,
     ): Promise<any> => {
         const body: IChatSession = {
             id: chatId,
+            deleted,
             title,
             systemDescription,
             memoryBalance,

@@ -57,6 +57,8 @@ public class ChatSession : IStorageEntity
     [JsonIgnore]
     public string Partition => this.Id;
 
+    public bool Deleted { get; internal set; } = false;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatSession"/> class.
     /// </summary>

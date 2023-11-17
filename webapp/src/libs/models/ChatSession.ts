@@ -5,6 +5,7 @@ import { IChatMessage } from './ChatMessage';
 export interface IChatSession {
     id: string;
     title: string;
+    deleted:boolean;
     systemDescription: string;
     memoryBalance: number;
     enabledPlugins: string[];

@@ -282,17 +282,19 @@ public class ChatHistoryController : ControllerBase
         }
 
         // Delete any resources associated with the chat session.
-        try
-        {
-            await this.DeleteChatResourcesAsync(chatIdString, cancellationToken);
-        }
-        catch (AggregateException)
-        {
-            return this.StatusCode(500, $"Failed to delete resources for chat id '{chatId}'.");
-        }
+        //try
+        //{
+        //    await this.DeleteChatResourcesAsync(chatIdString, cancellationToken);
+        //}
+        //catch (AggregateException)
+        //{
+        //    return this.StatusCode(500, $"Failed to delete resources for chat id '{chatId}'.");
+        //}
 
         // Delete chat session and broadcast update to all participants.
-        await this._sessionRepository.DeleteAsync(chatToDelete);
+        //await this._sessionRepository.DeleteAsync(chatToDelete);
+        chatToDelete.Deleted= true;
+        await this._sessionRepository.UpsertAsync(chatToDelete);
         await messageRelayHubContext.Clients.Group(chatIdString).SendAsync(ChatDeletedClientCall, chatIdString, this._authInfo.UserId, cancellationToken: cancellationToken);
 
         return this.NoContent();
