@@ -3,26 +3,32 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Reflection;
-using Azure;
+using CopilotChat.Shared;
+using CopilotChat.WebApi.Auth;
+using CopilotChat.WebApi.Models.Storage;
+using CopilotChat.WebApi.Options;
+using CopilotChat.WebApi.Services;
+using CopilotChat.WebApi.Services.MemoryMigration;
+using CopilotChat.WebApi.Storage;
+using CopilotChat.WebApi.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Identity.Web;
-using CopilotChat.WebApi.Auth;
-using CopilotChat.WebApi.Options;
-using CopilotChat.WebApi.Storage;
-using CopilotChat.WebApi.Services;
-using Tesseract;
-using CopilotChat.WebApi.Models.Storage;
+using Microsoft.KernelMemory;
+using Microsoft.SemanticKernel.Diagnostics;
 
 namespace CopilotChat.WebApi.Extensions;
 
 /// <summary>
 /// Extension methods for <see cref="IServiceCollection"/>.
-/// Add options and services for Copilot Chat.
+/// Add options and services for Chat Copilot.
 /// </summary>
 public static class CopilotChatServiceExtensions
 {
@@ -32,115 +38,117 @@ public static class CopilotChatServiceExtensions
     public static IServiceCollection AddOptions(this IServiceCollection services, ConfigurationManager configuration)
     {
         // General configuration
-        services.AddOptions<ServiceOptions>()
-            .Bind(configuration.GetSection(ServiceOptions.PropertyName))
-            .ValidateDataAnnotations()
-            .ValidateOnStart()
-            .PostConfigure(TrimStringProperties);
+        AddOptions<ServiceOptions>(ServiceOptions.PropertyName);
 
-        // Default AI service configurations for Semantic Kernel
-        services.AddOptions<AIServiceOptions>()
-            .Bind(configuration.GetSection(AIServiceOptions.PropertyName))
-            .ValidateDataAnnotations()
-            .ValidateOnStart()
-            .PostConfigure(TrimStringProperties);
+        // Authentication configuration
+        AddOptions<ChatAuthenticationOptions>(ChatAuthenticationOptions.PropertyName);
 
-        // Authorization configuration
-        services.AddOptions<AuthorizationOptions>()
-            .Bind(configuration.GetSection(AuthorizationOptions.PropertyName))
-            .ValidateOnStart()
-            .ValidateDataAnnotations()
-            .PostConfigure(TrimStringProperties);
-
-        // Memory store configuration
-        services.AddOptions<MemoriesStoreOptions>()
-            .Bind(configuration.GetSection(MemoriesStoreOptions.PropertyName))
-            .ValidateDataAnnotations()
-            .ValidateOnStart()
-            .PostConfigure(TrimStringProperties);
-
-        // Chat log storage configuration
-        services.AddOptions<ChatStoreOptions>()
-            .Bind(configuration.GetSection(ChatStoreOptions.PropertyName))
-            .ValidateDataAnnotations()
-            .ValidateOnStart()
-            .PostConfigure(TrimStringProperties);
+        // Chat storage configuration
+        AddOptions<ChatStoreOptions>(ChatStoreOptions.PropertyName);
 
         // Azure speech token configuration
-        services.AddOptions<AzureSpeechOptions>()
-            .Bind(configuration.GetSection(AzureSpeechOptions.PropertyName))
-            .ValidateDataAnnotations()
-            .ValidateOnStart()
-            .PostConfigure(TrimStringProperties);
+        AddOptions<AzureSpeechOptions>(AzureSpeechOptions.PropertyName);
 
-        // Bot schema configuration
-        services.AddOptions<BotSchemaOptions>()
-            .Bind(configuration.GetSection(BotSchemaOptions.PropertyName))
-            .ValidateDataAnnotations()
-            .ValidateOnStart()
-            .PostConfigure(TrimStringProperties);
-
-        // Document memory options
-        services.AddOptions<DocumentMemoryOptions>()
-            .Bind(configuration.GetSection(DocumentMemoryOptions.PropertyName))
-            .ValidateDataAnnotations()
-            .ValidateOnStart()
-            .PostConfigure(TrimStringProperties);
+        AddOptions<DocumentMemoryOptions>(DocumentMemoryOptions.PropertyName);
 
         // Chat prompt options
-        services.AddOptions<PromptsOptions>()
-            .Bind(configuration.GetSection(PromptsOptions.PropertyName))
-            .ValidateDataAnnotations()
-            .ValidateOnStart()
-            .PostConfigure(TrimStringProperties);
+        AddOptions<PromptsOptions>(PromptsOptions.PropertyName);
 
-        // Planner options
-        services.AddOptions<PlannerOptions>()
-            .Bind(configuration.GetSection(PlannerOptions.PropertyName))
-            .ValidateDataAnnotations()
-            .ValidateOnStart()
-            .PostConfigure(TrimStringProperties);
+        AddOptions<PlannerOptions>(PlannerOptions.PropertyName);
 
-        // OCR support options
-        services.AddOptions<OcrSupportOptions>()
-            .Bind(configuration.GetSection(OcrSupportOptions.PropertyName))
+        AddOptions<ContentSafetyOptions>(ContentSafetyOptions.PropertyName);
+
+        AddOptions<KernelMemoryConfig>(MemoryConfiguration.KernelMemorySection);
+
+        AddOptions<FrontendOptions>(FrontendOptions.PropertyName);
+
+        return services;
+
+        void AddOptions<TOptions>(string propertyName)
+            where TOptions : class
+        {
+            services.AddOptions<TOptions>(configuration.GetSection(propertyName));
+        }
+    }
+
+    internal static void AddOptions<TOptions>(this IServiceCollection services, IConfigurationSection section)
+        where TOptions : class
+    {
+        services.AddOptions<TOptions>()
+            .Bind(section)
             .ValidateDataAnnotations()
             .ValidateOnStart()
             .PostConfigure(TrimStringProperties);
+    }
+
+    internal static IServiceCollection AddUtilities(this IServiceCollection services)
+    {
+        return services.AddScoped<AskConverter>();
+    }
+
+    internal static IServiceCollection AddPlugins(this IServiceCollection services, IConfiguration configuration)
+    {
+        var plugins = configuration.GetSection("Plugins").Get<List<Plugin>>() ?? new List<Plugin>();
+        var logger = services.BuildServiceProvider().GetRequiredService<ILogger<Program>>();
+        logger.LogDebug("Found {0} plugins.", plugins.Count);
+
+        // Validate the plugins
+        Dictionary<string, Plugin> validatedPlugins = new();
+        foreach (Plugin plugin in plugins)
+        {
+            if (validatedPlugins.ContainsKey(plugin.Name))
+            {
+                logger.LogWarning("Plugin '{0}' is defined more than once. Skipping...", plugin.Name);
+                continue;
+            }
+
+            var pluginManifestUrl = PluginUtils.GetPluginManifestUri(plugin.ManifestDomain);
+            using var request = new HttpRequestMessage(HttpMethod.Get, pluginManifestUrl);
+            // Need to set the user agent to avoid 403s from some sites.
+            request.Headers.Add("User-Agent", Telemetry.HttpUserAgent);
+            try
+            {
+                logger.LogInformation("Adding plugin: {0}.", plugin.Name);
+                using var httpClient = new HttpClient();
+                var response = httpClient.SendAsync(request).Result;
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new InvalidOperationException($"Plugin '{plugin.Name}' at '{pluginManifestUrl}' returned status code '{response.StatusCode}'.");
+                }
+                validatedPlugins.Add(plugin.Name, plugin);
+                logger.LogInformation("Added plugin: {0}.", plugin.Name);
+            }
+            catch (Exception ex) when (ex is InvalidOperationException || ex is AggregateException)
+            {
+                logger.LogWarning(ex, "Plugin '{0}' at {1} responded with error. Skipping...", plugin.Name, pluginManifestUrl);
+            }
+            catch (Exception ex) when (ex is UriFormatException)
+            {
+                logger.LogWarning("Plugin '{0}' at {1} is not a valid URL. Skipping...", plugin.Name, pluginManifestUrl);
+            }
+        }
+
+        // Add the plugins
+        services.AddSingleton<IDictionary<string, Plugin>>(validatedPlugins);
 
         return services;
     }
 
-    /// <summary>
-    /// Add authorization services
-    /// </summary>
-    internal static IServiceCollection AddAuthorization(this IServiceCollection services, IConfiguration configuration)
+    internal static IServiceCollection AddMaintenanceServices(this IServiceCollection services)
     {
-        AuthorizationOptions config = services.BuildServiceProvider().GetRequiredService<IOptions<AuthorizationOptions>>().Value;
-        switch (config.Type)
-        {
-            case AuthorizationOptions.AuthorizationType.AzureAd:
-                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    .AddMicrosoftIdentityWebApi(configuration.GetSection($"{AuthorizationOptions.PropertyName}:AzureAd"));
-                break;
+        // Inject migration services
+        services.AddSingleton<IChatMigrationMonitor, ChatMigrationMonitor>();
+        services.AddSingleton<IChatMemoryMigrationService, ChatMemoryMigrationService>();
 
-            case AuthorizationOptions.AuthorizationType.ApiKey:
-                services.AddAuthentication(ApiKeyAuthenticationHandler.AuthenticationScheme)
-                    .AddScheme<ApiKeyAuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(
-                        ApiKeyAuthenticationHandler.AuthenticationScheme,
-                        options => options.ApiKey = config.ApiKey);
-                break;
-
-            case AuthorizationOptions.AuthorizationType.None:
-                services.AddAuthentication(PassThroughAuthenticationHandler.AuthenticationScheme)
-                    .AddScheme<AuthenticationSchemeOptions, PassThroughAuthenticationHandler>(
-                        authenticationScheme: PassThroughAuthenticationHandler.AuthenticationScheme,
-                        configureOptions: null);
-                break;
-
-            default:
-                throw new InvalidOperationException($"Invalid authorization type '{config.Type}'.");
-        }
+        // Inject actions so they can be part of the action-list.
+        services.AddSingleton<ChatMigrationMaintenanceAction>();
+        services.AddSingleton<IReadOnlyList<IMaintenanceAction>>(
+            sp =>
+                (IReadOnlyList<IMaintenanceAction>)
+                new[]
+                {
+                    sp.GetRequiredService<ChatMigrationMaintenanceAction>(),
+                });
 
         return services;
     }
@@ -148,9 +156,8 @@ public static class CopilotChatServiceExtensions
     /// <summary>
     /// Add CORS settings.
     /// </summary>
-    internal static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+    internal static IServiceCollection AddCorsPolicy(this IServiceCollection services, IConfiguration configuration)
     {
-        IConfiguration configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
         string[] allowedOrigins = configuration.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
         if (allowedOrigins.Length > 0)
         {
@@ -160,43 +167,10 @@ public static class CopilotChatServiceExtensions
                     policy =>
                     {
                         policy.WithOrigins(allowedOrigins)
+                            .WithMethods("POST", "GET", "PUT", "DELETE", "PATCH")
                             .AllowAnyHeader();
                     });
             });
-        }
-
-        return services;
-    }
-
-    /// <summary>
-    /// Adds persistent OCR support service.
-    /// </summary>
-    /// <exception cref="InvalidOperationException"></exception>
-    public static IServiceCollection AddPersistentOcrSupport(this IServiceCollection services)
-    {
-        OcrSupportOptions ocrSupportConfig = services.BuildServiceProvider().GetRequiredService<IOptions<OcrSupportOptions>>().Value;
-
-        switch (ocrSupportConfig.Type)
-        {
-            case OcrSupportOptions.OcrSupportType.AzureFormRecognizer:
-            {
-                services.AddSingleton<IOcrEngine>(sp => new AzureFormRecognizerOcrEngine(ocrSupportConfig.AzureFormRecognizer!.Endpoint!, new AzureKeyCredential(ocrSupportConfig.AzureFormRecognizer!.Key!)));
-                break;
-            }
-            case OcrSupportOptions.OcrSupportType.Tesseract:
-            {
-                services.AddSingleton<IOcrEngine>(sp => new TesseractEngineWrapper(new TesseractEngine(ocrSupportConfig.Tesseract!.FilePath, ocrSupportConfig.Tesseract!.Language, EngineMode.Default)));
-                break;
-            }
-            case OcrSupportOptions.OcrSupportType.None:
-            {
-                services.AddSingleton<IOcrEngine>(sp => new NullOcrEngine());
-                break;
-            }
-            default:
-            {
-                throw new InvalidOperationException($"Unsupported OcrSupport:Type '{ocrSupportConfig.Type}'");
-            }
         }
 
         return services;
@@ -208,7 +182,7 @@ public static class CopilotChatServiceExtensions
     public static IServiceCollection AddPersistentChatStore(this IServiceCollection services)
     {
         IStorageContext<ChatSession> chatSessionStorageContext;
-        IStorageContext<ChatMessage> chatMessageStorageContext;
+        IStorageContext<CopilotChatMessage> chatMessageStorageContext;
         IStorageContext<MemorySource> chatMemorySourceStorageContext;
         IStorageContext<ChatParticipant> chatParticipantStorageContext;
 
@@ -219,7 +193,7 @@ public static class CopilotChatServiceExtensions
             case ChatStoreOptions.ChatStoreType.Volatile:
             {
                 chatSessionStorageContext = new VolatileContext<ChatSession>();
-                chatMessageStorageContext = new VolatileContext<ChatMessage>();
+                chatMessageStorageContext = new VolatileContext<CopilotChatMessage>();
                 chatMemorySourceStorageContext = new VolatileContext<MemorySource>();
                 chatParticipantStorageContext = new VolatileContext<ChatParticipant>();
                 break;
@@ -236,7 +210,7 @@ public static class CopilotChatServiceExtensions
                 string directory = Path.GetDirectoryName(fullPath) ?? string.Empty;
                 chatSessionStorageContext = new FileSystemContext<ChatSession>(
                     new FileInfo(Path.Combine(directory, $"{Path.GetFileNameWithoutExtension(fullPath)}_sessions{Path.GetExtension(fullPath)}")));
-                chatMessageStorageContext = new FileSystemContext<ChatMessage>(
+                chatMessageStorageContext = new FileSystemContext<CopilotChatMessage>(
                     new FileInfo(Path.Combine(directory, $"{Path.GetFileNameWithoutExtension(fullPath)}_messages{Path.GetExtension(fullPath)}")));
                 chatMemorySourceStorageContext = new FileSystemContext<MemorySource>(
                     new FileInfo(Path.Combine(directory, $"{Path.GetFileNameWithoutExtension(fullPath)}_memorysources{Path.GetExtension(fullPath)}")));
@@ -254,7 +228,7 @@ public static class CopilotChatServiceExtensions
 #pragma warning disable CA2000 // Dispose objects before losing scope - objects are singletons for the duration of the process and disposed when the process exits.
                 chatSessionStorageContext = new CosmosDbContext<ChatSession>(
                     chatStoreConfig.Cosmos.ConnectionString, chatStoreConfig.Cosmos.Database, chatStoreConfig.Cosmos.ChatSessionsContainer);
-                chatMessageStorageContext = new CosmosDbContext<ChatMessage>(
+                chatMessageStorageContext = new CosmosDbContext<CopilotChatMessage>(
                     chatStoreConfig.Cosmos.ConnectionString, chatStoreConfig.Cosmos.Database, chatStoreConfig.Cosmos.ChatMessagesContainer);
                 chatMemorySourceStorageContext = new CosmosDbContext<MemorySource>(
                     chatStoreConfig.Cosmos.ConnectionString, chatStoreConfig.Cosmos.Database, chatStoreConfig.Cosmos.ChatMemorySourcesContainer);
@@ -280,6 +254,53 @@ public static class CopilotChatServiceExtensions
     }
 
     /// <summary>
+    /// Add authorization services
+    /// </summary>
+    public static IServiceCollection AddChatCopilotAuthorization(this IServiceCollection services)
+    {
+        return services.AddScoped<IAuthorizationHandler, ChatParticipantAuthorizationHandler>()
+            .AddAuthorizationCore(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.AddPolicy(AuthPolicyName.RequireChatParticipant, builder =>
+                {
+                    builder.RequireAuthenticatedUser()
+                        .AddRequirements(new ChatParticipantRequirement());
+                });
+            });
+    }
+
+    /// <summary>
+    /// Add authentication services
+    /// </summary>
+    public static IServiceCollection AddChatCopilotAuthentication(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddScoped<IAuthInfo, AuthInfo>();
+        var config = services.BuildServiceProvider().GetRequiredService<IOptions<ChatAuthenticationOptions>>().Value;
+        switch (config.Type)
+        {
+            case ChatAuthenticationOptions.AuthenticationType.AzureAd:
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddMicrosoftIdentityWebApi(configuration.GetSection($"{ChatAuthenticationOptions.PropertyName}:AzureAd"));
+                break;
+
+            case ChatAuthenticationOptions.AuthenticationType.None:
+                services.AddAuthentication(PassThroughAuthenticationHandler.AuthenticationScheme)
+                    .AddScheme<AuthenticationSchemeOptions, PassThroughAuthenticationHandler>(
+                        authenticationScheme: PassThroughAuthenticationHandler.AuthenticationScheme,
+                        configureOptions: null);
+                break;
+
+            default:
+                throw new InvalidOperationException($"Invalid authentication type '{config.Type}'.");
+        }
+
+        return services;
+    }
+
+    /// <summary>
     /// Trim all string properties, recursively.
     /// </summary>
     private static void TrimStringProperties<T>(T options) where T : class
@@ -295,6 +316,12 @@ public static class CopilotChatServiceExtensions
             {
                 // Skip enumerations
                 if (property.PropertyType.IsEnum)
+                {
+                    continue;
+                }
+
+                // Skip index properties
+                if (property.GetIndexParameters().Length == 0)
                 {
                     continue;
                 }

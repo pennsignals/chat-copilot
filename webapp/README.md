@@ -1,9 +1,12 @@
-# Copilot Chat Web App
+# Chat Copilot front end web application
 
-> This learning sample is for educational purposes only and is not recommended for
-> production deployments.
+This directory contains the source code for Chat Copilot's frontend web application. The backend web API service component can be found in the [webapi/](../webapi/) directory.
 
-See [../README.md](../README.md) for complete instructions on setting up and running the application.
+## Running the Chat Copilot sample
+To configure and run the full Chat Copilot application, please view the [main instructions](../README.md#instructions).
+
+# (Under Development)
+The following material is under development and may not be complete or accurate.
 
 ## How to use HTTPS for local development
 
@@ -115,7 +118,7 @@ Option 2: Using [mkcert](https://github.com/FiloSottile/mkcert#installation)
 ## Authentication
 
 This sample uses the Microsoft Authentication Library (MSAL) for React to authenticate users.
-Learn more about it here: https://learn.microsoft.com/en-us/azure/active-directory/develop/tutorial-v2-react.
+Learn more about it here: https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-single-page-app-react-sign-in.
 
 ## Debug the web app
 

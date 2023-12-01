@@ -5,10 +5,12 @@ import { Button, Spinner, Textarea, makeStyles, mergeClasses, shorthands, tokens
 import { AttachRegular, MicRegular, SendRegular } from '@fluentui/react-icons';
 import debug from 'debug';
 import * as speechSdk from 'microsoft-cognitiveservices-speech-sdk';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Constants } from '../../Constants';
+import { COPY } from '../../assets/strings';
 import { AuthHelper } from '../../libs/auth/AuthHelper';
-import { GetResponseOptions, useChat } from '../../libs/hooks/useChat';
+import { useFile } from '../../libs/hooks';
+import { GetResponseOptions } from '../../libs/hooks/useChat';
 import { AlertType } from '../../libs/models/AlertType';
 import { ChatMessageType } from '../../libs/models/ChatMessage';
 import { useAppDispatch, useAppSelector } from '../../redux/app/hooks';
@@ -16,6 +18,7 @@ import { RootState } from '../../redux/app/store';
 import { addAlert } from '../../redux/features/app/appSlice';
 import { editConversationInput, updateBotResponseStatus } from '../../redux/features/conversations/conversationsSlice';
 import { Alerts } from '../shared/Alerts';
+import { getErrorDetails } from '../utils/TextUtils';
 import { SpeechService } from './../../libs/services/SpeechService';
 import { updateUserIsTyping } from './../../redux/features/conversations/conversationsSlice';
 import { ChatStatus } from './ChatStatus';
@@ -26,7 +29,9 @@ const useClasses = makeStyles({
     root: {
         display: 'flex',
         flexDirection: 'column',
-        ...shorthands.margin(0, '72px'),
+        width: '100%',
+        maxWidth: '105em',
+        ...shorthands.margin(tokens.spacingVerticalNone, tokens.spacingHorizontalM),
     },
     typingIndicator: {
         maxHeight: '28px',
@@ -76,16 +81,17 @@ interface ChatInputProps {
 export const ChatInput: React.FC<ChatInputProps> = ({ isDraggingOver, onDragLeave, onSubmit }) => {
     const classes = useClasses();
     const { instance, inProgress } = useMsal();
-    const chat = useChat();
     const dispatch = useAppDispatch();
-    const [value, setValue] = React.useState('');
-    const [recognizer, setRecognizer] = React.useState<speechSdk.SpeechRecognizer>();
-    const [isListening, setIsListening] = React.useState(false);
-    const [documentImporting, setDocumentImporting] = React.useState(false);
-    const documentFileRef = useRef<HTMLInputElement | null>(null);
     const { conversations, selectedId } = useAppSelector((state: RootState) => state.conversations);
     const { activeUserInfo } = useAppSelector((state: RootState) => state.app);
+    const fileHandler = useFile();
 
+    const [value, setValue] = useState('');
+    const [recognizer, setRecognizer] = useState<speechSdk.SpeechRecognizer>();
+    const [isListening, setIsListening] = useState(false);
+    const { importingDocuments } = conversations[selectedId];
+
+    const documentFileRef = useRef<HTMLInputElement | null>(null);
     const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
     React.useEffect(() => {
         // Focus on the text area when the selected conversation changes
@@ -94,7 +100,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ isDraggingOver, onDragLeav
 
     React.useEffect(() => {
         async function initSpeechRecognizer() {
-            const speechService = new SpeechService(process.env.REACT_APP_BACKEND_URI as string);
+            const speechService = new SpeechService();
             const response = await speechService.getSpeechTokenAsync(
                 await AuthHelper.getSKaaSAccessToken(instance, inProgress),
             );
@@ -105,7 +111,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ isDraggingOver, onDragLeav
         }
 
         initSpeechRecognizer().catch((e) => {
-            const errorDetails = e instanceof Error ? e.message : String(e);
+            const errorDetails = getErrorDetails(e);
             const errorMessage = `Unable to initialize speech recognizer. Details: ${errorDetails}`;
             dispatch(addAlert({ message: errorMessage, type: AlertType.Error }));
         });
@@ -113,7 +119,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ isDraggingOver, onDragLeav
 
     React.useEffect(() => {
         const chatState = conversations[selectedId];
-        setValue(chatState.input);
+        setValue(chatState.disabled ? COPY.CHAT_DELETED_MESSAGE() : chatState.input);
     }, [conversations, selectedId]);
 
     const handleSpeech = () => {
@@ -127,26 +133,6 @@ export const ChatInput: React.FC<ChatInputProps> = ({ isDraggingOver, onDragLeav
                 }
                 setIsListening(false);
             });
-        }
-    };
-
-    const handleImport = (dragAndDropFiles?: FileList) => {
-        const files = dragAndDropFiles ?? documentFileRef.current?.files;
-
-        if (files && files.length > 0) {
-            setDocumentImporting(true);
-            // Deep copy the FileList into an array so that the function
-            // maintains a list of files to import before the import is complete.
-            const filesArray = Array.from(files);
-            void chat.importDocument(selectedId, filesArray).finally(() => {
-                setDocumentImporting(false);
-            });
-        }
-
-        // Reset the file input so that the onChange event will
-        // be triggered even if the same file is selected again.
-        if (documentFileRef.current?.value) {
-            documentFileRef.current.value = '';
         }
     };
 
@@ -172,7 +158,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ isDraggingOver, onDragLeav
 
     const handleDrop = (e: React.DragEvent<HTMLTextAreaElement>) => {
         onDragLeave(e);
-        handleImport(e.dataTransfer.files);
+        void fileHandler.handleImport(selectedId, documentFileRef, false, undefined, e.dataTransfer.files);
     };
 
     return (
@@ -183,9 +169,12 @@ export const ChatInput: React.FC<ChatInputProps> = ({ isDraggingOver, onDragLeav
             <Alerts />
             <div className={classes.content}>
                 <Textarea
+                    title="Chat input"
+                    aria-label="Chat input field. Click enter to submit input."
                     ref={textAreaRef}
                     id="chat-input"
                     resize="vertical"
+                    disabled={conversations[selectedId].disabled}
                     textarea={{
                         className: isDraggingOver
                             ? mergeClasses(classes.dragAndDrop, classes.textarea)
@@ -201,9 +190,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({ isDraggingOver, onDragLeav
                             setValue((chatInput as HTMLTextAreaElement).value);
                         }
                         // User is considered typing if the input is in focus
-                        dispatch(
-                            updateUserIsTyping({ userId: activeUserInfo?.id, chatId: selectedId, isTyping: true }),
-                        );
+                        if (activeUserInfo) {
+                            dispatch(
+                                updateUserIsTyping({ userId: activeUserInfo.id, chatId: selectedId, isTyping: true }),
+                            );
+                        }
                     }}
                     onChange={(_event, data) => {
                         if (isDraggingOver) {
@@ -221,9 +212,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({ isDraggingOver, onDragLeav
                     }}
                     onBlur={() => {
                         // User is considered not typing if the input is not  in focus
-                        dispatch(
-                            updateUserIsTyping({ userId: activeUserInfo?.id, chatId: selectedId, isTyping: false }),
-                        );
+                        if (activeUserInfo) {
+                            dispatch(
+                                updateUserIsTyping({ userId: activeUserInfo.id, chatId: selectedId, isTyping: false }),
+                            );
+                        }
                     }}
                 />
             </div>
@@ -234,35 +227,42 @@ export const ChatInput: React.FC<ChatInputProps> = ({ isDraggingOver, onDragLeav
                         type="file"
                         ref={documentFileRef}
                         style={{ display: 'none' }}
-                        accept=".txt,.pdf,.md,.jpg,.jpeg,.png,.tif,.tiff"
+                        accept={Constants.app.importTypes}
                         multiple={true}
                         onChange={() => {
-                            handleImport();
+                            void fileHandler.handleImport(selectedId, documentFileRef);
                         }}
                     />
                     <Button
-                        disabled={documentImporting}
+                        disabled={
+                            conversations[selectedId].disabled || (importingDocuments && importingDocuments.length > 0)
+                        }
                         appearance="transparent"
                         icon={<AttachRegular />}
                         onClick={() => documentFileRef.current?.click()}
+                        title="Attach file"
+                        aria-label="Attach file button"
                     />
-                    {documentImporting && <Spinner size="tiny" />}
+                    {importingDocuments && importingDocuments.length > 0 && <Spinner size="tiny" />}
                 </div>
                 <div className={classes.essentials}>
                     {recognizer && (
                         <Button
                             appearance="transparent"
-                            disabled={isListening}
+                            disabled={conversations[selectedId].disabled || isListening}
                             icon={<MicRegular />}
                             onClick={handleSpeech}
                         />
                     )}
                     <Button
+                        title="Submit"
+                        aria-label="Submit message"
                         appearance="transparent"
                         icon={<SendRegular />}
                         onClick={() => {
                             handleSubmit(value);
                         }}
+                        disabled={conversations[selectedId].disabled}
                     />
                 </div>
             </div>

@@ -13,7 +13,7 @@ using Microsoft.Identity.Client;
 namespace ImportDocument;
 
 /// <summary>
-/// This console app imports a list of files to the CopilotChat WebAPI document memory store.
+/// This console app imports a list of files to Chat Copilot's WebAPI document memory store.
 /// </summary>
 public static class Program
 {
@@ -39,17 +39,19 @@ public static class Program
         );
 
         var rootCommand = new RootCommand(
-            "This console app imports files to the CopilotChat WebAPI's document memory store."
+            "This console app imports files to Chat Copilot's WebAPI document memory store."
         )
         {
-            filesOption, chatCollectionOption
+            filesOption,
+            chatCollectionOption
         };
 
         rootCommand.SetHandler(async (files, chatCollectionId) =>
             {
                 await ImportFilesAsync(files, config!, chatCollectionId);
             },
-            filesOption, chatCollectionOption
+            filesOption,
+            chatCollectionOption
         );
 
         rootCommand.Invoke(args);
@@ -59,33 +61,23 @@ public static class Program
     /// Acquires a user account from Azure AD.
     /// </summary>
     /// <param name="config">The App configuration.</param>
-    /// <param name="setAccount">Sets the account to the first account found.</param>
     /// <param name="setAccessToken">Sets the access token to the first account found.</param>
     /// <returns>True if the user account was acquired.</returns>
-    private static async Task<bool> AcquireUserAccountAsync(
+    private static async Task<bool> AcquireTokenAsync(
         Config config,
-        Action<IAccount> setAccount,
         Action<string> setAccessToken)
     {
-        Console.WriteLine("Requesting User Account ID...");
+        Console.WriteLine("Attempting to authenticate user...");
 
-        string[] scopes = { "User.Read" };
+        var webApiScope = $"api://{config.BackendClientId}/{config.Scopes}";
+        string[] scopes = { webApiScope };
         try
         {
             var app = PublicClientApplicationBuilder.Create(config.ClientId)
                 .WithRedirectUri(config.RedirectUri)
+                .WithAuthority(config.Instance, config.TenantId)
                 .Build();
             var result = await app.AcquireTokenInteractive(scopes).ExecuteAsync();
-            IEnumerable<IAccount>? accounts = await app.GetAccountsAsync();
-            IAccount? first = accounts.FirstOrDefault();
-
-            if (first is null)
-            {
-                Console.WriteLine("Error: No accounts found");
-                return false;
-            }
-
-            setAccount(first);
             setAccessToken(result.AccessToken);
             return true;
         }
@@ -113,15 +105,16 @@ public static class Program
             }
         }
 
-        IAccount? userAccount = null;
         string? accessToken = null;
-
-        if (await AcquireUserAccountAsync(config, v => { userAccount = v; }, v => { accessToken = v; }) == false)
+        if (config.AuthenticationType == "AzureAd")
         {
-            Console.WriteLine("Error: Failed to acquire user account.");
-            return;
+            if (await AcquireTokenAsync(config, v => { accessToken = v; }) == false)
+            {
+                Console.WriteLine("Error: Failed to acquire access token.");
+                return;
+            }
+            Console.WriteLine($"Successfully acquired access token. Continuing...");
         }
-        Console.WriteLine($"Successfully acquired User ID. Continuing...");
 
         using var formContent = new MultipartFormDataContent();
         List<StreamContent> filesContent = files.Select(file => new StreamContent(file.OpenRead())).ToList();
@@ -130,32 +123,18 @@ public static class Program
             formContent.Add(filesContent[i], "formFiles", files.ElementAt(i).Name);
         }
 
-        var userId = userAccount!.HomeAccountId.Identifier;
-        var userName = userAccount.Username;
-        using var userIdContent = new StringContent(userId);
-        using var userNameContent = new StringContent(userName);
-        formContent.Add(userIdContent, "userId");
-        formContent.Add(userNameContent, "userName");
 
         if (chatCollectionId != Guid.Empty)
         {
             Console.WriteLine($"Uploading and parsing file to chat {chatCollectionId}...");
-            using var chatScopeContent = new StringContent("Chat");
-            using var chatCollectionIdContent = new StringContent(chatCollectionId.ToString());
-            formContent.Add(chatScopeContent, "documentScope");
-            formContent.Add(chatCollectionIdContent, "chatId");
 
-            // Calling UploadAsync here to make sure disposable objects are still in scope.
-            await UploadAsync(formContent, accessToken!, config);
+            await UploadAsync(chatCollectionId);
         }
         else
         {
             Console.WriteLine("Uploading and parsing file to global collection...");
-            using var globalScopeContent = new StringContent("Global");
-            formContent.Add(globalScopeContent, "documentScope");
 
-            // Calling UploadAsync here to make sure disposable objects are still in scope.
-            await UploadAsync(formContent, accessToken!, config);
+            await UploadAsync();
         }
 
         // Dispose of all the file streams.
@@ -163,54 +142,50 @@ public static class Program
         {
             fileContent.Dispose();
         }
-    }
 
-    /// <summary>
-    /// Sends a POST request to the Document Store to upload a file for parsing.
-    /// </summary>
-    /// <param name="multipartFormDataContent">The multipart form data content to send.</param>
-    /// <param name="config">Configuration.</param>
-    private static async Task UploadAsync(
-        MultipartFormDataContent multipartFormDataContent,
-        string accessToken,
-        Config config)
-    {
-        // Create a HttpClient instance and set the timeout to infinite since
-        // large documents will take a while to parse.
-        using HttpClientHandler clientHandler = new()
+        async Task UploadAsync(Guid? chatId = null)
         {
-            CheckCertificateRevocationList = true
-        };
-        using HttpClient httpClient = new(clientHandler)
-        {
-            Timeout = Timeout.InfiniteTimeSpan
-        };
-        // Add required properties to the request header.
-        httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
-        if (!string.IsNullOrEmpty(config.ApiKey))
-        {
-            httpClient.DefaultRequestHeaders.Add("x-sk-api-key", config.ApiKey);
-        }
-
-        try
-        {
-            using HttpResponseMessage response = await httpClient.PostAsync(
-                new Uri(new Uri(config.ServiceUri), "importDocuments"),
-                multipartFormDataContent
-            );
-
-            if (!response.IsSuccessStatusCode)
+            // Create a HttpClient instance and set the timeout to infinite since
+            // large documents will take a while to parse.
+            using HttpClientHandler clientHandler = new()
             {
-                Console.WriteLine($"Error: {response.StatusCode} {response.ReasonPhrase}");
-                Console.WriteLine(await response.Content.ReadAsStringAsync());
-                return;
+                CheckCertificateRevocationList = true
+            };
+            using HttpClient httpClient = new(clientHandler)
+            {
+                Timeout = Timeout.InfiniteTimeSpan
+            };
+
+            if (config.AuthenticationType == "AzureAd")
+            {
+                // Add required properties to the request header.
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken!}");
             }
 
-            Console.WriteLine("Uploading and parsing successful.");
-        }
-        catch (HttpRequestException ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
+            string uriPath =
+                chatId.HasValue ?
+                $"chats/{chatId}/documents" :
+                "documents";
+
+            try
+            {
+                using HttpResponseMessage response = await httpClient.PostAsync(
+                    new Uri(new Uri(config.ServiceUri), uriPath),
+                    formContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Error: {response.StatusCode} {response.ReasonPhrase}");
+                    Console.WriteLine(await response.Content.ReadAsStringAsync());
+                    return;
+                }
+
+                Console.WriteLine("Uploading and parsing successful.");
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
         }
     }
 }

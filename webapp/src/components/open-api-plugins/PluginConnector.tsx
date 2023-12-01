@@ -13,14 +13,45 @@ import {
     Input,
     Persona,
     Text,
+    makeStyles,
 } from '@fluentui/react-components';
 import { Dismiss20Regular } from '@fluentui/react-icons';
 import { FormEvent, useState } from 'react';
+import { AuthHelper } from '../../libs/auth/AuthHelper';
 import { TokenHelper } from '../../libs/auth/TokenHelper';
-import { useAppDispatch } from '../../redux/app/hooks';
+import { usePlugins } from '../../libs/hooks/usePlugins';
+import { AlertType } from '../../libs/models/AlertType';
+import { useAppDispatch, useAppSelector } from '../../redux/app/hooks';
+import { RootState } from '../../redux/app/store';
+import { addAlert } from '../../redux/features/app/appSlice';
 import { AdditionalApiProperties, PluginAuthRequirements } from '../../redux/features/plugins/PluginsState';
 import { connectPlugin } from '../../redux/features/plugins/pluginsSlice';
-import { useDialogClasses } from '../../styles';
+
+const useClasses = makeStyles({
+    root: {
+        height: '515px',
+    },
+    content: {
+        display: 'flex',
+        flexDirection: 'column',
+        rowGap: '10px',
+    },
+    scopes: {
+        display: 'flex',
+        flexDirection: 'column',
+        rowGap: '5px',
+        paddingLeft: '20px',
+    },
+    error: {
+        color: '#d13438',
+    },
+    section: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        rowGap: '10px',
+    },
+});
 
 interface PluginConnectorProps {
     name: string;
@@ -28,6 +59,7 @@ interface PluginConnectorProps {
     publisher: string;
     authRequirements: PluginAuthRequirements;
     apiProperties?: AdditionalApiProperties;
+    isHosted: boolean;
 }
 
 export const PluginConnector: React.FC<PluginConnectorProps> = ({
@@ -36,8 +68,13 @@ export const PluginConnector: React.FC<PluginConnectorProps> = ({
     publisher,
     authRequirements,
     apiProperties,
+    isHosted,
 }) => {
-    const classes = useDialogClasses();
+    const classes = useClasses();
+    const dispatch = useAppDispatch();
+    const { instance, inProgress } = useMsal();
+    const { setPluginStateAsync } = usePlugins();
+    const { selectedId } = useAppSelector((state: RootState) => state.conversations);
 
     const usernameRequired = !!authRequirements.username;
     const emailRequired = !!authRequirements.email;
@@ -54,9 +91,6 @@ export const PluginConnector: React.FC<PluginConnectorProps> = ({
 
     const [open, setOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | undefined>();
-
-    const dispatch = useAppDispatch();
-    const { instance, inProgress } = useMsal();
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -76,6 +110,14 @@ export const PluginConnector: React.FC<PluginConnectorProps> = ({
                 });
         } else if (oauthRequired) {
             // TODO: [Issue #44] implement OAuth Flow
+        } else if (isHosted) {
+            setPluginStateAsync(selectedId, name, true)
+                .then(() => {
+                    dispatch(addAlert({ message: `${name} enabled!`, type: AlertType.Success }));
+                })
+                .catch((error: Error) => {
+                    dispatch(addAlert({ message: error.message, type: AlertType.Error }));
+                });
         } else {
             // Basic Auth or PAT
             dispatch(
@@ -93,6 +135,9 @@ export const PluginConnector: React.FC<PluginConnectorProps> = ({
         setOpen(false);
     };
 
+    const inactive = msalRequired && !AuthHelper.isAuthAAD();
+    const inactiveReason = 'Only available when using Azure AD authorization.';
+
     return (
         <Dialog
             open={open}
@@ -103,7 +148,13 @@ export const PluginConnector: React.FC<PluginConnectorProps> = ({
             modalType="alert"
         >
             <DialogTrigger>
-                <Button data-testid="openPluginDialogButton" aria-label="Enable plugin" appearance="primary">
+                <Button
+                    data-testid="openPluginDialogButton"
+                    aria-label="Enable plugin"
+                    appearance="primary"
+                    disabled={inactive}
+                    title={inactive ? inactiveReason : ''}
+                >
                     Enable
                 </Button>
             </DialogTrigger>
@@ -126,7 +177,7 @@ export const PluginConnector: React.FC<PluginConnectorProps> = ({
                                     },
                                     initials: '', // Set to empty string so no initials are rendered behind image
                                 }}
-                                secondaryText={`${publisher} | Semantic Kernel Skills`}
+                                secondaryText={`${publisher} | Semantic Kernel`}
                             />
                         </DialogTitle>
                         <DialogContent className={classes.content}>

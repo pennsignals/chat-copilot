@@ -1,106 +1,124 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Deploy CopilotChat Azure resources.
+# Deploy Chat Copilot Azure resources.
 
 set -e
 
 usage() {
-    echo "Usage: $0 -d DEPLOYMENT_NAME -s SUBSCRIPTION -ai AI_SERVICE_TYPE -aikey AI_SERVICE_KEY [OPTIONS]"
+    echo "Usage: $0 -d DEPLOYMENT_NAME -s SUBSCRIPTION -c BACKEND_CLIENT_ID -fc FRONTEND_CLIENT_ID -t AZURE_AD_TENANT_ID -ai AI_SERVICE_TYPE [OPTIONS]"
     echo ""
     echo "Arguments:"
     echo "  -d, --deployment-name DEPLOYMENT_NAME      Name for the deployment (mandatory)"
     echo "  -s, --subscription SUBSCRIPTION            Subscription to which to make the deployment (mandatory)"
-    echo "  -wk, --web-api-key WEB_API_KEY             The API key for the backend web service"
-    echo "  -ai, --ai-service AI_SERVICE_TYPE          Type of AI service to use (i.e., OpenAI or AzureOpenAI)"
-    echo "  -aikey, --ai-service-key AI_SERVICE_KEY    API key for existing Azure OpenAI resource or OpenAI account"
+    echo "  -c, --client-id BACKEND_CLIENT_ID          Azure AD client ID for the Web API backend app registration (mandatory)"
+    echo "  -fc, --frontend-client-id FE_CLIENT_ID     Azure AD client ID for the frontend app registration (mandatory)"
+    echo "  -t, --tenant-id AZURE_AD_TENANT_ID         Azure AD tenant ID for authenticating users (mandatory)"
+    echo "  -ai, --ai-service AI_SERVICE_TYPE          Type of AI service to use (i.e., OpenAI or AzureOpenAI) (mandatory)"
     echo "  -aiend, --ai-endpoint AI_ENDPOINT          Endpoint for existing Azure OpenAI resource"
+    echo "  -aikey, --ai-service-key AI_SERVICE_KEY    API key for existing Azure OpenAI resource or OpenAI account"
     echo "  -rg, --resource-group RESOURCE_GROUP       Resource group to which to make the deployment (default: \"rg-\$DEPLOYMENT_NAME\")"
     echo "  -r, --region REGION                        Region to which to make the deployment (default: \"South Central US\")"
-    echo "  -wr, --web-app-region WEB_APP_REGION       Region to deploy to the static web app into. This must be a region that supports static web apps. (default: \"West US 2\")"
     echo "  -a, --app-service-sku WEB_APP_SVC_SKU      SKU for the Azure App Service plan (default: \"B1\")"
+    echo "  -i, --instance AZURE_AD_INSTANCE           Azure AD cloud instance for authenticating users"
+    echo "                                             (default: \"https://login.microsoftonline.com\")"
     echo "  -ms, --memory-store                        Method to use to persist embeddings. Valid values are"
-    echo "                                             \"AzureCognitiveSearch\" (default), \"Qdrant\" and \"Volatile\""
+    echo "                                             \"AzureCognitiveSearch\" (default) and \"Qdrant\""
     echo "  -nc, --no-cosmos-db                        Don't deploy Cosmos DB for chat storage - Use volatile memory instead"
     echo "  -ns, --no-speech-services                  Don't deploy Speech Services to enable speech as chat input"
+    echo "  -ws, --deploy-web-searcher-plugin          Deploy the web searcher plugin"
     echo "  -dd, --debug-deployment                    Switches on verbose template deployment output"
-    echo "  -ndp, --no-deploy-package                  Skips deploying the Web API package when set."
+    echo "  -ndp, --no-deploy-package                  Skips deploying binary packages to cloud when set."
 }
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
     key="$1"
     case $key in
-        -d|--deployment-name)
+    -d | --deployment-name)
         DEPLOYMENT_NAME="$2"
         shift
         shift
         ;;
-        -s|--subscription)
+    -s | --subscription)
         SUBSCRIPTION="$2"
         shift
         shift
         ;;
-        -wk|--web-api-key)
-        WEB_API_KEY="$2"
+    -c | --client-id)
+        BACKEND_CLIENT_ID="$2"
         shift
         shift
         ;;
-        -ai|--ai-service)
+    -fc | --frontend-client-id)
+        FRONTEND_CLIENT_ID="$2"
+        shift
+        shift
+        ;;
+    -t | --tenant-id)
+        AZURE_AD_TENANT_ID="$2"
+        shift
+        shift
+        ;;
+    -ai | --ai-service)
         AI_SERVICE_TYPE="$2"
         shift
         shift
         ;;
-        -aikey|--ai-service-key)
+    -aikey | --ai-service-key)
         AI_SERVICE_KEY="$2"
         shift
         shift
         ;;
-        -aiend|--ai-endpoint)
+    -aiend | --ai-endpoint)
         AI_ENDPOINT="$2"
         shift
         shift
         ;;
-        -rg|--resource-group)
+    -rg | --resource-group)
         RESOURCE_GROUP="$2"
         shift
         shift
         ;;
-        -r|--region)
+    -r | --region)
         REGION="$2"
         shift
         shift
         ;;
-        -wr|--web-app-region)
-        WEB_APP_REGION="$2"
-        shift
-        shift
-        ;;
-        -a|--app-service-sku)
+    -a | --app-service-sku)
         WEB_APP_SVC_SKU="$2"
         shift
         shift
         ;;
-        -ms|--memory-store)
+    -i | --instance)
+        AZURE_AD_INSTANCE="$2"
+        shift
+        shift
+        ;;
+    -ms | --memory-store)
         MEMORY_STORE=="$2"
         shift
         ;;
-        -nc|--no-cosmos-db)
+    -nc | --no-cosmos-db)
         NO_COSMOS_DB=true
         shift
         ;;
-        -ns|--no-speech-services)
+    -ns | --no-speech-services)
         NO_SPEECH_SERVICES=true
         shift
         ;;
-        -dd|--debug-deployment)
+    -ws | --deploy-web-searcher-plugin)
+        DEPLOY_WEB_SEARCHER_PLUGIN=true
+        shift
+        ;;
+    -dd | --debug-deployment)
         DEBUG_DEPLOYMENT=true
         shift
         ;;
-        -ndp|--no-deploy-package)
+    -ndp | --no-deploy-package)
         NO_DEPLOY_PACKAGE=true
         shift
         ;;
-        *)
+    *)
         echo "Unknown option $1"
         usage
         exit 1
@@ -109,14 +127,9 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Check mandatory arguments
-if [[ -z "$DEPLOYMENT_NAME" ]] || [[ -z "$SUBSCRIPTION" ]] || [[ -z "$AI_SERVICE_TYPE" ]]; then
+if [[ -z "$DEPLOYMENT_NAME" ]] || [[ -z "$SUBSCRIPTION" ]] || [[ -z "$BACKEND_CLIENT_ID" ]] || [[ -z "$FRONTEND_CLIENT_ID" ]] || [[ -z "$AZURE_AD_TENANT_ID" ]] || [[ -z "$AI_SERVICE_TYPE" ]]; then
     usage
     exit 1
-fi
-
-# Check if WEB_API_KEY is provided or not
-if [[ -z "$WEB_API_KEY" ]]; then
-    WEB_API_KEY=$(uuidgen -r)
 fi
 
 # Check if AI_SERVICE_TYPE is either OpenAI or AzureOpenAI
@@ -170,30 +183,35 @@ az account set -s "$SUBSCRIPTION"
 # Set defaults
 : "${REGION:="southcentralus"}"
 : "${WEB_APP_SVC_SKU:="B1"}"
-: "${WEB_APP_REGION:="westus2"}"
+: "${AZURE_AD_INSTANCE:="https://login.microsoftonline.com"}"
 : "${MEMORY_STORE:="AzureCognitiveSearch"}"
 : "${NO_COSMOS_DB:=false}"
 : "${NO_SPEECH_SERVICES:=false}"
+: "${DEPLOY_WEB_SEARCHER_PLUGIN:=false}"
 
 # Create JSON config
-JSON_CONFIG=$(cat << EOF
+JSON_CONFIG=$(
+    cat <<EOF
 {
-    "webApiKey": { "value" : "$WEB_API_KEY" },
     "webAppServiceSku": { "value": "$WEB_APP_SVC_SKU" },
-    "webappLocation": { "value": "$WEB_APP_REGION" },
     "aiService": { "value": "$AI_SERVICE_TYPE" },
     "aiApiKey": { "value": "$AI_SERVICE_KEY" },
-    "deployWebApiPackage": { "value": $([ "$NO_DEPLOY_PACKAGE" = true ] && echo "false" || echo "true") },
+    "deployPackages": { "value": $([ "$NO_DEPLOY_PACKAGE" = true ] && echo "false" || echo "true") },
     "aiEndpoint": { "value": "$([ ! -z "$AI_ENDPOINT" ] && echo "$AI_ENDPOINT")" },
+    "azureAdInstance": { "value": "$AZURE_AD_INSTANCE" },
+    "azureAdTenantId": { "value": "$AZURE_AD_TENANT_ID" },
+    "webApiClientId": { "value": "$BACKEND_CLIENT_ID" },
+    "frontendClientId": { "value": "$FRONTEND_CLIENT_ID" },
     "deployNewAzureOpenAI": { "value": $([ "$NO_NEW_AZURE_OPENAI" = true ] && echo "false" || echo "true") },
     "memoryStore": { "value": "$MEMORY_STORE" },
     "deployCosmosDB": { "value": $([ "$NO_COSMOS_DB" = true ] && echo "false" || echo "true") },
-    "deploySpeechServices": { "value": $([ "$NO_SPEECH_SERVICES" = true ] && echo "false" || echo "true") }
+    "deploySpeechServices": { "value": $([ "$NO_SPEECH_SERVICES" = true ] && echo "false" || echo "true") },
+    "deployWebSearcherPlugin": { "value": $([ "$DEPLOY_WEB_SEARCHER_PLUGIN" = true ] && echo "true" || echo "false") }
 }
 EOF
 )
 
-echo "Ensuring resource group $RESOURCE_GROUP..."
+echo "Ensuring resource group $RESOURCE_GROUP exists..."
 az group create --location "$REGION" --name "$RESOURCE_GROUP" --tags Creator="$USER"
 
 echo "Validating template file..."

@@ -10,6 +10,7 @@ import { addAlert } from '../../../redux/features/app/appSlice';
 import { editConversationTitle } from '../../../redux/features/conversations/conversationsSlice';
 import { Breakpoints } from '../../../styles';
 import { Checkmark20, Dismiss20 } from '../../shared/BundledIcons';
+import { getErrorDetails } from '../../utils/TextUtils';
 
 const useClasses = makeStyles({
     root: {
@@ -67,9 +68,7 @@ export const EditChatName: React.FC<IEditChatNameProps> = ({ name, chatId, exitE
 
     const handleSave = () => {
         onSaveTitleChange().catch((e: any) => {
-            const errorMessage = `Unable to retrieve chat to change title. Details: ${
-                e instanceof Error ? e.message : String(e)
-            }`;
+            const errorMessage = `Unable to retrieve chat to change title. Details: ${getErrorDetails(e)}`;
             dispatch(addAlert({ message: errorMessage, type: AlertType.Error }));
         });
     };
@@ -79,6 +78,7 @@ export const EditChatName: React.FC<IEditChatNameProps> = ({ name, chatId, exitE
             handleSave();
         }
     };
+
     return (
         <div
             className={classes.root}
@@ -87,8 +87,10 @@ export const EditChatName: React.FC<IEditChatNameProps> = ({ name, chatId, exitE
                 flexDirection: `${textButtons ? 'column' : 'row'}`,
                 gap: `${textButtons ? tokens.spacingVerticalS : tokens.spacingVerticalNone}`,
             }}
+            title={'Edit chat name'}
+            aria-label={`Edit chat name for "${name}"`}
         >
-            <Input value={title} onChange={onTitleChange} id={title} onKeyDown={handleKeyDown} />
+            <Input value={title} onChange={onTitleChange} id={`input-${chatId}`} onKeyDown={handleKeyDown} autoFocus />
             {textButtons && (
                 <div className={mergeClasses(classes.buttons, classes.textButtons)}>
                     <Button appearance="secondary" onClick={onClose}>

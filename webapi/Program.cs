@@ -1,8 +1,14 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using CopilotChat.WebApi.Extensions;
+using CopilotChat.WebApi.Hubs;
+using CopilotChat.WebApi.Services;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using Microsoft.AspNetCore.Builder;
@@ -12,14 +18,11 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using CopilotChat.WebApi.Extensions;
-using CopilotChat.WebApi.Hubs;
-using CopilotChat.WebApi.Services;
 
 namespace CopilotChat.WebApi;
 
 /// <summary>
-/// Copilot Chat Service
+/// Chat Copilot Service
 /// </summary>
 public sealed class Program
 {
@@ -40,10 +43,18 @@ public sealed class Program
         builder.Services
             .AddSingleton<ILogger>(sp => sp.GetRequiredService<ILogger<Program>>()) // some services require an un-templated ILogger
             .AddOptions(builder.Configuration)
-            .AddPlannerServices()
             .AddPersistentChatStore()
-            .AddPersistentOcrSupport()
-            .AddSemanticKernelServices();
+            .AddPlugins(builder.Configuration)
+            .AddUtilities()
+            .AddChatCopilotAuthentication(builder.Configuration)
+            .AddChatCopilotAuthorization();
+
+        // Configure and add semantic services
+        builder
+            .AddBotConfig()
+            .AddSemanticKernelServices()
+            .AddPlannerServices()
+            .AddSemanticMemoryServices();
 
         // Add SignalR as the real time relay service
         builder.Services.AddSignalR();
@@ -56,28 +67,42 @@ public sealed class Program
             .AddLogging(logBuilder => logBuilder.AddApplicationInsights())
             .AddSingleton<ITelemetryService, AppInsightsTelemetryService>();
 
-#if DEBUG
-        TelemetryDebugWriter.IsTracingDisabled = false;
-#endif
+        TelemetryDebugWriter.IsTracingDisabled = Debugger.IsAttached;
+
+        // Add named HTTP clients for IHttpClientFactory
+        builder.Services.AddHttpClient();
+        builder.Services.AddHttpClient("Plugin", httpClient =>
+        {
+            int timeout = int.Parse(builder.Configuration["Planner:PluginTimeoutLimitInS"] ?? "100", CultureInfo.InvariantCulture);
+            httpClient.Timeout = TimeSpan.FromSeconds(timeout);
+        });
 
         // Add in the rest of the services.
         builder.Services
-            .AddAuthorization(builder.Configuration)
+            .AddMaintenanceServices()
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
-            .AddCorsPolicy()
-            .AddControllers();
+            .AddCorsPolicy(builder.Configuration)
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            });
         builder.Services.AddHealthChecks();
 
         // Configure middleware and endpoints
         WebApplication app = builder.Build();
+        app.UseDefaultFiles();
+        app.UseStaticFiles();
         app.UseCors();
         app.UseAuthentication();
         app.UseAuthorization();
-        app.MapControllers();
+        app.UseMiddleware<MaintenanceMiddleware>();
+        app.MapControllers()
+            .RequireAuthorization();
         app.MapHealthChecks("/healthz");
 
-        // Add CopilotChat hub for real time communication
+        // Add Chat Copilot hub for real time communication
         app.MapHub<MessageRelayHub>("/messageRelayHub");
 
         // Enable Swagger for development environments.
@@ -85,6 +110,13 @@ public sealed class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            // Redirect root URL to Swagger UI URL
+            app.MapWhen(
+                context => context.Request.Path == "/",
+                appBuilder =>
+                    appBuilder.Run(
+                        async context => await Task.Run(() => context.Response.Redirect("/swagger"))));
         }
 
         // Start the service

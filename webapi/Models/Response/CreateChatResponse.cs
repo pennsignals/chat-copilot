@@ -6,7 +6,7 @@ using CopilotChat.WebApi.Models.Storage;
 namespace CopilotChat.WebApi.Models.Response;
 
 /// <summary>
-/// Response object definition to the 'chatSession/create' request.
+/// Response object definition to the 'chats' POST request.
 /// This groups the initial bot message with the chat session
 /// to avoid making two requests.
 /// </summary>
@@ -22,9 +22,9 @@ public class CreateChatResponse
     /// Initial bot message.
     /// </summary>
     [JsonPropertyName("initialBotMessage")]
-    public ChatMessage InitialBotMessage { get; set; }
+    public CopilotChatMessage InitialBotMessage { get; set; }
 
-    public CreateChatResponse(ChatSession chatSession, ChatMessage initialBotMessage)
+    public CreateChatResponse(ChatSession chatSession, CopilotChatMessage initialBotMessage)
     {
         this.ChatSession = chatSession;
         this.InitialBotMessage = initialBotMessage;

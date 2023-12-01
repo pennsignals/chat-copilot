@@ -12,7 +12,7 @@ export const pluginsState = createSlice({
             let authData = action.payload.accessToken;
 
             switch (action.payload.plugin) {
-                case BuiltInPlugins.Jira:
+                case BuiltInPlugins.Jira.valueOf():
                     authData = `${action.payload.email as string}:${action.payload.accessToken as string}`;
                     break;
                 default:
@@ -39,7 +39,7 @@ export const pluginsState = createSlice({
         },
         addPlugin: (state: PluginsState, action: PayloadAction<Plugin>) => {
             const newId = action.payload.name;
-            state.plugins = { ...state.plugins, [newId]: action.payload };
+            state.plugins = { [newId]: action.payload, ...state.plugins };
         },
     },
 });

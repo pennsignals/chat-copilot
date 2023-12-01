@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System.Text.Json.Serialization;
+using ChatCompletionContextMessages = Microsoft.SemanticKernel.AI.ChatCompletion.ChatHistory;
 
 namespace CopilotChat.WebApi.Models.Response;
 
@@ -34,49 +35,40 @@ public class BotResponsePrompt
     public string PastMemories { get; set; } = string.Empty;
 
     /// <summary>
-    /// Relevant additional knowledge extracted using a planner.
-    /// </summary>
-    [JsonPropertyName("externalInformation")]
-    public string ExternalInformation { get; set; } = string.Empty;
-
-    /// <summary>
     /// Most recent messages from chat history.
     /// </summary>
     [JsonPropertyName("chatHistory")]
     public string ChatHistory { get; set; } = string.Empty;
 
     /// <summary>
-    /// Preamble to the LLM's response.
+    /// Relevant additional knowledge extracted using a planner.
     /// </summary>
-    [JsonPropertyName("systemChatContinuation")]
-    public string SystemChatContinuation { get; set; } = string.Empty;
+    [JsonPropertyName("externalInformation")]
+    public SemanticDependency<PlanExecutionMetadata> ExternalInformation { get; set; }
 
     /// <summary>
-    /// Raw content of the prompt. Used to pass rendered prompt around ChatSkill.
+    /// The collection of context messages associated with this chat completions request.
+    /// See https://learn.microsoft.com/en-us/dotnet/api/azure.ai.openai.chatcompletionsoptions.messages?view=azure-dotnet-preview#azure-ai-openai-chatcompletionsoptions-messages.
     /// </summary>
-    [JsonIgnore]
-    public string RawContent { get; set; } = string.Empty;
+    [JsonPropertyName("metaPromptTemplate")]
+    public ChatCompletionContextMessages MetaPromptTemplate { get; set; } = new();
 
     public BotResponsePrompt(
-        string rawContent,
-        string systemDescription,
-        string systemResponse,
+        string systemInstructions,
         string audience,
         string userIntent,
         string chatMemories,
-        string documentMemories,
-        string externalInformation,
+        SemanticDependency<PlanExecutionMetadata> externalInformation,
         string chatHistory,
-        string systemChatContinuation
-        )
+        ChatCompletionContextMessages metaPromptTemplate
+    )
     {
-        this.RawContent = rawContent;
-        this.SystemPersona = string.Join("\n", systemDescription, systemResponse);
+        this.SystemPersona = systemInstructions;
         this.Audience = audience;
         this.UserIntent = userIntent;
-        this.PastMemories = string.Join("\n", chatMemories, documentMemories).Trim();
-        this.ExternalInformation = externalInformation;
+        this.PastMemories = chatMemories;
         this.ChatHistory = chatHistory;
-        this.SystemChatContinuation = systemChatContinuation;
+        this.ExternalInformation = externalInformation;
+        this.MetaPromptTemplate = metaPromptTemplate;
     }
 }

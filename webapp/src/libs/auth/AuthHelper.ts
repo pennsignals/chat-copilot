@@ -9,13 +9,27 @@ import {
 } from '@azure/msal-browser';
 import debug from 'debug';
 import { Constants } from '../../Constants';
+import { store } from '../../redux/app/store';
 import { TokenHelper } from './TokenHelper';
 
 const log = debug(Constants.debug.root).extend('authHelper');
 
-const msalConfig: Configuration = {
+export const enum AuthType {
+    None = 'None',
+    AAD = 'AzureAd',
+}
+
+export interface AuthConfig {
+    authType: AuthType;
+    aadAuthority: string;
+    aadClientId: string;
+    aadApiScope: string;
+}
+
+const getMsalConfig = (authConfig: AuthConfig): Configuration => ({
     auth: {
-        ...Constants.msal.auth,
+        clientId: authConfig.aadClientId,
+        authority: authConfig.aadAuthority,
         redirectUri: window.origin,
     },
     cache: Constants.msal.cache,
@@ -47,6 +61,11 @@ const msalConfig: Configuration = {
         iframeHashTimeout: 9000, // Applies just to silent calls - In milliseconds
         loadFrameTimeout: 9000, // Applies to both silent and popup calls - In milliseconds
     },
+});
+
+const getMsalScopes = () => {
+    const aadApiScope = getAuthConfig()?.aadApiScope;
+    return Constants.msal.semanticKernelScopes.concat(aadApiScope ?? []);
 };
 
 const logoutRequest: EndSessionRequest = {
@@ -56,19 +75,19 @@ const logoutRequest: EndSessionRequest = {
 const ssoSilentRequest = async (msalInstance: IPublicClientApplication) => {
     await msalInstance.ssoSilent({
         account: msalInstance.getActiveAccount() ?? undefined,
-        scopes: Constants.msal.semanticKernelScopes,
+        scopes: getMsalScopes(),
     });
 };
 
 const loginAsync = async (instance: IPublicClientApplication) => {
     if (Constants.msal.method === 'redirect') {
         await instance.loginRedirect({
-            scopes: Constants.msal.semanticKernelScopes,
+            scopes: getMsalScopes(),
             extraScopesToConsent: Constants.msal.msGraphAppScopes,
         });
     } else {
         await instance.loginPopup({
-            scopes: Constants.msal.semanticKernelScopes,
+            scopes: getMsalScopes(),
             extraScopesToConsent: Constants.msal.msGraphAppScopes,
         });
     }
@@ -83,17 +102,23 @@ const logoutAsync = (instance: IPublicClientApplication) => {
     }
 };
 
+const getAuthConfig = () => store.getState().app.authConfig;
+const isAuthAAD = () => getAuthConfig()?.authType === AuthType.AAD;
+
 // SKaaS = Semantic Kernel as a Service
 // Gets token with scopes to authorize SKaaS specifically
 const getSKaaSAccessToken = async (instance: IPublicClientApplication, inProgress: InteractionStatus) => {
-    return await TokenHelper.getAccessTokenUsingMsal(inProgress, instance, Constants.msal.semanticKernelScopes);
+    return isAuthAAD() ? await TokenHelper.getAccessTokenUsingMsal(inProgress, instance, getMsalScopes()) : '';
 };
 
 export const AuthHelper = {
     getSKaaSAccessToken,
-    msalConfig,
+    getMsalConfig,
+    getMsalScopes,
     logoutRequest,
     ssoSilentRequest,
     loginAsync,
     logoutAsync,
+    isAuthAAD,
+    getAuthConfig,
 };

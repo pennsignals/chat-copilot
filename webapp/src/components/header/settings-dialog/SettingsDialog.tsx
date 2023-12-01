@@ -56,7 +56,7 @@ interface ISettingsDialogProps {
 export const SettingsDialog: React.FC<ISettingsDialogProps> = ({ open, closeDialog }) => {
     const classes = useClasses();
     const dialogClasses = useDialogClasses();
-    const { settings, tokenUsage } = useAppSelector((state: RootState) => state.app);
+    const { serviceInfo, settings, tokenUsage } = useAppSelector((state: RootState) => state.app);
 
     return (
         <Dialog
@@ -81,7 +81,7 @@ export const SettingsDialog: React.FC<ISettingsDialogProps> = ({ open, closeDial
                             </AccordionItem>
                             <Divider />
                             <AccordionItem value="advanced">
-                                <AccordionHeader expandIconPosition="end">
+                                <AccordionHeader expandIconPosition="end" data-testid="advancedSettingsFoldup">
                                     <h3>Advanced</h3>
                                 </AccordionHeader>
                                 <AccordionPanel>
@@ -93,6 +93,22 @@ export const SettingsDialog: React.FC<ISettingsDialogProps> = ({ open, closeDial
                                     })}
                                 </AccordionPanel>
                             </AccordionItem>
+                            <Divider />
+                            <AccordionItem value="about">
+                                <AccordionHeader expandIconPosition="end">
+                                    <h3>About</h3>
+                                </AccordionHeader>
+                                <AccordionPanel>
+                                    <Body1 color={tokens.colorNeutralForeground3}>
+                                        Backend version: {serviceInfo.version}
+                                        <br />
+                                        Frontend version: {process.env.REACT_APP_SK_VERSION ?? '-'}
+                                        <br />
+                                        {process.env.REACT_APP_SK_BUILD_INFO}
+                                    </Body1>
+                                </AccordionPanel>
+                            </AccordionItem>
+                            <Divider />
                         </Accordion>
                     </DialogContent>
                 </DialogBody>
@@ -104,7 +120,9 @@ export const SettingsDialog: React.FC<ISettingsDialogProps> = ({ open, closeDial
                         </a>
                     </Label>
                     <DialogTrigger disableButtonEnhancement>
-                        <Button appearance="secondary">Close</Button>
+                        <Button appearance="secondary" data-testid="userSettingsCloseButton">
+                            Close
+                        </Button>
                     </DialogTrigger>
                 </DialogActions>
             </DialogSurface>
