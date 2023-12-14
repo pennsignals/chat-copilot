@@ -34,8 +34,14 @@ param aiService string = 'AzureOpenAI'
 @description('Model to use for chat completions')
 param completionModel string = 'gpt-35-turbo'
 
+@description('Model version for chat completion')
+param completionModelVersion string = '0613'
+
 @description('Model to use for text embeddings')
 param embeddingModel string = 'text-embedding-ada-002'
+
+@description('Model version for text embeddings')
+param embeddingModelVersion string = '2'
 
 @description('Completion model the task planner should use')
 param plannerModel string = 'gpt-35-turbo'
@@ -116,6 +122,7 @@ resource openAI_completionModel 'Microsoft.CognitiveServices/accounts/deployment
     model: {
       format: 'OpenAI'
       name: completionModel
+      version: completionModelVersion
     }
   }
 }
@@ -131,6 +138,7 @@ resource openAI_embeddingModel 'Microsoft.CognitiveServices/accounts/deployments
     model: {
       format: 'OpenAI'
       name: embeddingModel
+      version: embeddingModelVersion
     }
   }
   dependsOn: [// This "dependency" is to create models sequentially because the resource
