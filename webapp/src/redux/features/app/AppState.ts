@@ -70,6 +70,7 @@ export enum FeatureKeys {
     BotAsDocs,
     MultiUserChat,
     RLHF, // Reinforcement Learning from Human Feedback
+    DeleteChats,
 }
 
 export const Features = {
@@ -111,6 +112,13 @@ export const Features = {
         description: 'Enable users to vote on model-generated responses. For demonstration purposes only.',
         // TODO: [Issue #42] Send and store feedback in backend
     },
+    [FeatureKeys.DeleteChats]: {
+        enabled: true,
+        label: 'Delete Chat Sessions',
+        // TODO: [sk Issue #1642] Implement delete chats
+        //inactive: true,
+        inactive: false,
+    },
 };
 
 export const Settings = [
@@ -138,7 +146,13 @@ export const Settings = [
 ];
 
 export const initialState: AppState = {
-    alerts: [],
+    // alerts: [],
+    alerts: [
+        {
+            message: 'Use Penn AI Chat to protect sensitive data, and allow chat history collection for service improvements. This tool is for internal use only.',
+            type: AlertType.Info,
+        },
+    ],
     activeUserInfo: DefaultActiveUserInfo,
     authConfig: {} as AuthConfig,
     tokenUsage: {},

@@ -75,6 +75,7 @@ export class ChatService extends BaseService {
     public editChatAsync = async (
         chatId: string,
         title: string,
+        deleted: boolean,
         systemDescription: string,
         memoryBalance: number,
         accessToken: string,
@@ -82,6 +83,7 @@ export class ChatService extends BaseService {
         const body: IChatSession = {
             id: chatId,
             title,
+            deleted,
             systemDescription,
             memoryBalance,
             enabledPlugins: [], // edit will not modify the enabled plugins
