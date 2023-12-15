@@ -2,10 +2,11 @@
 set -euxo pipefail
 
 set +x
-source staging.env set
+source development.env set
 set -x
 
-bash ./deploy-webapi.sh \
+bash ./package-plugins.sh
+bash ./deploy-plugins.sh \
   --subscription "${SUBSCRIPTION_ID}" \
   --resource-group "${RESOURCE_GROUP}" \
   --deployment-name "${DEPLOYMENT_NAME}"

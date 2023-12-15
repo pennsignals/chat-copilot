@@ -63,7 +63,7 @@ public class ChatSession : IStorageEntity
     public string Partition => this.Id;
 
     /// <summary>
-    /// DateTime (utc) of deletion if deleted.
+    /// Marked as deleted.
     /// </summary>
     public bool Deleted { get; internal set; } = false;
 
