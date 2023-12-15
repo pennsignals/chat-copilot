@@ -5,7 +5,7 @@ set +x
 source production.env set
 set -x
 
-./deploy-webapi.sh \
+bash ./deploy-webapi.sh \
   --subscription "${SUBSCRIPTION_ID}" \
   --resource-group "${RESOURCE_GROUP}" \
   --deployment-name "${DEPLOYMENT_NAME}"

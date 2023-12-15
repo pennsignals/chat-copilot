@@ -5,7 +5,7 @@ set +x
 source development.env set
 set -x
 
-./deploy-azure.sh \
+bash ./deploy-azure.sh \
   --deployment-name "${DEPLOYMENT_NAME}" \
   --resource-group "${RESOURCE_GROUP}" \
   --region "${REGION}" \
