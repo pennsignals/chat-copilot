@@ -11,6 +11,7 @@ import {
 } from '@fluentui/react-components';
 
 export const semanticKernelBrandRamp: BrandVariants = {
+/*
     10: '#060103',
     20: '#261018',
     30: '#431426',
@@ -26,7 +27,23 @@ export const semanticKernelBrandRamp: BrandVariants = {
     130: '#D898A8',
     140: '#E0AAB7',
     150: '#E8BCC6',
-    160: '#EFCFD6',
+    160: '#EFCFD6', */
+    10: "#060103",
+    20: "#261018",
+    30: "#084D8E",
+    40: "#084D8E",
+    50: "#084D8E",
+    60: "#084D8E",
+    70: "#084D8E",
+    80: "#084D8E",
+    90: "#084D8E",
+    100: "#084D8E",
+    110: "#084D8E",
+    120: "#2596be",
+    130: "#2596be",
+    140: "#2596be",
+    150: "#2596be",
+    160: "#2596be"
 };
 
 export const semanticKernelLightTheme: Theme & { colorMeBackground: string } = {
