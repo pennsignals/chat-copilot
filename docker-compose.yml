@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  deploy-azure:
+    build:
+      target: deploy-azure
+
+  deploy-webapi:
+    build:
+      target: deploy-webapi

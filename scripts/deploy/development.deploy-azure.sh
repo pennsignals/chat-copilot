@@ -2,9 +2,10 @@
 set -euxo pipefail
 
 set +x
-source development.env set
+source .development.env set
 set -x
 
+az login --use-device-code
 bash ./deploy-azure.sh \
   --deployment-name "${DEPLOYMENT_NAME}" \
   --resource-group "${RESOURCE_GROUP}" \
