@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 set +x
-source ../../envs/development.env set
+source ../../envs/ds.env set
 set -x
 
 az login --use-device-code
