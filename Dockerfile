@@ -13,7 +13,7 @@ COPY . .
 WORKDIR /tmp/scripts/deploy
 
 FROM src as deploy-azure
-CMD ./development.deploy-azure.sh
+CMD ./env.deploy-azure.sh
 
 FROM src as deploy-webapi
-CMD ./development.deploy-webapi.sh
+CMD ./env.deploy-webapi.sh
