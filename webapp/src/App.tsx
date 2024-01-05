@@ -6,7 +6,7 @@ import { FluentProvider, Subtitle1, makeStyles, shorthands, tokens } from '@flue
 import * as React from 'react';
 import { useEffect } from 'react';
 import { UserSettingsMenu } from './components/header/UserSettingsMenu';
-import { PluginGallery } from './components/open-api-plugins/PluginGallery';
+// import { PluginGallery } from './components/open-api-plugins/PluginGallery';
 import { BackendProbe, ChatView, Error, Loading, Login } from './components/views';
 import { AuthHelper } from './libs/auth/AuthHelper';
 import { useChat, useFile } from './libs/hooks';
@@ -16,6 +16,9 @@ import { RootState } from './redux/app/store';
 import { FeatureKeys } from './redux/features/app/AppState';
 import { addAlert, setActiveUserInfo, setServiceInfo } from './redux/features/app/appSlice';
 import { semanticKernelDarkTheme, semanticKernelLightTheme } from './styles';
+import PennLogo from './assets/PennDNA.png';
+// import { FeedbackAddIn24 } from './components/shared/BundledIcons';
+import { FeedbackLink } from './components/chat/FeedbackLink';
 
 export const useClasses = makeStyles({
     container: {
@@ -27,7 +30,8 @@ export const useClasses = makeStyles({
     },
     header: {
         alignItems: 'center',
-        backgroundColor: tokens.colorBrandForeground2,
+        // backgroundColor: tokens.colorBrandForeground2,
+        backgroundColor: tokens.colorNeutralForegroundOnBrand,
         color: tokens.colorNeutralForegroundOnBrand,
         display: 'flex',
         '& h1': {
@@ -37,6 +41,12 @@ export const useClasses = makeStyles({
         height: '48px',
         justifyContent: 'space-between',
         width: '100%',
+    },
+    logo: {
+        backgroundImage: `url(${PennLogo})`,
+        backgroundRepeat: 'no-repeat',
+        width: '430px',
+        height: '50px'
     },
     persona: {
         marginRight: tokens.spacingHorizontalXXL,
@@ -142,7 +152,7 @@ const App = () => {
                     <UnauthenticatedTemplate>
                         <div className={classes.container}>
                             <div className={classes.header}>
-                                <Subtitle1 as="h1">Chat Copilot</Subtitle1>
+                            <Subtitle1 as="h1" className={classes.logo}></Subtitle1>   
                             </div>
                             {appState === AppState.SigningOut && <Loading text="Signing you out..." />}
                             {appState !== AppState.SigningOut && <Login />}
@@ -178,16 +188,17 @@ const Chat = ({
     return (
         <div className={classes.container}>
             <div className={classes.header}>
-                <Subtitle1 as="h1">Chat Copilot</Subtitle1>
+                <Subtitle1 as="h1" className={classes.logo}></Subtitle1>
                 {appState > AppState.SettingUserInfo && (
                     <div className={classes.cornerItems}>
                         <div className={classes.cornerItems}>
-                            <PluginGallery />
+                            {/*<PluginGallery />*/}
                             <UserSettingsMenu
                                 setLoadingState={() => {
                                     setAppState(AppState.SigningOut);
                                 }}
                             />
+                            <FeedbackLink />
                         </div>
                     </div>
                 )}

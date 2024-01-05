@@ -5,5 +5,6 @@ set +x
 source ../../envs/development.env set
 set -x
 
+source ./package-memorypipeline.sh
 az login --use-device-code
-source ./env.deploy-azure.sh
+source ./env.deploy-memorypipline.sh

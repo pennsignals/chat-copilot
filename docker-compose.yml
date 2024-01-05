@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  ds-azure:
+    build:
+      target: deploy-azure
+    env_file:
+      ./envs/ds.env
+
+  ds-webapi:
+    build:
+      target: deploy-webapi
+    env_file:
+      ./envs/ds.env
+
+
+  development-azure:
+    build:
+      target: deploy-azure
+    env_file:
+      ./envs/development.env
+
+  development-webapi:
+    build:
+      target: deploy-webapi
+    env_file:
+      ./envs/development.env
+
+
+  staging-azure:
+    build:
+      target: deploy-azure
+    env_file:
+      ./envs/staging.env
+
+  staging-webapi:
+    build:
+      target: deploy-webapi
+    env_file:
+      ./envs/staging.env
+
+

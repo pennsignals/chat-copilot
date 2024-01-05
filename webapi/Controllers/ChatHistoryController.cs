@@ -282,6 +282,7 @@ public class ChatHistoryController : ControllerBase
         }
 
         // Delete any resources associated with the chat session.
+        /*
         try
         {
             await this.DeleteChatResourcesAsync(chatIdString, cancellationToken);
@@ -293,6 +294,9 @@ public class ChatHistoryController : ControllerBase
 
         // Delete chat session and broadcast update to all participants.
         await this._sessionRepository.DeleteAsync(chatToDelete);
+        */
+        chatToDelete.Deleted=true;
+        await this._sessionRepository.UpsertAsync(chatToDelete);
         await messageRelayHubContext.Clients.Group(chatIdString).SendAsync(ChatDeletedClientCall, chatIdString, this._authInfo.UserId, cancellationToken: cancellationToken);
 
         return this.NoContent();

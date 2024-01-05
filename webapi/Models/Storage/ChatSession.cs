@@ -63,6 +63,11 @@ public class ChatSession : IStorageEntity
     public string Partition => this.Id;
 
     /// <summary>
+    /// Marked as deleted.
+    /// </summary>
+    public bool Deleted { get; internal set; } = false;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="ChatSession"/> class.
     /// </summary>
     /// <param name="title">The title of the chat.</param>

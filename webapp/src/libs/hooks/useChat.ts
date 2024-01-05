@@ -28,11 +28,14 @@ import { ChatArchiveService } from '../services/ChatArchiveService';
 import { ChatService } from '../services/ChatService';
 import { DocumentImportService } from '../services/DocumentImportService';
 
+/*
 import botIcon1 from '../../assets/bot-icons/bot-icon-1.png';
 import botIcon2 from '../../assets/bot-icons/bot-icon-2.png';
 import botIcon3 from '../../assets/bot-icons/bot-icon-3.png';
 import botIcon4 from '../../assets/bot-icons/bot-icon-4.png';
 import botIcon5 from '../../assets/bot-icons/bot-icon-5.png';
+*/
+
 import { getErrorDetails } from '../../components/utils/TextUtils';
 import { FeatureKeys } from '../../redux/features/app/AppState';
 import { PlanState } from '../models/Plan';
@@ -56,7 +59,7 @@ export const useChat = () => {
     const chatService = new ChatService();
     const documentImportService = new DocumentImportService();
 
-    const botProfilePictures: string[] = [botIcon1, botIcon2, botIcon3, botIcon4, botIcon5];
+    // const botProfilePictures: string[] = [botIcon1, botIcon2, botIcon3, botIcon4, botIcon5];
 
     const userId = activeUserInfo?.id ?? '';
     const fullName = activeUserInfo?.username ?? '';
@@ -78,7 +81,8 @@ export const useChat = () => {
     };
 
     const createChat = async () => {
-        const chatTitle = `Copilot @ ${new Date().toLocaleString()}`;
+        // const chatTitle = `Copilot @ ${new Date().toLocaleString()}`;
+        const chatTitle = `Penn AI Chat @ ${new Date().toLocaleString()}`;
         try {
             await chatService
                 .createChatAsync(chatTitle, await AuthHelper.getSKaaSAccessToken(instance, inProgress))
@@ -172,7 +176,8 @@ export const useChat = () => {
     const loadChats = async () => {
         try {
             const accessToken = await AuthHelper.getSKaaSAccessToken(instance, inProgress);
-            const chatSessions = await chatService.getAllChatsAsync(accessToken);
+            const allChatSessions = await chatService.getAllChatsAsync(accessToken);
+            const chatSessions = allChatSessions.filter((c) => !c.deleted);
 
             if (chatSessions.length > 0) {
                 const loadedConversations: Conversations = {};
@@ -261,8 +266,9 @@ export const useChat = () => {
         }
     };
 
-    const getBotProfilePicture = (index: number): string => {
-        return botProfilePictures[index % botProfilePictures.length];
+    const getBotProfilePicture = (_index: number): string => {
+        // return botProfilePictures[index % botProfilePictures.length];
+        return "";
     };
 
     const getChatMemorySources = async (chatId: string) => {
@@ -369,12 +375,13 @@ export const useChat = () => {
         return { success: true, message: '' };
     };
 
-    const editChat = async (chatId: string, title: string, syetemDescription: string, memoryBalance: number) => {
+    const editChat = async (chatId: string, title: string, systemDescription: string, memoryBalance: number) => {
         try {
             await chatService.editChatAsync(
                 chatId,
                 title,
-                syetemDescription,
+                false,
+                systemDescription,
                 memoryBalance,
                 await AuthHelper.getSKaaSAccessToken(instance, inProgress),
             );
