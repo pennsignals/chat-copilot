@@ -1,10 +1,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 as base
 RUN \
     apt-get update \
-    && apt-get install -y curl jq zip \
+    && apt-get install -y curl jq zip azure-cli \
     && apt-get remove cmdtest yarn \
     && curl -sL https://deb.nodesource.com/setup_20.x | bash - && apt-get install -yq nodejs build-essential \
-    && curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
     && npm install -g yarn
 
 FROM base as src
