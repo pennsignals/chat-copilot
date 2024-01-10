@@ -39,4 +39,16 @@ services:
     env_file:
       ./envs/staging.env
 
+  production-azure:
+    build:
+      target: deploy-azure
+    env_file:
+      ./envs/production.env
+
+  production-webapi:
+    build:
+      target: deploy-webapi
+    env_file:
+      ./envs/production.env
+
 
