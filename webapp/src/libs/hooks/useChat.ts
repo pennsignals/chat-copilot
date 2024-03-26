@@ -45,7 +45,7 @@ export interface GetResponseOptions {
     messageType: ChatMessageType;
     value: string;
     chatId: string;
-    contextVariables?: IAskVariables[];
+    kernelArguments?: IAskVariables[];
     processPlan?: boolean;
 }
 
@@ -112,7 +112,7 @@ export const useChat = () => {
         }
     };
 
-    const getResponse = async ({ messageType, value, chatId, contextVariables, processPlan }: GetResponseOptions) => {
+    const getResponse = async ({ messageType, value, chatId, kernelArguments, processPlan }: GetResponseOptions) => {
         const chatInput: IChatMessage = {
             chatId: chatId,
             timestamp: new Date().getTime(),
@@ -139,8 +139,8 @@ export const useChat = () => {
             ],
         };
 
-        if (contextVariables) {
-            ask.variables.push(...contextVariables);
+        if (kernelArguments) {
+            ask.variables.push(...kernelArguments);
         }
 
         try {
@@ -429,7 +429,7 @@ export const useChat = () => {
     };
 
     const processPlan = async (chatId: string, planState: PlanState, serializedPlan: string, planGoal?: string) => {
-        const contextVariables: ContextVariable[] = [
+        const kernelArguments: ContextVariable[] = [
             {
                 key: 'proposedPlan',
                 value: serializedPlan,
@@ -449,7 +449,7 @@ export const useChat = () => {
         // Send plan back for processing or execution
         await getResponse({
             value: message,
-            contextVariables,
+            kernelArguments,
             messageType: ChatMessageType.Message,
             chatId: chatId,
             processPlan: true,
