@@ -1,0 +1,2428 @@
+Microsoft Windows [Version 10.0.19045.4046]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\simpkinj\source\repos\chat-copilot>docker compose
+
+Usage:  docker compose [OPTIONS] COMMAND
+
+Define and run multi-container applications with Docker.
+
+Options:
+      --ansi string                Control when to print ANSI control
+                                   characters ("never"|"always"|"auto")
+                                   (default "auto")
+      --compatibility              Run compose in backward compatibility mode
+      --dry-run                    Execute command in dry run mode
+      --env-file stringArray       Specify an alternate environment file.
+  -f, --file stringArray           Compose configuration files
+      --parallel int               Control max parallelism, -1 for
+                                   unlimited (default -1)
+      --profile stringArray        Specify a profile to enable
+      --progress string            Set type of progress output (auto,
+                                   tty, plain, quiet) (default "auto")
+      --project-directory string   Specify an alternate working directory
+                                   (default: the path of the, first
+                                   specified, Compose file)
+  -p, --project-name string        Project name
+
+Commands:
+  build       Build or rebuild services
+  config      Parse, resolve and render compose file in canonical format
+  cp          Copy files/folders between a service container and the local filesystem
+  create      Creates containers for a service.
+  down        Stop and remove containers, networks
+  events      Receive real time events from containers.
+  exec        Execute a command in a running container.
+  images      List images used by the created containers
+  kill        Force stop service containers.
+  logs        View output from containers
+  ls          List running compose projects
+  pause       Pause services
+  port        Print the public port for a port binding.
+  ps          List containers
+  pull        Pull service images
+  push        Push service images
+  restart     Restart service containers
+  rm          Removes stopped service containers
+  run         Run a one-off command on a service.
+  scale       Scale services
+  start       Start services
+  stop        Stop services
+  top         Display the running processes
+  unpause     Unpause services
+  up          Create and start containers
+  version     Show the Docker Compose version information
+  wait        Block until the first service container stops
+  watch       Watch build context for service and rebuild/refresh containers when files are updated
+
+Run 'docker compose COMMAND --help' for more information on a command.
+
+C:\Users\simpkinj\source\repos\chat-copilot>docker compose up --build ds-webapi
+error during connect: this error may indicate that the docker daemon is not running: Get "http://%2F%2F.%2Fpipe%2Fdocker_engine/v1.24/containers/json?all=1&filters=%7B%22label%22%3A%7B%22com.docker.compose.config-hash%22%3Atrue%2C%22com.docker.compose.project%3Dchat-copilot%22%3Atrue%7D%7D": open //./pipe/docker_engine: The system cannot find the file specified.
+
+C:\Users\simpkinj\source\repos\chat-copilot>docker compose up --build ds-webapi
+[+] Building 247.3s (10/10) FINISHED                                                                                      docker:default
+ => [ds-webapi internal] load .dockerignore                                                                                         0.0s
+ => => transferring context: 69B                                                                                                    0.0s
+ => [ds-webapi internal] load build definition from Dockerfile                                                                      0.0s
+ => => transferring dockerfile: 511B                                                                                                0.0s
+ => [ds-webapi internal] load metadata for mcr.microsoft.com/dotnet/sdk:8.0                                                         0.5s
+ => [ds-webapi base 1/2] FROM mcr.microsoft.com/dotnet/sdk:8.0@sha256:9bb0d97c4361cc844f225c144ac2adb2b65fabfef21f95caedcf215d844  82.0s
+ => => resolve mcr.microsoft.com/dotnet/sdk:8.0@sha256:9bb0d97c4361cc844f225c144ac2adb2b65fabfef21f95caedcf215d844238fe             0.0s
+ => => sha256:8a1e25ce7c4f75e372e9884f8f7b1bedcfe4a7a7d452eb4b0a1c7477c9a90345 29.12MB / 29.12MB                                   13.6s
+ => => sha256:d038975ffc90fa0cf112ccb6208e4a734bfd2ff0aad5502ae102ff34c459ad85 18.72MB / 18.72MB                                    7.1s
+ => => sha256:9bb0d97c4361cc844f225c144ac2adb2b65fabfef21f95caedcf215d844238fe 1.08kB / 1.08kB                                      0.0s
+ => => sha256:bd0e629282d39de1f32aff697968475b0eb430624d80a9d06c0f50e804b960b8 2.22kB / 2.22kB                                      0.0s
+ => => sha256:60b36c9499682f95ca9b921cc8f7a7cdda666fc804efe796c70efaaf019f5402 5.68kB / 5.68kB                                      0.0s
+ => => sha256:4d3bcc6169b1668ece1d9e8252fdcc52f2502d78c6d83e481e2f999dc609c22c 3.28kB / 3.28kB                                      0.3s
+ => => sha256:1b5cdfe08966fb1fac2ca21027ca0be0e7fc716f256aed2b6b1cc927fca7aa0f 32.23MB / 32.23MB                                   17.0s
+ => => sha256:e324257af4ea9db78188a9437b45674b105f5c4325ec721e1c40029d1e521553 154B / 154B                                          7.2s
+ => => sha256:0b3a32d011fb8e6114900419908c5fad86fcc1ed8a8d23ffb77f0e350d06e067 11.02MB / 11.02MB                                   10.8s
+ => => sha256:9660556b62c096f03ca48bb165eb085ee20ca5e0a8314c7b38939022035a5a23 30.69MB / 30.69MB                                   22.7s
+ => => sha256:8aff502a7f0bb3112e91d30510d40479a01c99c0dcb6efb508ec6b6c2f6eae50 187.59MB / 187.59MB                                 76.4s
+ => => extracting sha256:8a1e25ce7c4f75e372e9884f8f7b1bedcfe4a7a7d452eb4b0a1c7477c9a90345                                           1.7s
+ => => extracting sha256:d038975ffc90fa0cf112ccb6208e4a734bfd2ff0aad5502ae102ff34c459ad85                                           0.4s
+ => => extracting sha256:4d3bcc6169b1668ece1d9e8252fdcc52f2502d78c6d83e481e2f999dc609c22c                                           0.0s
+ => => sha256:029614b690b755f148466aaee68967240d359f5a8ef4821dcba1c3ea40e6c654 15.71MB / 15.71MB                                   25.1s
+ => => extracting sha256:1b5cdfe08966fb1fac2ca21027ca0be0e7fc716f256aed2b6b1cc927fca7aa0f                                           0.5s
+ => => extracting sha256:e324257af4ea9db78188a9437b45674b105f5c4325ec721e1c40029d1e521553                                           0.0s
+ => => extracting sha256:0b3a32d011fb8e6114900419908c5fad86fcc1ed8a8d23ffb77f0e350d06e067                                           0.2s
+ => => extracting sha256:9660556b62c096f03ca48bb165eb085ee20ca5e0a8314c7b38939022035a5a23                                           1.3s
+ => => extracting sha256:8aff502a7f0bb3112e91d30510d40479a01c99c0dcb6efb508ec6b6c2f6eae50                                           5.0s
+ => => extracting sha256:029614b690b755f148466aaee68967240d359f5a8ef4821dcba1c3ea40e6c654                                           0.5s
+ => [ds-webapi internal] load build context                                                                                         0.7s
+ => => transferring context: 14.33MB                                                                                                0.7s
+ => [ds-webapi base 2/2] RUN     apt-get update     && apt-get install -y curl jq zip azure-cli     && apt-get remove cmdtest ya  150.8s
+ => [ds-webapi src 1/3] WORKDIR /tmp                                                                                                0.0s
+ => [ds-webapi src 2/3] COPY . .                                                                                                    1.3s
+ => [ds-webapi src 3/3] WORKDIR /tmp/scripts/deploy                                                                                 0.0s
+ => [ds-webapi] exporting to image                                                                                                 12.5s
+ => => exporting layers                                                                                                            12.5s
+ => => writing image sha256:da9f868a2a9168b78464e2bddaf476159082dd0433ffe54145ebe9ed29959b13                                        0.0s
+ => => naming to docker.io/library/chat-copilot-ds-webapi                                                                           0.0s
+time="2024-03-26T10:13:54-04:00" level=warning msg="Found orphan containers ([chat-copilot-deploy-webapi-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+[+] Running 1/1
+ ✔ Container chat-copilot-ds-webapi-1  Created                                                                                      0.1s
+Attaching to ds-webapi-1
+ds-webapi-1  | + bash ./package-webapi.sh
+ds-webapi-1  | Building backend executables...
+ds-webapi-1  | Build configuration: Release
+ds-webapi-1  | MSBuild version 17.9.6+a4ecab324 for .NET
+ds-webapi-1  |   Determining projects to restore...
+ds-webapi-1  |   Restored /tmp/shared/CopilotChatShared.csproj (in 54.9 sec).
+ds-webapi-1  |   Restored /tmp/webapi/CopilotChatWebApi.csproj (in 54.94 sec).
+ds-webapi-1  |   CopilotChatShared -> /tmp/shared/bin/Release/net6.0/CopilotChatShared.dll
+ds-webapi-1  |   CopilotChatWebApi -> /tmp/webapi/bin/Release/net6.0/win-x64/CopilotChatWebApi.dll
+ds-webapi-1  |   CopilotChatWebApi -> /tmp/scripts/deploy/publish/
+ds-webapi-1  | Building static frontend files...
+ds-webapi-1  | /tmp/webapp /tmp/scripts/deploy
+ds-webapi-1  | Installing yarn dependencies...
+ds-webapi-1  | yarn install v1.22.22
+ds-webapi-1  | warning package-lock.json found. Your project contains lock files generated by tools other than Yarn. It is advised not to mix package managers in order to avoid resolution inconsistencies caused by unsynchronized lock files. To clear this warning, remove package-lock.json.
+ds-webapi-1  | [1/4] Resolving packages...
+ds-webapi-1  | [2/4] Fetching packages...
+ds-webapi-1  | [3/4] Linking dependencies...
+ds-webapi-1  | warning " > @fluentui/react-components@9.46.7" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+ds-webapi-1  | warning "@fluentui/react-components > @fluentui/react-accordion@9.3.43" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+ds-webapi-1  | warning "@fluentui/react-components > @fluentui/react-avatar@9.6.16" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+ds-webapi-1  | warning "@fluentui/react-components > @fluentui/react-combobox@9.9.0" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+ds-webapi-1  | warning "@fluentui/react-components > @fluentui/react-menu@9.13.1" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+ds-webapi-1  | warning "@fluentui/react-components > @fluentui/react-overflow@9.1.12" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+ds-webapi-1  | warning "@fluentui/react-components > @fluentui/react-popover@9.8.40" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+ds-webapi-1  | warning "@fluentui/react-components > @fluentui/react-radio@9.2.9" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+ds-webapi-1  | warning "@fluentui/react-components > @fluentui/react-tabs@9.4.11" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+ds-webapi-1  | warning "@fluentui/react-components > @fluentui/react-accordion > @fluentui/react-context-selector@9.1.53" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+ds-webapi-1  | warning "@fluentui/react-components > @fluentui/react-positioning > @floating-ui/devtools@0.2.1" has incorrect peer dependency "@floating-ui/dom@>=1.5.4".
+ds-webapi-1  | warning " > @fluentui/react-northstar@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+ds-webapi-1  | warning " > @fluentui/react-northstar@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+ds-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+ds-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+ds-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings@0.66.5" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+ds-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-component-nesting-registry@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+ds-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-component-nesting-registry@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+ds-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-icons-northstar@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+ds-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-icons-northstar@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+ds-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-northstar-styles-renderer@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+ds-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings > @fluentui/react-northstar-fela-renderer@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+ds-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings > @fluentui/react-northstar-fela-renderer@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+ds-webapi-1  | warning " > @babel/plugin-proposal-private-property-in-object@7.21.11" has unmet peer dependency "@babel/core@^7.0.0-0".
+ds-webapi-1  | warning "@babel/plugin-proposal-private-property-in-object > @babel/helper-create-class-features-plugin@7.22.9" has unmet peer dependency "@babel/core@^7.0.0".
+ds-webapi-1  | warning "@babel/plugin-proposal-private-property-in-object > @babel/plugin-syntax-private-property-in-object@7.14.5" has unmet peer dependency "@babel/core@^7.0.0-0".
+ds-webapi-1  | warning "@babel/plugin-proposal-private-property-in-object > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers@7.22.9" has unmet peer dependency "@babel/core@^7.0.0".
+ds-webapi-1  | warning "react-scripts > eslint-config-react-app > eslint-plugin-flowtype@8.0.3" has unmet peer dependency "@babel/plugin-syntax-flow@^7.14.5".
+ds-webapi-1  | warning "react-scripts > eslint-config-react-app > eslint-plugin-flowtype@8.0.3" has unmet peer dependency "@babel/plugin-transform-react-jsx@^7.14.9".
+ds-webapi-1  | [4/4] Building fresh packages...
+ds-webapi-1  | Done in 66.70s.
+ds-webapi-1  | Building webapp...
+ds-webapi-1  | yarn run v1.22.22
+ds-webapi-1  | $ react-scripts build
+ds-webapi-1  | Creating an optimized production build...
+ds-webapi-1  | Browserslist: caniuse-lite is outdated. Please run:
+ds-webapi-1  |   npx update-browserslist-db@latest
+ds-webapi-1  |   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ds-webapi-1  | Browserslist: caniuse-lite is outdated. Please run:
+ds-webapi-1  |   npx update-browserslist-db@latest
+ds-webapi-1  |   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ds-webapi-1  | Compiled successfully.
+ds-webapi-1  |
+ds-webapi-1  | File sizes after gzip:
+ds-webapi-1  |
+ds-webapi-1  |   552.1 kB (+66.61 kB)  build/static/js/main.e2f6bc30.js
+ds-webapi-1  |   279 B                 build/static/css/main.3f026dcf.css
+ds-webapi-1  |
+ds-webapi-1  | The bundle size is significantly larger than recommended.
+ds-webapi-1  | Consider reducing it with code splitting: https://goo.gl/9VhYWB
+ds-webapi-1  | You can also analyze the project dependencies: https://goo.gl/LeUzfb
+ds-webapi-1  |
+ds-webapi-1  | The project was built assuming it is hosted at /.
+ds-webapi-1  | You can control this with the homepage field in your package.json.
+ds-webapi-1  |
+ds-webapi-1  | The build folder is ready to be deployed.
+ds-webapi-1  | You may serve it with a static server:
+ds-webapi-1  |
+ds-webapi-1  |   yarn global add serve
+ds-webapi-1  |   serve -s build
+ds-webapi-1  |
+ds-webapi-1  | Find out more about deployment here:
+ds-webapi-1  |
+ds-webapi-1  |   https://cra.link/deployment
+ds-webapi-1  |
+ds-webapi-1  | Done in 123.22s.
+ds-webapi-1  | /tmp/scripts/deploy
+ds-webapi-1  | Copying frontend files to package
+ds-webapi-1  | /tmp/scripts/deploy/publish /tmp/scripts/deploy
+ds-webapi-1  | Compressing to /tmp/scripts/deploy/out/webapi.zip
+ds-webapi-1  | updating: Plugins/OpenApi/ (stored 0%)
+ds-webapi-1  | updating: Plugins/OpenApi/GitHubPlugin/openapi.json (deflated 91%)
+ds-webapi-1  | updating: Plugins/OpenApi/JiraPlugin/openapi.json (deflated 90%)
+ds-webapi-1  | updating: wwwroot/static/ (stored 0%)
+ds-webapi-1  | updating: wwwroot/asset-manifest.json (deflated 59%)
+ds-webapi-1  | updating: wwwroot/favicon.ico (deflated 38%)
+ds-webapi-1  | updating: wwwroot/index.html (deflated 31%)
+ds-webapi-1  | updating: wwwroot/static/css/main.3f026dcf.css (deflated 33%)
+ds-webapi-1  | updating: wwwroot/static/css/main.3f026dcf.css.map (deflated 42%)
+ds-webapi-1  | updating: wwwroot/static/js/main.49e0e17c.js (deflated 73%)
+ds-webapi-1  | updating: wwwroot/static/js/main.49e0e17c.js.LICENSE.txt (deflated 76%)
+ds-webapi-1  | updating: wwwroot/static/js/main.49e0e17c.js.map (deflated 79%)
+ds-webapi-1  | updating: wwwroot/static/media/add-plugin.67bd3a863550baa0c309.png (stored 0%)
+ds-webapi-1  | updating: wwwroot/static/media/ms-symbollockup_signin_light.e2f600a8cb97ce3efe4d3db463e6af48.svg (deflated 65%)
+ds-webapi-1  | updating: wwwroot/static/media/PennDNA.51bf0620833e5b81aafc.png (deflated 0%)
+ds-webapi-1  | updating: wwwroot/static/media/typing-balls-light.a859d2fb6345248c0471c6cde7d729fe.svg (deflated 75%)
+ds-webapi-1  | updating: x64/leptonica-1.82.0.dll (deflated 58%)
+ds-webapi-1  | updating: x64/tesseract50.dll (deflated 54%)
+ds-webapi-1  | updating: x86/leptonica-1.82.0.dll (deflated 59%)
+ds-webapi-1  | updating: x86/tesseract50.dll (deflated 53%)
+ds-webapi-1  | updating: api-ms-win-core-console-l1-1-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-core-console-l1-2-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-core-datetime-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-core-debug-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-core-errorhandling-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-core-fibers-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-core-file-l1-1-0.dll (deflated 71%)
+ds-webapi-1  | updating: api-ms-win-core-file-l1-2-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-core-file-l2-1-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-core-handle-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-core-heap-l1-1-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-core-interlocked-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-core-libraryloader-l1-1-0.dll (deflated 68%)
+ds-webapi-1  | updating: api-ms-win-core-localization-l1-2-0.dll (deflated 66%)
+ds-webapi-1  | updating: api-ms-win-core-memory-l1-1-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-core-namedpipe-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-core-processenvironment-l1-1-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-core-processthreads-l1-1-0.dll (deflated 66%)
+ds-webapi-1  | updating: api-ms-win-core-processthreads-l1-1-1.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-core-profile-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-core-rtlsupport-l1-1-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-core-string-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-core-synch-l1-1-0.dll (deflated 67%)
+ds-webapi-1  | updating: api-ms-win-core-synch-l1-2-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-core-sysinfo-l1-1-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-core-timezone-l1-1-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-core-util-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-crt-conio-l1-1-0.dll (deflated 68%)
+ds-webapi-1  | updating: api-ms-win-crt-convert-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-crt-environment-l1-1-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-crt-filesystem-l1-1-0.dll (deflated 66%)
+ds-webapi-1  | updating: api-ms-win-crt-heap-l1-1-0.dll (deflated 68%)
+ds-webapi-1  | updating: api-ms-win-crt-locale-l1-1-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-crt-math-l1-1-0.dll (deflated 68%)
+ds-webapi-1  | updating: api-ms-win-crt-multibyte-l1-1-0.dll (deflated 70%)
+ds-webapi-1  | updating: api-ms-win-crt-private-l1-1-0.dll (deflated 73%)
+ds-webapi-1  | updating: api-ms-win-crt-process-l1-1-0.dll (deflated 68%)
+ds-webapi-1  | updating: api-ms-win-crt-runtime-l1-1-0.dll (deflated 69%)
+ds-webapi-1  | updating: api-ms-win-crt-stdio-l1-1-0.dll (deflated 67%)
+ds-webapi-1  | updating: api-ms-win-crt-string-l1-1-0.dll (deflated 67%)
+ds-webapi-1  | updating: api-ms-win-crt-time-l1-1-0.dll (deflated 66%)
+ds-webapi-1  | updating: api-ms-win-crt-utility-l1-1-0.dll (deflated 68%)
+ds-webapi-1  | updating: appsettings.Development.json (deflated 55%)
+ds-webapi-1  | updating: appsettings.json (deflated 69%)
+ds-webapi-1  | updating: aspnetcorev2_inprocess.dll (deflated 54%)
+ds-webapi-1  | updating: Azure.AI.FormRecognizer.dll (deflated 67%)
+ds-webapi-1  | updating: Azure.AI.OpenAI.dll (deflated 70%)
+ds-webapi-1  | updating: Azure.Core.dll (deflated 58%)
+ds-webapi-1  | updating: Azure.Extensions.AspNetCore.Configuration.Secrets.dll (deflated 45%)
+ds-webapi-1  | updating: Azure.Identity.dll (deflated 62%)
+ds-webapi-1  | updating: Azure.Search.Documents.dll (deflated 66%)
+ds-webapi-1  | updating: Azure.Security.KeyVault.Certificates.dll (deflated 59%)
+ds-webapi-1  | updating: Azure.Security.KeyVault.Secrets.dll (deflated 56%)
+ds-webapi-1  | updating: Azure.Storage.Blobs.dll (deflated 67%)
+ds-webapi-1  | updating: Azure.Storage.Common.dll (deflated 52%)
+ds-webapi-1  | updating: Azure.Storage.Queues.dll (deflated 62%)
+ds-webapi-1  | updating: ClosedXML.dll (deflated 63%)
+ds-webapi-1  | updating: clretwrc.dll (deflated 78%)
+ds-webapi-1  | updating: clrjit.dll (deflated 45%)
+ds-webapi-1  | updating: CopilotChatShared.dll (deflated 59%)
+ds-webapi-1  | updating: CopilotChatShared.pdb (deflated 43%)
+ds-webapi-1  | updating: CopilotChatWebApi.deps.json (deflated 85%)
+ds-webapi-1  | updating: CopilotChatWebApi.dll (deflated 59%)
+ds-webapi-1  | updating: CopilotChatWebApi.exe (deflated 55%)
+ds-webapi-1  | updating: CopilotChatWebApi.pdb (deflated 50%)
+ds-webapi-1  | updating: CopilotChatWebApi.runtimeconfig.json (deflated 48%)
+ds-webapi-1  | updating: coreclr.dll (deflated 50%)
+ds-webapi-1  | updating: Cosmos.CRTCompat.dll (deflated 51%)
+ds-webapi-1  | updating: createdump.exe (deflated 47%)
+ds-webapi-1  | updating: dbgshim.dll (deflated 50%)
+ds-webapi-1  | updating: DocumentFormat.OpenXml.dll (deflated 75%)
+ds-webapi-1  | updating: ExcelNumberFormat.dll (deflated 54%)
+ds-webapi-1  | updating: Google.Apis.Core.dll (deflated 55%)
+ds-webapi-1  | updating: Google.Apis.CustomSearchAPI.v1.dll (deflated 64%)
+ds-webapi-1  | updating: Google.Apis.dll (deflated 55%)
+ds-webapi-1  | updating: Handlebars.dll (deflated 60%)
+ds-webapi-1  | updating: hostfxr.dll (deflated 54%)
+ds-webapi-1  | updating: hostpolicy.dll (deflated 54%)
+ds-webapi-1  | updating: HtmlAgilityPack.dll (deflated 62%)
+ds-webapi-1  | updating: Humanizer.dll (deflated 56%)
+ds-webapi-1  | updating: Irony.dll (deflated 56%)
+ds-webapi-1  | updating: JetBrains.Annotations.dll (deflated 77%)
+ds-webapi-1  | updating: Json.More.dll (deflated 53%)
+ds-webapi-1  | updating: JsonPointer.Net.dll (deflated 52%)
+ds-webapi-1  | updating: JsonSchema.Net.dll (deflated 63%)
+ds-webapi-1  | updating: JsonSchema.Net.Generation.dll (deflated 57%)
+ds-webapi-1  | updating: Microsoft.AI.DependencyCollector.dll (deflated 64%)
+ds-webapi-1  | updating: Microsoft.AI.EventCounterCollector.dll (deflated 53%)
+ds-webapi-1  | updating: Microsoft.AI.PerfCounterCollector.dll (deflated 62%)
+ds-webapi-1  | updating: Microsoft.AI.ServerTelemetryChannel.dll (deflated 59%)
+ds-webapi-1  | updating: Microsoft.AI.WindowsServer.dll (deflated 56%)
+ds-webapi-1  | updating: Microsoft.ApplicationInsights.AspNetCore.dll (deflated 57%)
+ds-webapi-1  | updating: Microsoft.ApplicationInsights.dll (deflated 60%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Antiforgery.dll (deflated 50%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Authentication.Abstractions.dll (deflated 48%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Authentication.Cookies.dll (deflated 50%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Authentication.Core.dll (deflated 54%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Authentication.dll (deflated 51%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Authentication.JwtBearer.dll (deflated 50%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Authentication.OAuth.dll (deflated 48%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Authentication.OpenIdConnect.dll (deflated 60%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Authorization.dll (deflated 49%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Authorization.Policy.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Components.Authorization.dll (deflated 47%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Components.dll (deflated 54%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Components.Forms.dll (deflated 47%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Components.Server.dll (deflated 58%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Components.Web.dll (deflated 54%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Connections.Abstractions.dll (deflated 48%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.CookiePolicy.dll (deflated 48%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Cors.dll (deflated 49%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Cryptography.Internal.dll (deflated 50%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Cryptography.KeyDerivation.dll (deflated 41%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.DataProtection.Abstractions.dll (deflated 44%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.DataProtection.dll (deflated 54%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.DataProtection.Extensions.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Diagnostics.Abstractions.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Diagnostics.dll (deflated 58%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Diagnostics.HealthChecks.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.HostFiltering.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Hosting.Abstractions.dll (deflated 48%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Hosting.dll (deflated 55%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Hosting.Server.Abstractions.dll (deflated 43%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Html.Abstractions.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Http.Abstractions.dll (deflated 50%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Http.Connections.Common.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Http.Connections.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Http.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Http.Extensions.dll (deflated 54%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Http.Features.dll (deflated 57%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Http.Results.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.HttpLogging.dll (deflated 49%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.HttpOverrides.dll (deflated 44%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.HttpsPolicy.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Identity.dll (deflated 54%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Localization.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Localization.Routing.dll (deflated 44%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Metadata.dll (deflated 41%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Abstractions.dll (deflated 55%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.ApiExplorer.dll (deflated 50%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Core.dll (deflated 58%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Cors.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.DataAnnotations.dll (deflated 51%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.dll (deflated 48%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Formatters.Json.dll (deflated 43%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Formatters.Xml.dll (deflated 51%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Localization.dll (deflated 50%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Razor.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.RazorPages.dll (deflated 56%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.TagHelpers.dll (deflated 53%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Mvc.ViewFeatures.dll (deflated 55%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Razor.dll (deflated 48%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Razor.Runtime.dll (deflated 47%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.ResponseCaching.Abstractions.dll (deflated 43%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.ResponseCaching.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.ResponseCompression.dll (deflated 47%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Rewrite.dll (deflated 51%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Routing.Abstractions.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Routing.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Server.HttpSys.dll (deflated 53%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Server.IIS.dll (deflated 55%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Server.IISIntegration.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.Core.dll (deflated 58%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.Transport.Quic.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll (deflated 51%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.Session.dll (deflated 48%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.SignalR.Common.dll (deflated 48%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.SignalR.Core.dll (deflated 54%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.SignalR.dll (deflated 44%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.SignalR.Protocols.Json.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.StaticFiles.dll (deflated 56%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.WebSockets.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.AspNetCore.WebUtilities.dll (deflated 50%)
+ds-webapi-1  | updating: Microsoft.Azure.Cosmos.Client.dll (deflated 65%)
+ds-webapi-1  | updating: Microsoft.Azure.Cosmos.Core.dll (deflated 65%)
+ds-webapi-1  | updating: Microsoft.Azure.Cosmos.Direct.dll (deflated 69%)
+ds-webapi-1  | updating: Microsoft.Azure.Cosmos.Serialization.HybridRow.dll (deflated 63%)
+ds-webapi-1  | updating: Microsoft.Azure.Cosmos.ServiceInterop.dll (deflated 70%)
+ds-webapi-1  | updating: Microsoft.Bcl.AsyncInterfaces.dll (deflated 42%)
+ds-webapi-1  | updating: Microsoft.Bcl.HashCode.dll (deflated 44%)
+ds-webapi-1  | updating: Microsoft.Bcl.TimeProvider.dll (deflated 47%)
+ds-webapi-1  | updating: Microsoft.CSharp.dll (deflated 51%)
+ds-webapi-1  | updating: Microsoft.DiaSymReader.Native.amd64.dll (deflated 55%)
+ds-webapi-1  | updating: Microsoft.Extensions.Caching.Abstractions.dll (deflated 47%)
+ds-webapi-1  | updating: Microsoft.Extensions.Caching.Memory.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.Extensions.Configuration.Abstractions.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.Extensions.Configuration.Binder.dll (deflated 51%)
+ds-webapi-1  | updating: Microsoft.Extensions.Configuration.CommandLine.dll (deflated 44%)
+ds-webapi-1  | updating: Microsoft.Extensions.Configuration.dll (deflated 48%)
+ds-webapi-1  | updating: Microsoft.Extensions.Configuration.EnvironmentVariables.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.Extensions.Configuration.FileExtensions.dll (deflated 47%)
+ds-webapi-1  | updating: Microsoft.Extensions.Configuration.Ini.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.Extensions.Configuration.Json.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.Extensions.Configuration.KeyPerFile.dll (deflated 44%)
+ds-webapi-1  | updating: Microsoft.Extensions.Configuration.UserSecrets.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.Extensions.Configuration.Xml.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.Extensions.DependencyInjection.Abstractions.dll (deflated 56%)
+ds-webapi-1  | updating: Microsoft.Extensions.DependencyInjection.dll (deflated 54%)
+ds-webapi-1  | updating: Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.Extensions.Diagnostics.HealthChecks.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.Extensions.Features.dll (deflated 43%)
+ds-webapi-1  | updating: Microsoft.Extensions.FileProviders.Abstractions.dll (deflated 44%)
+ds-webapi-1  | updating: Microsoft.Extensions.FileProviders.Composite.dll (deflated 42%)
+ds-webapi-1  | updating: Microsoft.Extensions.FileProviders.Embedded.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.Extensions.FileProviders.Physical.dll (deflated 47%)
+ds-webapi-1  | updating: Microsoft.Extensions.FileSystemGlobbing.dll (deflated 48%)
+ds-webapi-1  | updating: Microsoft.Extensions.Hosting.Abstractions.dll (deflated 57%)
+ds-webapi-1  | updating: Microsoft.Extensions.Hosting.dll (deflated 54%)
+ds-webapi-1  | updating: Microsoft.Extensions.Http.dll (deflated 53%)
+ds-webapi-1  | updating: Microsoft.Extensions.Identity.Core.dll (deflated 58%)
+ds-webapi-1  | updating: Microsoft.Extensions.Identity.Stores.dll (deflated 54%)
+ds-webapi-1  | updating: Microsoft.Extensions.Localization.Abstractions.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.Extensions.Localization.dll (deflated 45%)
+ds-webapi-1  | updating: Microsoft.Extensions.Logging.Abstractions.dll (deflated 53%)
+ds-webapi-1  | updating: Microsoft.Extensions.Logging.ApplicationInsights.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.Extensions.Logging.Configuration.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.Extensions.Logging.Console.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.Extensions.Logging.Debug.dll (deflated 43%)
+ds-webapi-1  | updating: Microsoft.Extensions.Logging.dll (deflated 49%)
+ds-webapi-1  | updating: Microsoft.Extensions.Logging.EventLog.dll (deflated 43%)
+ds-webapi-1  | updating: Microsoft.Extensions.Logging.EventSource.dll (deflated 49%)
+ds-webapi-1  | updating: Microsoft.Extensions.Logging.TraceSource.dll (deflated 44%)
+ds-webapi-1  | updating: Microsoft.Extensions.ObjectPool.dll (deflated 43%)
+ds-webapi-1  | updating: Microsoft.Extensions.Options.ConfigurationExtensions.dll (deflated 44%)
+ds-webapi-1  | updating: Microsoft.Extensions.Options.DataAnnotations.dll (deflated 43%)
+ds-webapi-1  | updating: Microsoft.Extensions.Options.dll (deflated 53%)
+ds-webapi-1  | updating: Microsoft.Extensions.Primitives.dll (deflated 50%)
+ds-webapi-1  | updating: Microsoft.Extensions.WebEncoders.dll (deflated 47%)
+ds-webapi-1  | updating: Microsoft.Graph.Core.dll (deflated 56%)
+ds-webapi-1  | updating: Microsoft.Graph.dll (deflated 76%)
+ds-webapi-1  | updating: Microsoft.Identity.Abstractions.dll (deflated 53%)
+ds-webapi-1  | updating: Microsoft.Identity.Client.dll (deflated 67%)
+ds-webapi-1  | updating: Microsoft.Identity.Client.Extensions.Msal.dll (deflated 55%)
+ds-webapi-1  | updating: Microsoft.Identity.Web.Certificate.dll (deflated 49%)
+ds-webapi-1  | updating: Microsoft.Identity.Web.Certificateless.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.Identity.Web.Diagnostics.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.Identity.Web.dll (deflated 60%)
+ds-webapi-1  | updating: Microsoft.Identity.Web.TokenAcquisition.dll (deflated 59%)
+ds-webapi-1  | updating: Microsoft.Identity.Web.TokenCache.dll (deflated 55%)
+ds-webapi-1  | updating: Microsoft.IdentityModel.Abstractions.dll (deflated 43%)
+ds-webapi-1  | updating: Microsoft.IdentityModel.JsonWebTokens.dll (deflated 63%)
+ds-webapi-1  | updating: Microsoft.IdentityModel.Logging.dll (deflated 53%)
+ds-webapi-1  | updating: Microsoft.IdentityModel.LoggingExtensions.dll (deflated 41%)
+ds-webapi-1  | updating: Microsoft.IdentityModel.Protocols.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.IdentityModel.Protocols.OpenIdConnect.dll (deflated 65%)
+ds-webapi-1  | updating: Microsoft.IdentityModel.Tokens.dll (deflated 67%)
+ds-webapi-1  | updating: Microsoft.IdentityModel.Validators.dll (deflated 54%)
+ds-webapi-1  | updating: Microsoft.JSInterop.dll (deflated 50%)
+ds-webapi-1  | updating: Microsoft.KernelMemory.Client.dll (deflated 56%)
+ds-webapi-1  | updating: Microsoft.KernelMemory.Core.dll (deflated 60%)
+ds-webapi-1  | updating: Microsoft.Net.Http.Headers.dll (deflated 49%)
+ds-webapi-1  | updating: Microsoft.OpenApi.dll (deflated 60%)
+ds-webapi-1  | updating: Microsoft.OpenApi.Readers.dll (deflated 60%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Abstractions.dll (deflated 57%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Connectors.AI.OpenAI.dll (deflated 60%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Connectors.Memory.AzureCognitiveSearch.dll (deflated 57%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Connectors.Memory.Qdrant.dll (deflated 60%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Core.dll (deflated 56%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.dll (deflated 39%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Functions.OpenAPI.dll (deflated 64%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Planners.Core.dll (deflated 60%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.Core.dll (deflated 56%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.Memory.dll (deflated 53%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.MsGraph.dll (deflated 56%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.Web.dll (deflated 53%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.Reliability.Basic.dll (deflated 55%)
+ds-webapi-1  | updating: Microsoft.SemanticKernel.TemplateEngine.Basic.dll (deflated 55%)
+ds-webapi-1  | updating: Microsoft.VisualBasic.Core.dll (deflated 52%)
+ds-webapi-1  | updating: Microsoft.VisualBasic.dll (deflated 43%)
+ds-webapi-1  | updating: Microsoft.Win32.Primitives.dll (deflated 42%)
+ds-webapi-1  | updating: Microsoft.Win32.Registry.dll (deflated 46%)
+ds-webapi-1  | updating: Microsoft.Win32.SystemEvents.dll (deflated 51%)
+ds-webapi-1  | updating: mscordaccore_amd64_amd64_6.0.2023.32017.dll (deflated 57%)
+ds-webapi-1  | updating: mscordaccore.dll (deflated 56%)
+ds-webapi-1  | updating: mscordbi.dll (deflated 58%)
+ds-webapi-1  | updating: mscorlib.dll (deflated 63%)
+ds-webapi-1  | updating: mscorrc.dll (deflated 77%)
+ds-webapi-1  | updating: msquic.dll (deflated 50%)
+ds-webapi-1  | updating: msvcp140.dll (deflated 68%)
+ds-webapi-1  | updating: netstandard.dll (deflated 67%)
+ds-webapi-1  | updating: Newtonsoft.Json.dll (deflated 62%)
+ds-webapi-1  | updating: nuget.config (deflated 48%)
+ds-webapi-1  | updating: Polly.Core.dll (deflated 57%)
+ds-webapi-1  | updating: RabbitMQ.Client.dll (deflated 62%)
+ds-webapi-1  | updating: SharpToken.dll (deflated 57%)
+ds-webapi-1  | updating: SharpYaml.dll (deflated 59%)
+ds-webapi-1  | updating: SixLabors.Fonts.dll (deflated 76%)
+ds-webapi-1  | updating: Swashbuckle.AspNetCore.Swagger.dll (deflated 55%)
+ds-webapi-1  | updating: Swashbuckle.AspNetCore.SwaggerGen.dll (deflated 56%)
+ds-webapi-1  | updating: Swashbuckle.AspNetCore.SwaggerUI.dll (deflated 70%)
+ds-webapi-1  | updating: System.AppContext.dll (deflated 40%)
+ds-webapi-1  | updating: System.Buffers.dll (deflated 40%)
+ds-webapi-1  | updating: System.Collections.Concurrent.dll (deflated 49%)
+ds-webapi-1  | updating: System.Collections.dll (deflated 51%)
+ds-webapi-1  | updating: System.Collections.Immutable.dll (deflated 56%)
+ds-webapi-1  | updating: System.Collections.NonGeneric.dll (deflated 53%)
+ds-webapi-1  | updating: System.Collections.Specialized.dll (deflated 49%)
+ds-webapi-1  | updating: System.ComponentModel.Annotations.dll (deflated 54%)
+ds-webapi-1  | updating: System.ComponentModel.DataAnnotations.dll (deflated 43%)
+ds-webapi-1  | updating: System.ComponentModel.dll (deflated 43%)
+ds-webapi-1  | updating: System.ComponentModel.EventBasedAsync.dll (deflated 47%)
+ds-webapi-1  | updating: System.ComponentModel.Primitives.dll (deflated 51%)
+ds-webapi-1  | updating: System.ComponentModel.TypeConverter.dll (deflated 54%)
+ds-webapi-1  | updating: System.Configuration.ConfigurationManager.dll (deflated 61%)
+ds-webapi-1  | updating: System.Configuration.dll (deflated 47%)
+ds-webapi-1  | updating: System.Console.dll (deflated 51%)
+ds-webapi-1  | updating: System.Core.dll (deflated 51%)
+ds-webapi-1  | updating: System.Data.Common.dll (deflated 53%)
+ds-webapi-1  | updating: System.Data.DataSetExtensions.dll (deflated 42%)
+ds-webapi-1  | updating: System.Data.dll (deflated 52%)
+ds-webapi-1  | updating: System.Diagnostics.Contracts.dll (deflated 40%)
+ds-webapi-1  | updating: System.Diagnostics.Debug.dll (deflated 40%)
+ds-webapi-1  | updating: System.Diagnostics.DiagnosticSource.dll (deflated 56%)
+ds-webapi-1  | updating: System.Diagnostics.EventLog.dll (deflated 58%)
+ds-webapi-1  | updating: System.Diagnostics.EventLog.Messages.dll (deflated 99%)
+ds-webapi-1  | updating: System.Diagnostics.FileVersionInfo.dll (deflated 47%)
+ds-webapi-1  | updating: System.Diagnostics.PerformanceCounter.dll (deflated 55%)
+ds-webapi-1  | updating: System.Diagnostics.Process.dll (deflated 50%)
+ds-webapi-1  | updating: System.Diagnostics.StackTrace.dll (deflated 45%)
+ds-webapi-1  | updating: System.Diagnostics.TextWriterTraceListener.dll (deflated 47%)
+ds-webapi-1  | updating: System.Diagnostics.Tools.dll (deflated 40%)
+ds-webapi-1  | updating: System.Diagnostics.TraceSource.dll (deflated 52%)
+ds-webapi-1  | updating: System.Diagnostics.Tracing.dll (deflated 41%)
+ds-webapi-1  | updating: System.dll (deflated 62%)
+ds-webapi-1  | updating: System.Drawing.Common.dll (deflated 61%)
+ds-webapi-1  | updating: System.Drawing.dll (deflated 47%)
+ds-webapi-1  | updating: System.Drawing.Primitives.dll (deflated 54%)
+ds-webapi-1  | updating: System.Dynamic.Runtime.dll (deflated 42%)
+ds-webapi-1  | updating: System.Formats.Asn1.dll (deflated 49%)
+ds-webapi-1  | updating: System.Globalization.Calendars.dll (deflated 40%)
+ds-webapi-1  | updating: System.Globalization.dll (deflated 40%)
+ds-webapi-1  | updating: System.Globalization.Extensions.dll (deflated 39%)
+ds-webapi-1  | updating: System.IdentityModel.Tokens.Jwt.dll (deflated 59%)
+ds-webapi-1  | updating: System.IO.Compression.Brotli.dll (deflated 47%)
+ds-webapi-1  | updating: System.IO.Compression.dll (deflated 49%)
+ds-webapi-1  | updating: System.IO.Compression.FileSystem.dll (deflated 41%)
+ds-webapi-1  | updating: System.IO.Compression.Native.dll (deflated 54%)
+ds-webapi-1  | updating: System.IO.Compression.ZipFile.dll (deflated 44%)
+ds-webapi-1  | updating: System.IO.dll (deflated 41%)
+ds-webapi-1  | updating: System.IO.FileSystem.AccessControl.dll (deflated 48%)
+ds-webapi-1  | updating: System.IO.FileSystem.dll (deflated 48%)
+ds-webapi-1  | updating: System.IO.FileSystem.DriveInfo.dll (deflated 46%)
+ds-webapi-1  | updating: System.IO.FileSystem.Primitives.dll (deflated 39%)
+ds-webapi-1  | updating: System.IO.FileSystem.Watcher.dll (deflated 46%)
+ds-webapi-1  | updating: System.IO.Hashing.dll (deflated 47%)
+ds-webapi-1  | updating: System.IO.IsolatedStorage.dll (deflated 50%)
+ds-webapi-1  | updating: System.IO.MemoryMappedFiles.dll (deflated 47%)
+ds-webapi-1  | updating: System.IO.Packaging.dll (deflated 58%)
+ds-webapi-1  | updating: System.IO.Pipelines.dll (deflated 48%)
+ds-webapi-1  | updating: System.IO.Pipes.AccessControl.dll (deflated 40%)
+ds-webapi-1  | updating: System.IO.Pipes.dll (deflated 50%)
+ds-webapi-1  | updating: System.IO.UnmanagedMemoryStream.dll (deflated 39%)
+ds-webapi-1  | updating: System.Linq.Async.dll (deflated 66%)
+ds-webapi-1  | updating: System.Linq.dll (deflated 55%)
+ds-webapi-1  | updating: System.Linq.Expressions.dll (deflated 65%)
+ds-webapi-1  | updating: System.Linq.Parallel.dll (deflated 58%)
+ds-webapi-1  | updating: System.Linq.Queryable.dll (deflated 65%)
+ds-webapi-1  | updating: System.Memory.Data.dll (deflated 46%)
+ds-webapi-1  | updating: System.Memory.dll (deflated 49%)
+ds-webapi-1  | updating: System.Net.dll (deflated 44%)
+ds-webapi-1  | updating: System.Net.Http.dll (deflated 53%)
+ds-webapi-1  | updating: System.Net.Http.Json.dll (deflated 52%)
+ds-webapi-1  | updating: System.Net.HttpListener.dll (deflated 51%)
+ds-webapi-1  | updating: System.Net.Mail.dll (deflated 51%)
+ds-webapi-1  | updating: System.Net.NameResolution.dll (deflated 47%)
+ds-webapi-1  | updating: System.Net.NetworkInformation.dll (deflated 50%)
+ds-webapi-1  | updating: System.Net.Ping.dll (deflated 45%)
+ds-webapi-1  | updating: System.Net.Primitives.dll (deflated 46%)
+ds-webapi-1  | updating: System.Net.Quic.dll (deflated 51%)
+ds-webapi-1  | updating: System.Net.Requests.dll (deflated 50%)
+ds-webapi-1  | updating: System.Net.Security.dll (deflated 53%)
+ds-webapi-1  | updating: System.Net.ServicePoint.dll (deflated 46%)
+ds-webapi-1  | updating: System.Net.Sockets.dll (deflated 51%)
+ds-webapi-1  | updating: System.Net.WebClient.dll (deflated 52%)
+ds-webapi-1  | updating: System.Net.WebHeaderCollection.dll (deflated 48%)
+ds-webapi-1  | updating: System.Net.WebProxy.dll (deflated 44%)
+ds-webapi-1  | updating: System.Net.WebSockets.Client.dll (deflated 47%)
+ds-webapi-1  | updating: System.Net.WebSockets.dll (deflated 48%)
+ds-webapi-1  | updating: System.Numerics.dll (deflated 41%)
+ds-webapi-1  | updating: System.Numerics.Tensors.dll (deflated 62%)
+ds-webapi-1  | updating: System.Numerics.Vectors.dll (deflated 41%)
+ds-webapi-1  | updating: System.ObjectModel.dll (deflated 51%)
+ds-webapi-1  | updating: System.Private.CoreLib.dll (deflated 56%)
+ds-webapi-1  | updating: System.Private.DataContractSerialization.dll (deflated 56%)
+ds-webapi-1  | updating: System.Private.Uri.dll (deflated 44%)
+ds-webapi-1  | updating: System.Private.Xml.dll (deflated 55%)
+ds-webapi-1  | updating: System.Private.Xml.Linq.dll (deflated 52%)
+ds-webapi-1  | updating: System.Reflection.DispatchProxy.dll (deflated 46%)
+ds-webapi-1  | updating: System.Reflection.dll (deflated 40%)
+ds-webapi-1  | updating: System.Reflection.Emit.dll (deflated 40%)
+ds-webapi-1  | updating: System.Reflection.Emit.ILGeneration.dll (deflated 41%)
+ds-webapi-1  | updating: System.Reflection.Emit.Lightweight.dll (deflated 41%)
+ds-webapi-1  | updating: System.Reflection.Extensions.dll (deflated 40%)
+ds-webapi-1  | updating: System.Reflection.Metadata.dll (deflated 56%)
+ds-webapi-1  | updating: System.Reflection.Primitives.dll (deflated 40%)
+ds-webapi-1  | updating: System.Reflection.TypeExtensions.dll (deflated 50%)
+ds-webapi-1  | updating: System.Resources.Reader.dll (deflated 40%)
+ds-webapi-1  | updating: System.Resources.ResourceManager.dll (deflated 40%)
+ds-webapi-1  | updating: System.Resources.Writer.dll (deflated 44%)
+ds-webapi-1  | updating: System.Runtime.CompilerServices.Unsafe.dll (deflated 47%)
+ds-webapi-1  | updating: System.Runtime.CompilerServices.VisualC.dll (deflated 44%)
+ds-webapi-1  | updating: System.Runtime.dll (deflated 59%)
+ds-webapi-1  | updating: System.Runtime.Extensions.dll (deflated 42%)
+ds-webapi-1  | updating: System.Runtime.Handles.dll (deflated 39%)
+ds-webapi-1  | updating: System.Runtime.InteropServices.dll (deflated 48%)
+ds-webapi-1  | updating: System.Runtime.InteropServices.RuntimeInformation.dll (deflated 45%)
+ds-webapi-1  | updating: System.Runtime.Intrinsics.dll (deflated 41%)
+ds-webapi-1  | updating: System.Runtime.Loader.dll (deflated 40%)
+ds-webapi-1  | updating: System.Runtime.Numerics.dll (deflated 45%)
+ds-webapi-1  | updating: System.Runtime.Serialization.dll (deflated 43%)
+ds-webapi-1  | updating: System.Runtime.Serialization.Formatters.dll (deflated 49%)
+ds-webapi-1  | updating: System.Runtime.Serialization.Json.dll (deflated 41%)
+ds-webapi-1  | updating: System.Runtime.Serialization.Primitives.dll (deflated 47%)
+ds-webapi-1  | updating: System.Runtime.Serialization.Xml.dll (deflated 41%)
+ds-webapi-1  | updating: System.Security.AccessControl.dll (deflated 50%)
+ds-webapi-1  | updating: System.Security.Claims.dll (deflated 52%)
+ds-webapi-1  | updating: System.Security.Cryptography.Algorithms.dll (deflated 56%)
+ds-webapi-1  | updating: System.Security.Cryptography.Cng.dll (deflated 52%)
+ds-webapi-1  | updating: System.Security.Cryptography.Csp.dll (deflated 49%)
+ds-webapi-1  | updating: System.Security.Cryptography.Encoding.dll (deflated 49%)
+ds-webapi-1  | updating: System.Security.Cryptography.OpenSsl.dll (deflated 51%)
+ds-webapi-1  | updating: System.Security.Cryptography.Pkcs.dll (deflated 60%)
+ds-webapi-1  | updating: System.Security.Cryptography.Primitives.dll (deflated 50%)
+ds-webapi-1  | updating: System.Security.Cryptography.ProtectedData.dll (deflated 48%)
+ds-webapi-1  | updating: System.Security.Cryptography.X509Certificates.dll (deflated 53%)
+ds-webapi-1  | updating: System.Security.Cryptography.Xml.dll (deflated 53%)
+ds-webapi-1  | updating: System.Security.dll (deflated 45%)
+ds-webapi-1  | updating: System.Security.Permissions.dll (deflated 60%)
+ds-webapi-1  | updating: System.Security.Principal.dll (deflated 39%)
+ds-webapi-1  | updating: System.Security.Principal.Windows.dll (deflated 47%)
+ds-webapi-1  | updating: System.Security.SecureString.dll (deflated 39%)
+ds-webapi-1  | updating: System.ServiceModel.Web.dll (deflated 43%)
+ds-webapi-1  | updating: System.ServiceProcess.dll (deflated 41%)
+ds-webapi-1  | updating: System.Text.Encoding.CodePages.dll (deflated 31%)
+ds-webapi-1  | updating: System.Text.Encoding.dll (deflated 40%)
+ds-webapi-1  | updating: System.Text.Encoding.Extensions.dll (deflated 41%)
+ds-webapi-1  | updating: System.Text.Encodings.Web.dll (deflated 56%)
+ds-webapi-1  | updating: System.Text.Json.dll (deflated 64%)
+ds-webapi-1  | updating: System.Text.RegularExpressions.dll (deflated 49%)
+ds-webapi-1  | updating: System.Threading.Channels.dll (deflated 49%)
+ds-webapi-1  | updating: System.Threading.dll (deflated 46%)
+ds-webapi-1  | updating: System.Threading.Overlapped.dll (deflated 41%)
+ds-webapi-1  | updating: System.Threading.Tasks.Dataflow.dll (deflated 54%)
+ds-webapi-1  | updating: System.Threading.Tasks.dll (deflated 41%)
+ds-webapi-1  | updating: System.Threading.Tasks.Extensions.dll (deflated 40%)
+ds-webapi-1  | updating: System.Threading.Tasks.Parallel.dll (deflated 51%)
+ds-webapi-1  | updating: System.Threading.Thread.dll (deflated 40%)
+ds-webapi-1  | updating: System.Threading.ThreadPool.dll (deflated 41%)
+ds-webapi-1  | updating: System.Threading.Timer.dll (deflated 39%)
+ds-webapi-1  | updating: System.Transactions.dll (deflated 42%)
+ds-webapi-1  | updating: System.Transactions.Local.dll (deflated 59%)
+ds-webapi-1  | updating: System.ValueTuple.dll (deflated 39%)
+ds-webapi-1  | updating: System.Web.dll (deflated 40%)
+ds-webapi-1  | updating: System.Web.HttpUtility.dll (deflated 43%)
+ds-webapi-1  | updating: System.Windows.dll (deflated 41%)
+ds-webapi-1  | updating: System.Windows.Extensions.dll (deflated 48%)
+ds-webapi-1  | updating: System.Xml.dll (deflated 52%)
+ds-webapi-1  | updating: System.Xml.Linq.dll (deflated 42%)
+ds-webapi-1  | updating: System.Xml.ReaderWriter.dll (deflated 50%)
+ds-webapi-1  | updating: System.Xml.Serialization.dll (deflated 41%)
+ds-webapi-1  | updating: System.Xml.XDocument.dll (deflated 40%)
+ds-webapi-1  | updating: System.Xml.XmlDocument.dll (deflated 40%)
+ds-webapi-1  | updating: System.Xml.XmlSerializer.dll (deflated 45%)
+ds-webapi-1  | updating: System.Xml.XPath.dll (deflated 41%)
+ds-webapi-1  | updating: System.Xml.XPath.XDocument.dll (deflated 42%)
+ds-webapi-1  | updating: Tesseract.dll (deflated 70%)
+ds-webapi-1  | updating: ucrtbase.dll (deflated 54%)
+ds-webapi-1  | updating: UglyToad.PdfPig.Core.dll (deflated 56%)
+ds-webapi-1  | updating: UglyToad.PdfPig.dll (deflated 67%)
+ds-webapi-1  | updating: UglyToad.PdfPig.DocumentLayoutAnalysis.dll (deflated 60%)
+ds-webapi-1  | updating: UglyToad.PdfPig.Fonts.dll (deflated 75%)
+ds-webapi-1  | updating: UglyToad.PdfPig.Package.dll (deflated 67%)
+ds-webapi-1  | updating: UglyToad.PdfPig.Tokenization.dll (deflated 49%)
+ds-webapi-1  | updating: UglyToad.PdfPig.Tokens.dll (deflated 57%)
+ds-webapi-1  | updating: vcruntime140_1.dll (deflated 46%)
+ds-webapi-1  | updating: vcruntime140.dll (deflated 46%)
+ds-webapi-1  | updating: web.config (deflated 39%)
+ds-webapi-1  | updating: WindowsBase.dll (deflated 42%)
+ds-webapi-1  | updating: XLParser.dll (deflated 60%)
+ds-webapi-1  |   adding: Plugins/ (stored 0%)
+ds-webapi-1  |   adding: Plugins/OpenApi/GitHubPlugin/ (stored 0%)
+ds-webapi-1  |   adding: Plugins/OpenApi/JiraPlugin/ (stored 0%)
+ds-webapi-1  |   adding: wwwroot/ (stored 0%)
+ds-webapi-1  |   adding: wwwroot/static/js/ (stored 0%)
+ds-webapi-1  |   adding: wwwroot/static/js/main.e2f6bc30.js.LICENSE.txt (deflated 70%)
+ds-webapi-1  |   adding: wwwroot/static/js/main.e2f6bc30.js.map (deflated 79%)
+ds-webapi-1  |   adding: wwwroot/static/js/main.e2f6bc30.js (deflated 75%)
+ds-webapi-1  |   adding: wwwroot/static/media/ (stored 0%)
+ds-webapi-1  |   adding: wwwroot/static/css/ (stored 0%)
+ds-webapi-1  |   adding: x64/ (stored 0%)
+ds-webapi-1  |   adding: x86/ (stored 0%)
+ds-webapi-1  |   adding: Microsoft.KernelMemory.MemoryDb.Redis.dll (deflated 55%)
+ds-webapi-1  |   adding: Microsoft.SemanticKernel.Connectors.Qdrant.dll (deflated 57%)
+ds-webapi-1  |   adding: Microsoft.SemanticKernel.Connectors.OpenAI.dll (deflated 59%)
+ds-webapi-1  |   adding: Microsoft.KernelMemory.AI.AzureOpenAI.dll (deflated 54%)
+ds-webapi-1  |   adding: Microsoft.KernelMemory.MemoryDb.AzureAISearch.dll (deflated 56%)
+ds-webapi-1  |   adding: StackExchange.Redis.dll (deflated 55%)
+ds-webapi-1  |   adding: Microsoft.KernelMemory.Orchestration.RabbitMQ.dll (deflated 51%)
+ds-webapi-1  |   adding: Microsoft.KernelMemory.Orchestration.AzureQueues.dll (deflated 57%)
+ds-webapi-1  |   adding: Microsoft.SemanticKernel.Connectors.AzureAISearch.dll (deflated 54%)
+ds-webapi-1  |   adding: Microsoft.KernelMemory.MemoryDb.Qdrant.dll (deflated 57%)
+ds-webapi-1  |   adding: System.ClientModel.dll (deflated 44%)
+ds-webapi-1  |   adding: Pgvector.dll (deflated 52%)
+ds-webapi-1  |   adding: Microsoft.Extensions.Diagnostics.dll (deflated 46%)
+ds-webapi-1  |   adding: Microsoft.KernelMemory.DataFormats.AzureAIDocIntel.dll (deflated 51%)
+ds-webapi-1  |   adding: NetTopologySuite.dll (deflated 59%)
+ds-webapi-1  |   adding: Microsoft.KernelMemory.Abstractions.dll (deflated 57%)
+ds-webapi-1  |   adding: Npgsql.dll (deflated 66%)
+ds-webapi-1  |   adding: NRedisStack.dll (deflated 63%)
+ds-webapi-1  |   adding: Microsoft.KernelMemory.AI.OpenAI.dll (deflated 62%)
+ds-webapi-1  |   adding: Microsoft.Extensions.Diagnostics.Abstractions.dll (deflated 49%)
+ds-webapi-1  |   adding: Pipelines.Sockets.Unofficial.dll (deflated 44%)
+ds-webapi-1  |   adding: Microsoft.SemanticKernel.Plugins.OpenApi.dll (deflated 56%)
+ds-webapi-1  |   adding: Microsoft.KernelMemory.ContentStorage.AzureBlobs.dll (deflated 57%)
+ds-webapi-1  |   adding: Microsoft.KernelMemory.Postgres.dll (deflated 61%)
+ds-webapi-1  |   adding: mscordaccore_amd64_amd64_6.0.2824.12007.dll (deflated 56%)
+ds-webapi-1  | /tmp/scripts/deploy
+ds-webapi-1  | + az login --use-device-code
+ds-webapi-1  | To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code FYS8W2MC2 to authenticate.
+ds-webapi-1  | [
+ds-webapi-1  |   {
+ds-webapi-1  |     "cloudName": "AzureCloud",
+ds-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "id": "c05a12a6-0747-45f4-9154-3bace576db04",
+ds-webapi-1  |     "isDefault": true,
+ds-webapi-1  |     "managedByTenants": [],
+ds-webapi-1  |     "name": "COPILOT-DEVELOPMENT",
+ds-webapi-1  |     "state": "Enabled",
+ds-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "user": {
+ds-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+ds-webapi-1  |       "type": "user"
+ds-webapi-1  |     }
+ds-webapi-1  |   },
+ds-webapi-1  |   {
+ds-webapi-1  |     "cloudName": "AzureCloud",
+ds-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "id": "fdce12c3-7da1-4cea-af42-32388c941559",
+ds-webapi-1  |     "isDefault": false,
+ds-webapi-1  |     "managedByTenants": [
+ds-webapi-1  |       {
+ds-webapi-1  |         "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+ds-webapi-1  |       }
+ds-webapi-1  |     ],
+ds-webapi-1  |     "name": "DATASCIENCE-DEVELOPMENT",
+ds-webapi-1  |     "state": "Enabled",
+ds-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "user": {
+ds-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+ds-webapi-1  |       "type": "user"
+ds-webapi-1  |     }
+ds-webapi-1  |   },
+ds-webapi-1  |   {
+ds-webapi-1  |     "cloudName": "AzureCloud",
+ds-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "id": "b43be16a-9f27-4a0d-8370-3088ac9974e0",
+ds-webapi-1  |     "isDefault": false,
+ds-webapi-1  |     "managedByTenants": [],
+ds-webapi-1  |     "name": "DATASCIENCE-PRODUCTION",
+ds-webapi-1  |     "state": "Enabled",
+ds-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "user": {
+ds-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+ds-webapi-1  |       "type": "user"
+ds-webapi-1  |     }
+ds-webapi-1  |   },
+ds-webapi-1  |   {
+ds-webapi-1  |     "cloudName": "AzureCloud",
+ds-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "id": "e18944c8-cbf1-4087-9c69-9149bdfcb8e6",
+ds-webapi-1  |     "isDefault": false,
+ds-webapi-1  |     "managedByTenants": [
+ds-webapi-1  |       {
+ds-webapi-1  |         "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+ds-webapi-1  |       }
+ds-webapi-1  |     ],
+ds-webapi-1  |     "name": "CHCI-CH",
+ds-webapi-1  |     "state": "Enabled",
+ds-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "user": {
+ds-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+ds-webapi-1  |       "type": "user"
+ds-webapi-1  |     }
+ds-webapi-1  |   },
+ds-webapi-1  |   {
+ds-webapi-1  |     "cloudName": "AzureCloud",
+ds-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "id": "a0e1180c-5639-44b0-848a-998313609ccf",
+ds-webapi-1  |     "isDefault": false,
+ds-webapi-1  |     "managedByTenants": [],
+ds-webapi-1  |     "name": "COPILOT-PRODUCTION",
+ds-webapi-1  |     "state": "Enabled",
+ds-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "user": {
+ds-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+ds-webapi-1  |       "type": "user"
+ds-webapi-1  |     }
+ds-webapi-1  |   },
+ds-webapi-1  |   {
+ds-webapi-1  |     "cloudName": "AzureCloud",
+ds-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "id": "9d8139ea-9976-4b23-84c7-44b592cb0018",
+ds-webapi-1  |     "isDefault": false,
+ds-webapi-1  |     "managedByTenants": [],
+ds-webapi-1  |     "name": "COPILOT-STAGING",
+ds-webapi-1  |     "state": "Enabled",
+ds-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+ds-webapi-1  |     "user": {
+ds-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+ds-webapi-1  |       "type": "user"
+ds-webapi-1  |     }
+ds-webapi-1  |   }
+ds-webapi-1  | ]
+ds-webapi-1  | + bash ./deploy-webapi.sh --subscription fdce12c3-7da1-4cea-af42-32388c941559 --resource-group use2-beta-chat-copliot-development-rg --deployment-name use2-beta-chat-copilot-development-rg
+ds-webapi-1  | Getting Azure WebApp resource name...
+ds-webapi-1  | WEB_API_URL: app-copichat-6ad5gzu4lkl4g-webapi.azurewebsites.net
+ds-webapi-1  | WEB_API_NAME: app-copichat-6ad5gzu4lkl4g-webapi
+ds-webapi-1  | PLUGIN_NAMES:
+ds-webapi-1  | Configuring Azure WebApp to run from package...
+ds-webapi-1  | Deploying './out/webapi.zip' to Azure WebApp 'app-copichat-6ad5gzu4lkl4g-webapi'...
+ds-webapi-1  | WARNING: Getting scm site credentials for zip deployment
+ds-webapi-1  | WARNING: Starting zip deployment. This operation can take a while to complete ...
+ds-webapi-1  | WARNING: Deployment endpoint responded with status code 202
+ds-webapi-1  | {
+ds-webapi-1  |   "active": true,
+ds-webapi-1  |   "author": "N/A",
+ds-webapi-1  |   "author_email": "N/A",
+ds-webapi-1  |   "complete": true,
+ds-webapi-1  |   "deployer": "ZipDeploy",
+ds-webapi-1  |   "end_time": "2024-03-26T14:23:31.5470846Z",
+ds-webapi-1  |   "id": "82a531cb41344e82bcbac68cbcc9de91",
+ds-webapi-1  |   "is_readonly": true,
+ds-webapi-1  |   "is_temp": false,
+ds-webapi-1  |   "last_success_end_time": "2024-03-26T14:23:31.5470846Z",
+ds-webapi-1  |   "log_url": "https://app-copichat-6ad5gzu4lkl4g-webapi.scm.azurewebsites.net/api/deployments/latest/log",
+ds-webapi-1  |   "message": "Created via a push deployment",
+ds-webapi-1  |   "progress": "",
+ds-webapi-1  |   "provisioningState": "Succeeded",
+ds-webapi-1  |   "received_time": "2024-03-26T14:23:31.0470025Z",
+ds-webapi-1  |   "site_name": "app-copichat-6ad5gzu4lkl4g-webapi",
+ds-webapi-1  |   "start_time": "2024-03-26T14:23:31.2477498Z",
+ds-webapi-1  |   "status": 4,
+ds-webapi-1  |   "status_text": "",
+ds-webapi-1  |   "url": "https://app-copichat-6ad5gzu4lkl4g-webapi.scm.azurewebsites.net/api/deployments/latest"
+ds-webapi-1  | }
+ds-webapi-1  | Ensuring 'https://app-copichat-6ad5gzu4lkl4g-webapi.azurewebsites.net' is included in AAD app registration's redirect URIs...
+ds-webapi-1  | To verify your deployment, go to 'https://app-copichat-6ad5gzu4lkl4g-webapi.azurewebsites.net/' in your browser.
+ds-webapi-1 exited with code 0
+
+C:\Users\simpkinj\source\repos\chat-copilot>docker compose up development-webapi
+[+] Building 3.5s (10/10) FINISHED                                                                                        docker:default
+ => [development-webapi internal] load .dockerignore                                                                                0.0s
+ => => transferring context: 69B                                                                                                    0.0s
+ => [development-webapi internal] load build definition from Dockerfile                                                             0.0s
+ => => transferring dockerfile: 511B                                                                                                0.0s
+ => [development-webapi internal] load metadata for mcr.microsoft.com/dotnet/sdk:8.0                                                0.2s
+ => [development-webapi internal] load build context                                                                                0.2s
+ => => transferring context: 409.40kB                                                                                               0.2s
+ => [development-webapi base 1/2] FROM mcr.microsoft.com/dotnet/sdk:8.0@sha256:9bb0d97c4361cc844f225c144ac2adb2b65fabfef21f95caedc  0.0s
+ => CACHED [development-webapi base 2/2] RUN     apt-get update     && apt-get install -y curl jq zip azure-cli     && apt-get rem  0.0s
+ => CACHED [development-webapi src 1/3] WORKDIR /tmp                                                                                0.0s
+ => [development-webapi src 2/3] COPY . .                                                                                           1.7s
+ => [development-webapi src 3/3] WORKDIR /tmp/scripts/deploy                                                                        0.0s
+ => [development-webapi] exporting to image                                                                                         1.2s
+ => => exporting layers                                                                                                             1.2s
+ => => writing image sha256:108711cc65e83abcde5a7f99814783099867f2a71ed73d30c66438139abdd809                                        0.0s
+ => => naming to docker.io/library/chat-copilot-development-webapi                                                                  0.0s
+time="2024-03-26T10:48:24-04:00" level=warning msg="Found orphan containers ([chat-copilot-deploy-webapi-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+[+] Running 1/1
+ ✔ Container chat-copilot-development-webapi-1  Created                                                                             0.1s
+Attaching to development-webapi-1
+development-webapi-1  | + bash ./package-webapi.sh
+development-webapi-1  | Building backend executables...
+development-webapi-1  | Build configuration: Release
+development-webapi-1  | MSBuild version 17.9.6+a4ecab324 for .NET
+development-webapi-1  |   Determining projects to restore...
+development-webapi-1  |   Restored /tmp/shared/CopilotChatShared.csproj (in 57.89 sec).
+development-webapi-1  |   Restored /tmp/webapi/CopilotChatWebApi.csproj (in 57.91 sec).
+development-webapi-1  |   CopilotChatShared -> /tmp/shared/bin/Release/net6.0/CopilotChatShared.dll
+development-webapi-1  |   CopilotChatWebApi -> /tmp/webapi/bin/Release/net6.0/win-x64/CopilotChatWebApi.dll
+development-webapi-1  |   CopilotChatWebApi -> /tmp/scripts/deploy/publish/
+development-webapi-1  | Building static frontend files...
+development-webapi-1  | /tmp/webapp /tmp/scripts/deploy
+development-webapi-1  | Installing yarn dependencies...
+development-webapi-1  | yarn install v1.22.22
+development-webapi-1  | warning package-lock.json found. Your project contains lock files generated by tools other than Yarn. It is advised not to mix package managers in order to avoid resolution inconsistencies caused by unsynchronized lock files. To clear this warning, remove package-lock.json.
+development-webapi-1  | [1/4] Resolving packages...
+development-webapi-1  | [2/4] Fetching packages...
+development-webapi-1  | [3/4] Linking dependencies...
+development-webapi-1  | warning " > @fluentui/react-components@9.46.7" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+development-webapi-1  | warning "@fluentui/react-components > @fluentui/react-accordion@9.3.43" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+development-webapi-1  | warning "@fluentui/react-components > @fluentui/react-avatar@9.6.16" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+development-webapi-1  | warning "@fluentui/react-components > @fluentui/react-combobox@9.9.0" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+development-webapi-1  | warning "@fluentui/react-components > @fluentui/react-menu@9.13.1" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+development-webapi-1  | warning "@fluentui/react-components > @fluentui/react-overflow@9.1.12" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+development-webapi-1  | warning "@fluentui/react-components > @fluentui/react-popover@9.8.40" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+development-webapi-1  | warning "@fluentui/react-components > @fluentui/react-radio@9.2.9" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+development-webapi-1  | warning "@fluentui/react-components > @fluentui/react-tabs@9.4.11" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+development-webapi-1  | warning "@fluentui/react-components > @fluentui/react-accordion > @fluentui/react-context-selector@9.1.53" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+development-webapi-1  | warning "@fluentui/react-components > @fluentui/react-positioning > @floating-ui/devtools@0.2.1" has incorrect peer dependency "@floating-ui/dom@>=1.5.4".
+development-webapi-1  | warning " > @fluentui/react-northstar@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+development-webapi-1  | warning " > @fluentui/react-northstar@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+development-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+development-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+development-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings@0.66.5" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+development-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-component-nesting-registry@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+development-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-component-nesting-registry@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+development-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-icons-northstar@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+development-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-icons-northstar@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+development-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-northstar-styles-renderer@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+development-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings > @fluentui/react-northstar-fela-renderer@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+development-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings > @fluentui/react-northstar-fela-renderer@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+development-webapi-1  | warning " > @babel/plugin-proposal-private-property-in-object@7.21.11" has unmet peer dependency "@babel/core@^7.0.0-0".
+development-webapi-1  | warning "@babel/plugin-proposal-private-property-in-object > @babel/helper-create-class-features-plugin@7.22.9" has unmet peer dependency "@babel/core@^7.0.0".
+development-webapi-1  | warning "@babel/plugin-proposal-private-property-in-object > @babel/plugin-syntax-private-property-in-object@7.14.5" has unmet peer dependency "@babel/core@^7.0.0-0".
+development-webapi-1  | warning "@babel/plugin-proposal-private-property-in-object > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers@7.22.9" has unmet peer dependency "@babel/core@^7.0.0".
+development-webapi-1  | warning "react-scripts > eslint-config-react-app > eslint-plugin-flowtype@8.0.3" has unmet peer dependency "@babel/plugin-syntax-flow@^7.14.5".
+development-webapi-1  | warning "react-scripts > eslint-config-react-app > eslint-plugin-flowtype@8.0.3" has unmet peer dependency "@babel/plugin-transform-react-jsx@^7.14.9".
+development-webapi-1  | [4/4] Building fresh packages...
+development-webapi-1  | Done in 67.33s.
+development-webapi-1  | Building webapp...
+development-webapi-1  | yarn run v1.22.22
+development-webapi-1  | $ react-scripts build
+development-webapi-1  | Creating an optimized production build...
+development-webapi-1  | Browserslist: caniuse-lite is outdated. Please run:
+development-webapi-1  |   npx update-browserslist-db@latest
+development-webapi-1  |   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+development-webapi-1  | Browserslist: caniuse-lite is outdated. Please run:
+development-webapi-1  |   npx update-browserslist-db@latest
+development-webapi-1  |   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+development-webapi-1  | Compiled successfully.
+development-webapi-1  |
+development-webapi-1  | File sizes after gzip:
+development-webapi-1  |
+development-webapi-1  |   552.1 kB (+66.61 kB)  build/static/js/main.e2f6bc30.js
+development-webapi-1  |   279 B                 build/static/css/main.3f026dcf.css
+development-webapi-1  |
+development-webapi-1  | The bundle size is significantly larger than recommended.
+development-webapi-1  | Consider reducing it with code splitting: https://goo.gl/9VhYWB
+development-webapi-1  | You can also analyze the project dependencies: https://goo.gl/LeUzfb
+development-webapi-1  |
+development-webapi-1  | The project was built assuming it is hosted at /.
+development-webapi-1  | You can control this with the homepage field in your package.json.
+development-webapi-1  |
+development-webapi-1  | The build folder is ready to be deployed.
+development-webapi-1  | You may serve it with a static server:
+development-webapi-1  |
+development-webapi-1  |   yarn global add serve
+development-webapi-1  |   serve -s build
+development-webapi-1  |
+development-webapi-1  | Find out more about deployment here:
+development-webapi-1  |
+development-webapi-1  |   https://cra.link/deployment
+development-webapi-1  |
+development-webapi-1  | Done in 100.42s.
+development-webapi-1  | /tmp/scripts/deploy
+development-webapi-1  | Copying frontend files to package
+development-webapi-1  | /tmp/scripts/deploy/publish /tmp/scripts/deploy
+development-webapi-1  | Compressing to /tmp/scripts/deploy/out/webapi.zip
+development-webapi-1  | updating: Plugins/OpenApi/ (stored 0%)
+development-webapi-1  | updating: Plugins/OpenApi/GitHubPlugin/openapi.json (deflated 91%)
+development-webapi-1  | updating: Plugins/OpenApi/JiraPlugin/openapi.json (deflated 90%)
+development-webapi-1  | updating: wwwroot/static/ (stored 0%)
+development-webapi-1  | updating: wwwroot/asset-manifest.json (deflated 59%)
+development-webapi-1  | updating: wwwroot/favicon.ico (deflated 38%)
+development-webapi-1  | updating: wwwroot/index.html (deflated 31%)
+development-webapi-1  | updating: wwwroot/static/css/main.3f026dcf.css (deflated 33%)
+development-webapi-1  | updating: wwwroot/static/css/main.3f026dcf.css.map (deflated 42%)
+development-webapi-1  | updating: wwwroot/static/js/main.49e0e17c.js (deflated 73%)
+development-webapi-1  | updating: wwwroot/static/js/main.49e0e17c.js.LICENSE.txt (deflated 76%)
+development-webapi-1  | updating: wwwroot/static/js/main.49e0e17c.js.map (deflated 79%)
+development-webapi-1  | updating: wwwroot/static/media/add-plugin.67bd3a863550baa0c309.png (stored 0%)
+development-webapi-1  | updating: wwwroot/static/media/ms-symbollockup_signin_light.e2f600a8cb97ce3efe4d3db463e6af48.svg (deflated 65%)
+development-webapi-1  | updating: wwwroot/static/media/PennDNA.51bf0620833e5b81aafc.png (deflated 0%)
+development-webapi-1  | updating: wwwroot/static/media/typing-balls-light.a859d2fb6345248c0471c6cde7d729fe.svg (deflated 75%)
+development-webapi-1  | updating: x64/leptonica-1.82.0.dll (deflated 58%)
+development-webapi-1  | updating: x64/tesseract50.dll (deflated 54%)
+development-webapi-1  | updating: x86/leptonica-1.82.0.dll (deflated 59%)
+development-webapi-1  | updating: x86/tesseract50.dll (deflated 53%)
+development-webapi-1  | updating: api-ms-win-core-console-l1-1-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-core-console-l1-2-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-core-datetime-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-core-debug-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-core-errorhandling-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-core-fibers-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-core-file-l1-1-0.dll (deflated 71%)
+development-webapi-1  | updating: api-ms-win-core-file-l1-2-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-core-file-l2-1-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-core-handle-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-core-heap-l1-1-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-core-interlocked-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-core-libraryloader-l1-1-0.dll (deflated 68%)
+development-webapi-1  | updating: api-ms-win-core-localization-l1-2-0.dll (deflated 66%)
+development-webapi-1  | updating: api-ms-win-core-memory-l1-1-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-core-namedpipe-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-core-processenvironment-l1-1-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-core-processthreads-l1-1-0.dll (deflated 66%)
+development-webapi-1  | updating: api-ms-win-core-processthreads-l1-1-1.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-core-profile-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-core-rtlsupport-l1-1-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-core-string-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-core-synch-l1-1-0.dll (deflated 67%)
+development-webapi-1  | updating: api-ms-win-core-synch-l1-2-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-core-sysinfo-l1-1-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-core-timezone-l1-1-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-core-util-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-crt-conio-l1-1-0.dll (deflated 68%)
+development-webapi-1  | updating: api-ms-win-crt-convert-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-crt-environment-l1-1-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-crt-filesystem-l1-1-0.dll (deflated 66%)
+development-webapi-1  | updating: api-ms-win-crt-heap-l1-1-0.dll (deflated 68%)
+development-webapi-1  | updating: api-ms-win-crt-locale-l1-1-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-crt-math-l1-1-0.dll (deflated 68%)
+development-webapi-1  | updating: api-ms-win-crt-multibyte-l1-1-0.dll (deflated 70%)
+development-webapi-1  | updating: api-ms-win-crt-private-l1-1-0.dll (deflated 73%)
+development-webapi-1  | updating: api-ms-win-crt-process-l1-1-0.dll (deflated 68%)
+development-webapi-1  | updating: api-ms-win-crt-runtime-l1-1-0.dll (deflated 69%)
+development-webapi-1  | updating: api-ms-win-crt-stdio-l1-1-0.dll (deflated 67%)
+development-webapi-1  | updating: api-ms-win-crt-string-l1-1-0.dll (deflated 67%)
+development-webapi-1  | updating: api-ms-win-crt-time-l1-1-0.dll (deflated 66%)
+development-webapi-1  | updating: api-ms-win-crt-utility-l1-1-0.dll (deflated 68%)
+development-webapi-1  | updating: appsettings.Development.json (deflated 55%)
+development-webapi-1  | updating: appsettings.json (deflated 69%)
+development-webapi-1  | updating: aspnetcorev2_inprocess.dll (deflated 54%)
+development-webapi-1  | updating: Azure.AI.FormRecognizer.dll (deflated 67%)
+development-webapi-1  | updating: Azure.AI.OpenAI.dll (deflated 70%)
+development-webapi-1  | updating: Azure.Core.dll (deflated 58%)
+development-webapi-1  | updating: Azure.Extensions.AspNetCore.Configuration.Secrets.dll (deflated 45%)
+development-webapi-1  | updating: Azure.Identity.dll (deflated 62%)
+development-webapi-1  | updating: Azure.Search.Documents.dll (deflated 66%)
+development-webapi-1  | updating: Azure.Security.KeyVault.Certificates.dll (deflated 59%)
+development-webapi-1  | updating: Azure.Security.KeyVault.Secrets.dll (deflated 56%)
+development-webapi-1  | updating: Azure.Storage.Blobs.dll (deflated 67%)
+development-webapi-1  | updating: Azure.Storage.Common.dll (deflated 52%)
+development-webapi-1  | updating: Azure.Storage.Queues.dll (deflated 62%)
+development-webapi-1  | updating: ClosedXML.dll (deflated 63%)
+development-webapi-1  | updating: clretwrc.dll (deflated 78%)
+development-webapi-1  | updating: clrjit.dll (deflated 45%)
+development-webapi-1  | updating: CopilotChatShared.dll (deflated 59%)
+development-webapi-1  | updating: CopilotChatShared.pdb (deflated 43%)
+development-webapi-1  | updating: CopilotChatWebApi.deps.json (deflated 85%)
+development-webapi-1  | updating: CopilotChatWebApi.dll (deflated 59%)
+development-webapi-1  | updating: CopilotChatWebApi.exe (deflated 55%)
+development-webapi-1  | updating: CopilotChatWebApi.pdb (deflated 50%)
+development-webapi-1  | updating: CopilotChatWebApi.runtimeconfig.json (deflated 48%)
+development-webapi-1  | updating: coreclr.dll (deflated 50%)
+development-webapi-1  | updating: Cosmos.CRTCompat.dll (deflated 51%)
+development-webapi-1  | updating: createdump.exe (deflated 47%)
+development-webapi-1  | updating: dbgshim.dll (deflated 50%)
+development-webapi-1  | updating: DocumentFormat.OpenXml.dll (deflated 75%)
+development-webapi-1  | updating: ExcelNumberFormat.dll (deflated 54%)
+development-webapi-1  | updating: Google.Apis.Core.dll (deflated 55%)
+development-webapi-1  | updating: Google.Apis.CustomSearchAPI.v1.dll (deflated 64%)
+development-webapi-1  | updating: Google.Apis.dll (deflated 55%)
+development-webapi-1  | updating: Handlebars.dll (deflated 60%)
+development-webapi-1  | updating: hostfxr.dll (deflated 54%)
+development-webapi-1  | updating: hostpolicy.dll (deflated 54%)
+development-webapi-1  | updating: HtmlAgilityPack.dll (deflated 62%)
+development-webapi-1  | updating: Humanizer.dll (deflated 56%)
+development-webapi-1  | updating: Irony.dll (deflated 56%)
+development-webapi-1  | updating: JetBrains.Annotations.dll (deflated 77%)
+development-webapi-1  | updating: Json.More.dll (deflated 53%)
+development-webapi-1  | updating: JsonPointer.Net.dll (deflated 52%)
+development-webapi-1  | updating: JsonSchema.Net.dll (deflated 63%)
+development-webapi-1  | updating: JsonSchema.Net.Generation.dll (deflated 57%)
+development-webapi-1  | updating: Microsoft.AI.DependencyCollector.dll (deflated 64%)
+development-webapi-1  | updating: Microsoft.AI.EventCounterCollector.dll (deflated 53%)
+development-webapi-1  | updating: Microsoft.AI.PerfCounterCollector.dll (deflated 62%)
+development-webapi-1  | updating: Microsoft.AI.ServerTelemetryChannel.dll (deflated 59%)
+development-webapi-1  | updating: Microsoft.AI.WindowsServer.dll (deflated 56%)
+development-webapi-1  | updating: Microsoft.ApplicationInsights.AspNetCore.dll (deflated 57%)
+development-webapi-1  | updating: Microsoft.ApplicationInsights.dll (deflated 60%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Antiforgery.dll (deflated 50%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Authentication.Abstractions.dll (deflated 48%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Authentication.Cookies.dll (deflated 50%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Authentication.Core.dll (deflated 54%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Authentication.dll (deflated 51%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Authentication.JwtBearer.dll (deflated 50%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Authentication.OAuth.dll (deflated 48%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Authentication.OpenIdConnect.dll (deflated 60%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Authorization.dll (deflated 49%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Authorization.Policy.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Components.Authorization.dll (deflated 47%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Components.dll (deflated 54%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Components.Forms.dll (deflated 47%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Components.Server.dll (deflated 58%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Components.Web.dll (deflated 54%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Connections.Abstractions.dll (deflated 48%)
+development-webapi-1  | updating: Microsoft.AspNetCore.CookiePolicy.dll (deflated 48%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Cors.dll (deflated 49%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Cryptography.Internal.dll (deflated 50%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Cryptography.KeyDerivation.dll (deflated 41%)
+development-webapi-1  | updating: Microsoft.AspNetCore.DataProtection.Abstractions.dll (deflated 44%)
+development-webapi-1  | updating: Microsoft.AspNetCore.DataProtection.dll (deflated 54%)
+development-webapi-1  | updating: Microsoft.AspNetCore.DataProtection.Extensions.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Diagnostics.Abstractions.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Diagnostics.dll (deflated 58%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Diagnostics.HealthChecks.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.AspNetCore.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.AspNetCore.HostFiltering.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Hosting.Abstractions.dll (deflated 48%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Hosting.dll (deflated 55%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Hosting.Server.Abstractions.dll (deflated 43%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Html.Abstractions.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Http.Abstractions.dll (deflated 50%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Http.Connections.Common.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Http.Connections.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Http.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Http.Extensions.dll (deflated 54%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Http.Features.dll (deflated 57%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Http.Results.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.AspNetCore.HttpLogging.dll (deflated 49%)
+development-webapi-1  | updating: Microsoft.AspNetCore.HttpOverrides.dll (deflated 44%)
+development-webapi-1  | updating: Microsoft.AspNetCore.HttpsPolicy.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Identity.dll (deflated 54%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Localization.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Localization.Routing.dll (deflated 44%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Metadata.dll (deflated 41%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Abstractions.dll (deflated 55%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.ApiExplorer.dll (deflated 50%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Core.dll (deflated 58%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Cors.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.DataAnnotations.dll (deflated 51%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.dll (deflated 48%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Formatters.Json.dll (deflated 43%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Formatters.Xml.dll (deflated 51%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Localization.dll (deflated 50%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Razor.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.RazorPages.dll (deflated 56%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.TagHelpers.dll (deflated 53%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Mvc.ViewFeatures.dll (deflated 55%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Razor.dll (deflated 48%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Razor.Runtime.dll (deflated 47%)
+development-webapi-1  | updating: Microsoft.AspNetCore.ResponseCaching.Abstractions.dll (deflated 43%)
+development-webapi-1  | updating: Microsoft.AspNetCore.ResponseCaching.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.AspNetCore.ResponseCompression.dll (deflated 47%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Rewrite.dll (deflated 51%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Routing.Abstractions.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Routing.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Server.HttpSys.dll (deflated 53%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Server.IIS.dll (deflated 55%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Server.IISIntegration.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.Core.dll (deflated 58%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.Transport.Quic.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll (deflated 51%)
+development-webapi-1  | updating: Microsoft.AspNetCore.Session.dll (deflated 48%)
+development-webapi-1  | updating: Microsoft.AspNetCore.SignalR.Common.dll (deflated 48%)
+development-webapi-1  | updating: Microsoft.AspNetCore.SignalR.Core.dll (deflated 54%)
+development-webapi-1  | updating: Microsoft.AspNetCore.SignalR.dll (deflated 44%)
+development-webapi-1  | updating: Microsoft.AspNetCore.SignalR.Protocols.Json.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.AspNetCore.StaticFiles.dll (deflated 56%)
+development-webapi-1  | updating: Microsoft.AspNetCore.WebSockets.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.AspNetCore.WebUtilities.dll (deflated 50%)
+development-webapi-1  | updating: Microsoft.Azure.Cosmos.Client.dll (deflated 65%)
+development-webapi-1  | updating: Microsoft.Azure.Cosmos.Core.dll (deflated 65%)
+development-webapi-1  | updating: Microsoft.Azure.Cosmos.Direct.dll (deflated 69%)
+development-webapi-1  | updating: Microsoft.Azure.Cosmos.Serialization.HybridRow.dll (deflated 63%)
+development-webapi-1  | updating: Microsoft.Azure.Cosmos.ServiceInterop.dll (deflated 70%)
+development-webapi-1  | updating: Microsoft.Bcl.AsyncInterfaces.dll (deflated 42%)
+development-webapi-1  | updating: Microsoft.Bcl.HashCode.dll (deflated 44%)
+development-webapi-1  | updating: Microsoft.Bcl.TimeProvider.dll (deflated 47%)
+development-webapi-1  | updating: Microsoft.CSharp.dll (deflated 51%)
+development-webapi-1  | updating: Microsoft.DiaSymReader.Native.amd64.dll (deflated 55%)
+development-webapi-1  | updating: Microsoft.Extensions.Caching.Abstractions.dll (deflated 47%)
+development-webapi-1  | updating: Microsoft.Extensions.Caching.Memory.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.Extensions.Configuration.Abstractions.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.Extensions.Configuration.Binder.dll (deflated 51%)
+development-webapi-1  | updating: Microsoft.Extensions.Configuration.CommandLine.dll (deflated 44%)
+development-webapi-1  | updating: Microsoft.Extensions.Configuration.dll (deflated 48%)
+development-webapi-1  | updating: Microsoft.Extensions.Configuration.EnvironmentVariables.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.Extensions.Configuration.FileExtensions.dll (deflated 47%)
+development-webapi-1  | updating: Microsoft.Extensions.Configuration.Ini.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.Extensions.Configuration.Json.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.Extensions.Configuration.KeyPerFile.dll (deflated 44%)
+development-webapi-1  | updating: Microsoft.Extensions.Configuration.UserSecrets.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.Extensions.Configuration.Xml.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.Extensions.DependencyInjection.Abstractions.dll (deflated 56%)
+development-webapi-1  | updating: Microsoft.Extensions.DependencyInjection.dll (deflated 54%)
+development-webapi-1  | updating: Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.Extensions.Diagnostics.HealthChecks.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.Extensions.Features.dll (deflated 43%)
+development-webapi-1  | updating: Microsoft.Extensions.FileProviders.Abstractions.dll (deflated 44%)
+development-webapi-1  | updating: Microsoft.Extensions.FileProviders.Composite.dll (deflated 42%)
+development-webapi-1  | updating: Microsoft.Extensions.FileProviders.Embedded.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.Extensions.FileProviders.Physical.dll (deflated 47%)
+development-webapi-1  | updating: Microsoft.Extensions.FileSystemGlobbing.dll (deflated 48%)
+development-webapi-1  | updating: Microsoft.Extensions.Hosting.Abstractions.dll (deflated 57%)
+development-webapi-1  | updating: Microsoft.Extensions.Hosting.dll (deflated 54%)
+development-webapi-1  | updating: Microsoft.Extensions.Http.dll (deflated 53%)
+development-webapi-1  | updating: Microsoft.Extensions.Identity.Core.dll (deflated 58%)
+development-webapi-1  | updating: Microsoft.Extensions.Identity.Stores.dll (deflated 54%)
+development-webapi-1  | updating: Microsoft.Extensions.Localization.Abstractions.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.Extensions.Localization.dll (deflated 45%)
+development-webapi-1  | updating: Microsoft.Extensions.Logging.Abstractions.dll (deflated 53%)
+development-webapi-1  | updating: Microsoft.Extensions.Logging.ApplicationInsights.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.Extensions.Logging.Configuration.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.Extensions.Logging.Console.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.Extensions.Logging.Debug.dll (deflated 43%)
+development-webapi-1  | updating: Microsoft.Extensions.Logging.dll (deflated 49%)
+development-webapi-1  | updating: Microsoft.Extensions.Logging.EventLog.dll (deflated 43%)
+development-webapi-1  | updating: Microsoft.Extensions.Logging.EventSource.dll (deflated 49%)
+development-webapi-1  | updating: Microsoft.Extensions.Logging.TraceSource.dll (deflated 44%)
+development-webapi-1  | updating: Microsoft.Extensions.ObjectPool.dll (deflated 43%)
+development-webapi-1  | updating: Microsoft.Extensions.Options.ConfigurationExtensions.dll (deflated 44%)
+development-webapi-1  | updating: Microsoft.Extensions.Options.DataAnnotations.dll (deflated 43%)
+development-webapi-1  | updating: Microsoft.Extensions.Options.dll (deflated 53%)
+development-webapi-1  | updating: Microsoft.Extensions.Primitives.dll (deflated 50%)
+development-webapi-1  | updating: Microsoft.Extensions.WebEncoders.dll (deflated 47%)
+development-webapi-1  | updating: Microsoft.Graph.Core.dll (deflated 56%)
+development-webapi-1  | updating: Microsoft.Graph.dll (deflated 76%)
+development-webapi-1  | updating: Microsoft.Identity.Abstractions.dll (deflated 53%)
+development-webapi-1  | updating: Microsoft.Identity.Client.dll (deflated 67%)
+development-webapi-1  | updating: Microsoft.Identity.Client.Extensions.Msal.dll (deflated 55%)
+development-webapi-1  | updating: Microsoft.Identity.Web.Certificate.dll (deflated 49%)
+development-webapi-1  | updating: Microsoft.Identity.Web.Certificateless.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.Identity.Web.Diagnostics.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.Identity.Web.dll (deflated 60%)
+development-webapi-1  | updating: Microsoft.Identity.Web.TokenAcquisition.dll (deflated 59%)
+development-webapi-1  | updating: Microsoft.Identity.Web.TokenCache.dll (deflated 55%)
+development-webapi-1  | updating: Microsoft.IdentityModel.Abstractions.dll (deflated 43%)
+development-webapi-1  | updating: Microsoft.IdentityModel.JsonWebTokens.dll (deflated 63%)
+development-webapi-1  | updating: Microsoft.IdentityModel.Logging.dll (deflated 53%)
+development-webapi-1  | updating: Microsoft.IdentityModel.LoggingExtensions.dll (deflated 41%)
+development-webapi-1  | updating: Microsoft.IdentityModel.Protocols.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.IdentityModel.Protocols.OpenIdConnect.dll (deflated 65%)
+development-webapi-1  | updating: Microsoft.IdentityModel.Tokens.dll (deflated 67%)
+development-webapi-1  | updating: Microsoft.IdentityModel.Validators.dll (deflated 54%)
+development-webapi-1  | updating: Microsoft.JSInterop.dll (deflated 50%)
+development-webapi-1  | updating: Microsoft.KernelMemory.Client.dll (deflated 56%)
+development-webapi-1  | updating: Microsoft.KernelMemory.Core.dll (deflated 60%)
+development-webapi-1  | updating: Microsoft.Net.Http.Headers.dll (deflated 49%)
+development-webapi-1  | updating: Microsoft.OpenApi.dll (deflated 60%)
+development-webapi-1  | updating: Microsoft.OpenApi.Readers.dll (deflated 60%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Abstractions.dll (deflated 57%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Connectors.AI.OpenAI.dll (deflated 60%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Connectors.Memory.AzureCognitiveSearch.dll (deflated 57%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Connectors.Memory.Qdrant.dll (deflated 60%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Core.dll (deflated 56%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.dll (deflated 39%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Functions.OpenAPI.dll (deflated 64%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Planners.Core.dll (deflated 60%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.Core.dll (deflated 56%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.Memory.dll (deflated 53%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.MsGraph.dll (deflated 56%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.Web.dll (deflated 53%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.Reliability.Basic.dll (deflated 55%)
+development-webapi-1  | updating: Microsoft.SemanticKernel.TemplateEngine.Basic.dll (deflated 55%)
+development-webapi-1  | updating: Microsoft.VisualBasic.Core.dll (deflated 52%)
+development-webapi-1  | updating: Microsoft.VisualBasic.dll (deflated 43%)
+development-webapi-1  | updating: Microsoft.Win32.Primitives.dll (deflated 42%)
+development-webapi-1  | updating: Microsoft.Win32.Registry.dll (deflated 46%)
+development-webapi-1  | updating: Microsoft.Win32.SystemEvents.dll (deflated 51%)
+development-webapi-1  | updating: mscordaccore_amd64_amd64_6.0.2023.32017.dll (deflated 57%)
+development-webapi-1  | updating: mscordaccore.dll (deflated 56%)
+development-webapi-1  | updating: mscordbi.dll (deflated 58%)
+development-webapi-1  | updating: mscorlib.dll (deflated 63%)
+development-webapi-1  | updating: mscorrc.dll (deflated 77%)
+development-webapi-1  | updating: msquic.dll (deflated 50%)
+development-webapi-1  | updating: msvcp140.dll (deflated 68%)
+development-webapi-1  | updating: netstandard.dll (deflated 67%)
+development-webapi-1  | updating: Newtonsoft.Json.dll (deflated 62%)
+development-webapi-1  | updating: nuget.config (deflated 48%)
+development-webapi-1  | updating: Polly.Core.dll (deflated 57%)
+development-webapi-1  | updating: RabbitMQ.Client.dll (deflated 62%)
+development-webapi-1  | updating: SharpToken.dll (deflated 57%)
+development-webapi-1  | updating: SharpYaml.dll (deflated 59%)
+development-webapi-1  | updating: SixLabors.Fonts.dll (deflated 76%)
+development-webapi-1  | updating: Swashbuckle.AspNetCore.Swagger.dll (deflated 55%)
+development-webapi-1  | updating: Swashbuckle.AspNetCore.SwaggerGen.dll (deflated 56%)
+development-webapi-1  | updating: Swashbuckle.AspNetCore.SwaggerUI.dll (deflated 70%)
+development-webapi-1  | updating: System.AppContext.dll (deflated 40%)
+development-webapi-1  | updating: System.Buffers.dll (deflated 40%)
+development-webapi-1  | updating: System.Collections.Concurrent.dll (deflated 49%)
+development-webapi-1  | updating: System.Collections.dll (deflated 51%)
+development-webapi-1  | updating: System.Collections.Immutable.dll (deflated 56%)
+development-webapi-1  | updating: System.Collections.NonGeneric.dll (deflated 53%)
+development-webapi-1  | updating: System.Collections.Specialized.dll (deflated 49%)
+development-webapi-1  | updating: System.ComponentModel.Annotations.dll (deflated 54%)
+development-webapi-1  | updating: System.ComponentModel.DataAnnotations.dll (deflated 43%)
+development-webapi-1  | updating: System.ComponentModel.dll (deflated 43%)
+development-webapi-1  | updating: System.ComponentModel.EventBasedAsync.dll (deflated 47%)
+development-webapi-1  | updating: System.ComponentModel.Primitives.dll (deflated 51%)
+development-webapi-1  | updating: System.ComponentModel.TypeConverter.dll (deflated 54%)
+development-webapi-1  | updating: System.Configuration.ConfigurationManager.dll (deflated 61%)
+development-webapi-1  | updating: System.Configuration.dll (deflated 47%)
+development-webapi-1  | updating: System.Console.dll (deflated 51%)
+development-webapi-1  | updating: System.Core.dll (deflated 51%)
+development-webapi-1  | updating: System.Data.Common.dll (deflated 53%)
+development-webapi-1  | updating: System.Data.DataSetExtensions.dll (deflated 42%)
+development-webapi-1  | updating: System.Data.dll (deflated 52%)
+development-webapi-1  | updating: System.Diagnostics.Contracts.dll (deflated 40%)
+development-webapi-1  | updating: System.Diagnostics.Debug.dll (deflated 40%)
+development-webapi-1  | updating: System.Diagnostics.DiagnosticSource.dll (deflated 56%)
+development-webapi-1  | updating: System.Diagnostics.EventLog.dll (deflated 58%)
+development-webapi-1  | updating: System.Diagnostics.EventLog.Messages.dll (deflated 99%)
+development-webapi-1  | updating: System.Diagnostics.FileVersionInfo.dll (deflated 47%)
+development-webapi-1  | updating: System.Diagnostics.PerformanceCounter.dll (deflated 55%)
+development-webapi-1  | updating: System.Diagnostics.Process.dll (deflated 50%)
+development-webapi-1  | updating: System.Diagnostics.StackTrace.dll (deflated 45%)
+development-webapi-1  | updating: System.Diagnostics.TextWriterTraceListener.dll (deflated 47%)
+development-webapi-1  | updating: System.Diagnostics.Tools.dll (deflated 40%)
+development-webapi-1  | updating: System.Diagnostics.TraceSource.dll (deflated 52%)
+development-webapi-1  | updating: System.Diagnostics.Tracing.dll (deflated 41%)
+development-webapi-1  | updating: System.dll (deflated 62%)
+development-webapi-1  | updating: System.Drawing.Common.dll (deflated 61%)
+development-webapi-1  | updating: System.Drawing.dll (deflated 47%)
+development-webapi-1  | updating: System.Drawing.Primitives.dll (deflated 54%)
+development-webapi-1  | updating: System.Dynamic.Runtime.dll (deflated 42%)
+development-webapi-1  | updating: System.Formats.Asn1.dll (deflated 49%)
+development-webapi-1  | updating: System.Globalization.Calendars.dll (deflated 40%)
+development-webapi-1  | updating: System.Globalization.dll (deflated 40%)
+development-webapi-1  | updating: System.Globalization.Extensions.dll (deflated 39%)
+development-webapi-1  | updating: System.IdentityModel.Tokens.Jwt.dll (deflated 59%)
+development-webapi-1  | updating: System.IO.Compression.Brotli.dll (deflated 47%)
+development-webapi-1  | updating: System.IO.Compression.dll (deflated 49%)
+development-webapi-1  | updating: System.IO.Compression.FileSystem.dll (deflated 41%)
+development-webapi-1  | updating: System.IO.Compression.Native.dll (deflated 54%)
+development-webapi-1  | updating: System.IO.Compression.ZipFile.dll (deflated 44%)
+development-webapi-1  | updating: System.IO.dll (deflated 41%)
+development-webapi-1  | updating: System.IO.FileSystem.AccessControl.dll (deflated 48%)
+development-webapi-1  | updating: System.IO.FileSystem.dll (deflated 48%)
+development-webapi-1  | updating: System.IO.FileSystem.DriveInfo.dll (deflated 46%)
+development-webapi-1  | updating: System.IO.FileSystem.Primitives.dll (deflated 39%)
+development-webapi-1  | updating: System.IO.FileSystem.Watcher.dll (deflated 46%)
+development-webapi-1  | updating: System.IO.Hashing.dll (deflated 47%)
+development-webapi-1  | updating: System.IO.IsolatedStorage.dll (deflated 50%)
+development-webapi-1  | updating: System.IO.MemoryMappedFiles.dll (deflated 47%)
+development-webapi-1  | updating: System.IO.Packaging.dll (deflated 58%)
+development-webapi-1  | updating: System.IO.Pipelines.dll (deflated 48%)
+development-webapi-1  | updating: System.IO.Pipes.AccessControl.dll (deflated 40%)
+development-webapi-1  | updating: System.IO.Pipes.dll (deflated 50%)
+development-webapi-1  | updating: System.IO.UnmanagedMemoryStream.dll (deflated 39%)
+development-webapi-1  | updating: System.Linq.Async.dll (deflated 66%)
+development-webapi-1  | updating: System.Linq.dll (deflated 55%)
+development-webapi-1  | updating: System.Linq.Expressions.dll (deflated 65%)
+development-webapi-1  | updating: System.Linq.Parallel.dll (deflated 58%)
+development-webapi-1  | updating: System.Linq.Queryable.dll (deflated 65%)
+development-webapi-1  | updating: System.Memory.Data.dll (deflated 46%)
+development-webapi-1  | updating: System.Memory.dll (deflated 49%)
+development-webapi-1  | updating: System.Net.dll (deflated 44%)
+development-webapi-1  | updating: System.Net.Http.dll (deflated 53%)
+development-webapi-1  | updating: System.Net.Http.Json.dll (deflated 52%)
+development-webapi-1  | updating: System.Net.HttpListener.dll (deflated 51%)
+development-webapi-1  | updating: System.Net.Mail.dll (deflated 51%)
+development-webapi-1  | updating: System.Net.NameResolution.dll (deflated 47%)
+development-webapi-1  | updating: System.Net.NetworkInformation.dll (deflated 50%)
+development-webapi-1  | updating: System.Net.Ping.dll (deflated 45%)
+development-webapi-1  | updating: System.Net.Primitives.dll (deflated 46%)
+development-webapi-1  | updating: System.Net.Quic.dll (deflated 51%)
+development-webapi-1  | updating: System.Net.Requests.dll (deflated 50%)
+development-webapi-1  | updating: System.Net.Security.dll (deflated 53%)
+development-webapi-1  | updating: System.Net.ServicePoint.dll (deflated 46%)
+development-webapi-1  | updating: System.Net.Sockets.dll (deflated 51%)
+development-webapi-1  | updating: System.Net.WebClient.dll (deflated 52%)
+development-webapi-1  | updating: System.Net.WebHeaderCollection.dll (deflated 48%)
+development-webapi-1  | updating: System.Net.WebProxy.dll (deflated 44%)
+development-webapi-1  | updating: System.Net.WebSockets.Client.dll (deflated 47%)
+development-webapi-1  | updating: System.Net.WebSockets.dll (deflated 48%)
+development-webapi-1  | updating: System.Numerics.dll (deflated 41%)
+development-webapi-1  | updating: System.Numerics.Tensors.dll (deflated 62%)
+development-webapi-1  | updating: System.Numerics.Vectors.dll (deflated 41%)
+development-webapi-1  | updating: System.ObjectModel.dll (deflated 51%)
+development-webapi-1  | updating: System.Private.CoreLib.dll (deflated 56%)
+development-webapi-1  | updating: System.Private.DataContractSerialization.dll (deflated 56%)
+development-webapi-1  | updating: System.Private.Uri.dll (deflated 44%)
+development-webapi-1  | updating: System.Private.Xml.dll (deflated 55%)
+development-webapi-1  | updating: System.Private.Xml.Linq.dll (deflated 52%)
+development-webapi-1  | updating: System.Reflection.DispatchProxy.dll (deflated 46%)
+development-webapi-1  | updating: System.Reflection.dll (deflated 40%)
+development-webapi-1  | updating: System.Reflection.Emit.dll (deflated 40%)
+development-webapi-1  | updating: System.Reflection.Emit.ILGeneration.dll (deflated 41%)
+development-webapi-1  | updating: System.Reflection.Emit.Lightweight.dll (deflated 41%)
+development-webapi-1  | updating: System.Reflection.Extensions.dll (deflated 40%)
+development-webapi-1  | updating: System.Reflection.Metadata.dll (deflated 56%)
+development-webapi-1  | updating: System.Reflection.Primitives.dll (deflated 40%)
+development-webapi-1  | updating: System.Reflection.TypeExtensions.dll (deflated 50%)
+development-webapi-1  | updating: System.Resources.Reader.dll (deflated 40%)
+development-webapi-1  | updating: System.Resources.ResourceManager.dll (deflated 40%)
+development-webapi-1  | updating: System.Resources.Writer.dll (deflated 44%)
+development-webapi-1  | updating: System.Runtime.CompilerServices.Unsafe.dll (deflated 47%)
+development-webapi-1  | updating: System.Runtime.CompilerServices.VisualC.dll (deflated 44%)
+development-webapi-1  | updating: System.Runtime.dll (deflated 59%)
+development-webapi-1  | updating: System.Runtime.Extensions.dll (deflated 42%)
+development-webapi-1  | updating: System.Runtime.Handles.dll (deflated 39%)
+development-webapi-1  | updating: System.Runtime.InteropServices.dll (deflated 48%)
+development-webapi-1  | updating: System.Runtime.InteropServices.RuntimeInformation.dll (deflated 45%)
+development-webapi-1  | updating: System.Runtime.Intrinsics.dll (deflated 41%)
+development-webapi-1  | updating: System.Runtime.Loader.dll (deflated 40%)
+development-webapi-1  | updating: System.Runtime.Numerics.dll (deflated 45%)
+development-webapi-1  | updating: System.Runtime.Serialization.dll (deflated 43%)
+development-webapi-1  | updating: System.Runtime.Serialization.Formatters.dll (deflated 49%)
+development-webapi-1  | updating: System.Runtime.Serialization.Json.dll (deflated 41%)
+development-webapi-1  | updating: System.Runtime.Serialization.Primitives.dll (deflated 47%)
+development-webapi-1  | updating: System.Runtime.Serialization.Xml.dll (deflated 41%)
+development-webapi-1  | updating: System.Security.AccessControl.dll (deflated 50%)
+development-webapi-1  | updating: System.Security.Claims.dll (deflated 52%)
+development-webapi-1  | updating: System.Security.Cryptography.Algorithms.dll (deflated 56%)
+development-webapi-1  | updating: System.Security.Cryptography.Cng.dll (deflated 52%)
+development-webapi-1  | updating: System.Security.Cryptography.Csp.dll (deflated 49%)
+development-webapi-1  | updating: System.Security.Cryptography.Encoding.dll (deflated 49%)
+development-webapi-1  | updating: System.Security.Cryptography.OpenSsl.dll (deflated 51%)
+development-webapi-1  | updating: System.Security.Cryptography.Pkcs.dll (deflated 60%)
+development-webapi-1  | updating: System.Security.Cryptography.Primitives.dll (deflated 50%)
+development-webapi-1  | updating: System.Security.Cryptography.ProtectedData.dll (deflated 48%)
+development-webapi-1  | updating: System.Security.Cryptography.X509Certificates.dll (deflated 53%)
+development-webapi-1  | updating: System.Security.Cryptography.Xml.dll (deflated 53%)
+development-webapi-1  | updating: System.Security.dll (deflated 45%)
+development-webapi-1  | updating: System.Security.Permissions.dll (deflated 60%)
+development-webapi-1  | updating: System.Security.Principal.dll (deflated 39%)
+development-webapi-1  | updating: System.Security.Principal.Windows.dll (deflated 47%)
+development-webapi-1  | updating: System.Security.SecureString.dll (deflated 39%)
+development-webapi-1  | updating: System.ServiceModel.Web.dll (deflated 43%)
+development-webapi-1  | updating: System.ServiceProcess.dll (deflated 41%)
+development-webapi-1  | updating: System.Text.Encoding.CodePages.dll (deflated 31%)
+development-webapi-1  | updating: System.Text.Encoding.dll (deflated 40%)
+development-webapi-1  | updating: System.Text.Encoding.Extensions.dll (deflated 41%)
+development-webapi-1  | updating: System.Text.Encodings.Web.dll (deflated 56%)
+development-webapi-1  | updating: System.Text.Json.dll (deflated 64%)
+development-webapi-1  | updating: System.Text.RegularExpressions.dll (deflated 49%)
+development-webapi-1  | updating: System.Threading.Channels.dll (deflated 49%)
+development-webapi-1  | updating: System.Threading.dll (deflated 46%)
+development-webapi-1  | updating: System.Threading.Overlapped.dll (deflated 41%)
+development-webapi-1  | updating: System.Threading.Tasks.Dataflow.dll (deflated 54%)
+development-webapi-1  | updating: System.Threading.Tasks.dll (deflated 41%)
+development-webapi-1  | updating: System.Threading.Tasks.Extensions.dll (deflated 40%)
+development-webapi-1  | updating: System.Threading.Tasks.Parallel.dll (deflated 51%)
+development-webapi-1  | updating: System.Threading.Thread.dll (deflated 40%)
+development-webapi-1  | updating: System.Threading.ThreadPool.dll (deflated 41%)
+development-webapi-1  | updating: System.Threading.Timer.dll (deflated 39%)
+development-webapi-1  | updating: System.Transactions.dll (deflated 42%)
+development-webapi-1  | updating: System.Transactions.Local.dll (deflated 59%)
+development-webapi-1  | updating: System.ValueTuple.dll (deflated 39%)
+development-webapi-1  | updating: System.Web.dll (deflated 40%)
+development-webapi-1  | updating: System.Web.HttpUtility.dll (deflated 43%)
+development-webapi-1  | updating: System.Windows.dll (deflated 41%)
+development-webapi-1  | updating: System.Windows.Extensions.dll (deflated 48%)
+development-webapi-1  | updating: System.Xml.dll (deflated 52%)
+development-webapi-1  | updating: System.Xml.Linq.dll (deflated 42%)
+development-webapi-1  | updating: System.Xml.ReaderWriter.dll (deflated 50%)
+development-webapi-1  | updating: System.Xml.Serialization.dll (deflated 41%)
+development-webapi-1  | updating: System.Xml.XDocument.dll (deflated 40%)
+development-webapi-1  | updating: System.Xml.XmlDocument.dll (deflated 40%)
+development-webapi-1  | updating: System.Xml.XmlSerializer.dll (deflated 45%)
+development-webapi-1  | updating: System.Xml.XPath.dll (deflated 41%)
+development-webapi-1  | updating: System.Xml.XPath.XDocument.dll (deflated 42%)
+development-webapi-1  | updating: Tesseract.dll (deflated 70%)
+development-webapi-1  | updating: ucrtbase.dll (deflated 54%)
+development-webapi-1  | updating: UglyToad.PdfPig.Core.dll (deflated 56%)
+development-webapi-1  | updating: UglyToad.PdfPig.dll (deflated 67%)
+development-webapi-1  | updating: UglyToad.PdfPig.DocumentLayoutAnalysis.dll (deflated 60%)
+development-webapi-1  | updating: UglyToad.PdfPig.Fonts.dll (deflated 75%)
+development-webapi-1  | updating: UglyToad.PdfPig.Package.dll (deflated 67%)
+development-webapi-1  | updating: UglyToad.PdfPig.Tokenization.dll (deflated 49%)
+development-webapi-1  | updating: UglyToad.PdfPig.Tokens.dll (deflated 57%)
+development-webapi-1  | updating: vcruntime140_1.dll (deflated 46%)
+development-webapi-1  | updating: vcruntime140.dll (deflated 46%)
+development-webapi-1  | updating: web.config (deflated 39%)
+development-webapi-1  | updating: WindowsBase.dll (deflated 42%)
+development-webapi-1  | updating: XLParser.dll (deflated 60%)
+development-webapi-1  |   adding: Plugins/ (stored 0%)
+development-webapi-1  |   adding: Plugins/OpenApi/GitHubPlugin/ (stored 0%)
+development-webapi-1  |   adding: Plugins/OpenApi/JiraPlugin/ (stored 0%)
+development-webapi-1  |   adding: wwwroot/ (stored 0%)
+development-webapi-1  |   adding: wwwroot/static/js/ (stored 0%)
+development-webapi-1  |   adding: wwwroot/static/js/main.e2f6bc30.js.LICENSE.txt (deflated 70%)
+development-webapi-1  |   adding: wwwroot/static/js/main.e2f6bc30.js.map (deflated 79%)
+development-webapi-1  |   adding: wwwroot/static/js/main.e2f6bc30.js (deflated 75%)
+development-webapi-1  |   adding: wwwroot/static/media/ (stored 0%)
+development-webapi-1  |   adding: wwwroot/static/css/ (stored 0%)
+development-webapi-1  |   adding: x64/ (stored 0%)
+development-webapi-1  |   adding: x86/ (stored 0%)
+development-webapi-1  |   adding: Microsoft.KernelMemory.MemoryDb.Redis.dll (deflated 55%)
+development-webapi-1  |   adding: Microsoft.SemanticKernel.Connectors.Qdrant.dll (deflated 57%)
+development-webapi-1  |   adding: Microsoft.SemanticKernel.Connectors.OpenAI.dll (deflated 59%)
+development-webapi-1  |   adding: Microsoft.KernelMemory.AI.AzureOpenAI.dll (deflated 54%)
+development-webapi-1  |   adding: Microsoft.KernelMemory.MemoryDb.AzureAISearch.dll (deflated 56%)
+development-webapi-1  |   adding: StackExchange.Redis.dll (deflated 55%)
+development-webapi-1  |   adding: Microsoft.KernelMemory.Orchestration.RabbitMQ.dll (deflated 51%)
+development-webapi-1  |   adding: Microsoft.KernelMemory.Orchestration.AzureQueues.dll (deflated 57%)
+development-webapi-1  |   adding: Microsoft.SemanticKernel.Connectors.AzureAISearch.dll (deflated 54%)
+development-webapi-1  |   adding: Microsoft.KernelMemory.MemoryDb.Qdrant.dll (deflated 57%)
+development-webapi-1  |   adding: System.ClientModel.dll (deflated 44%)
+development-webapi-1  |   adding: Pgvector.dll (deflated 52%)
+development-webapi-1  |   adding: Microsoft.Extensions.Diagnostics.dll (deflated 46%)
+development-webapi-1  |   adding: Microsoft.KernelMemory.DataFormats.AzureAIDocIntel.dll (deflated 51%)
+development-webapi-1  |   adding: NetTopologySuite.dll (deflated 59%)
+development-webapi-1  |   adding: Microsoft.KernelMemory.Abstractions.dll (deflated 57%)
+development-webapi-1  |   adding: Npgsql.dll (deflated 66%)
+development-webapi-1  |   adding: NRedisStack.dll (deflated 63%)
+development-webapi-1  |   adding: Microsoft.KernelMemory.AI.OpenAI.dll (deflated 62%)
+development-webapi-1  |   adding: Microsoft.Extensions.Diagnostics.Abstractions.dll (deflated 49%)
+development-webapi-1  |   adding: Pipelines.Sockets.Unofficial.dll (deflated 44%)
+development-webapi-1  |   adding: Microsoft.SemanticKernel.Plugins.OpenApi.dll (deflated 56%)
+development-webapi-1  |   adding: Microsoft.KernelMemory.ContentStorage.AzureBlobs.dll (deflated 57%)
+development-webapi-1  |   adding: Microsoft.KernelMemory.Postgres.dll (deflated 61%)
+development-webapi-1  |   adding: mscordaccore_amd64_amd64_6.0.2824.12007.dll (deflated 56%)
+development-webapi-1  | /tmp/scripts/deploy
+development-webapi-1  | + az login --use-device-code
+development-webapi-1  | To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code EFF9JBMTC to authenticate.
+development-webapi-1  | [
+development-webapi-1  |   {
+development-webapi-1  |     "cloudName": "AzureCloud",
+development-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "id": "c05a12a6-0747-45f4-9154-3bace576db04",
+development-webapi-1  |     "isDefault": true,
+development-webapi-1  |     "managedByTenants": [],
+development-webapi-1  |     "name": "COPILOT-DEVELOPMENT",
+development-webapi-1  |     "state": "Enabled",
+development-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "user": {
+development-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+development-webapi-1  |       "type": "user"
+development-webapi-1  |     }
+development-webapi-1  |   },
+development-webapi-1  |   {
+development-webapi-1  |     "cloudName": "AzureCloud",
+development-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "id": "fdce12c3-7da1-4cea-af42-32388c941559",
+development-webapi-1  |     "isDefault": false,
+development-webapi-1  |     "managedByTenants": [
+development-webapi-1  |       {
+development-webapi-1  |         "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+development-webapi-1  |       }
+development-webapi-1  |     ],
+development-webapi-1  |     "name": "DATASCIENCE-DEVELOPMENT",
+development-webapi-1  |     "state": "Enabled",
+development-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "user": {
+development-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+development-webapi-1  |       "type": "user"
+development-webapi-1  |     }
+development-webapi-1  |   },
+development-webapi-1  |   {
+development-webapi-1  |     "cloudName": "AzureCloud",
+development-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "id": "b43be16a-9f27-4a0d-8370-3088ac9974e0",
+development-webapi-1  |     "isDefault": false,
+development-webapi-1  |     "managedByTenants": [],
+development-webapi-1  |     "name": "DATASCIENCE-PRODUCTION",
+development-webapi-1  |     "state": "Enabled",
+development-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "user": {
+development-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+development-webapi-1  |       "type": "user"
+development-webapi-1  |     }
+development-webapi-1  |   },
+development-webapi-1  |   {
+development-webapi-1  |     "cloudName": "AzureCloud",
+development-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "id": "e18944c8-cbf1-4087-9c69-9149bdfcb8e6",
+development-webapi-1  |     "isDefault": false,
+development-webapi-1  |     "managedByTenants": [
+development-webapi-1  |       {
+development-webapi-1  |         "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+development-webapi-1  |       }
+development-webapi-1  |     ],
+development-webapi-1  |     "name": "CHCI-CH",
+development-webapi-1  |     "state": "Enabled",
+development-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "user": {
+development-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+development-webapi-1  |       "type": "user"
+development-webapi-1  |     }
+development-webapi-1  |   },
+development-webapi-1  |   {
+development-webapi-1  |     "cloudName": "AzureCloud",
+development-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "id": "a0e1180c-5639-44b0-848a-998313609ccf",
+development-webapi-1  |     "isDefault": false,
+development-webapi-1  |     "managedByTenants": [],
+development-webapi-1  |     "name": "COPILOT-PRODUCTION",
+development-webapi-1  |     "state": "Enabled",
+development-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "user": {
+development-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+development-webapi-1  |       "type": "user"
+development-webapi-1  |     }
+development-webapi-1  |   },
+development-webapi-1  |   {
+development-webapi-1  |     "cloudName": "AzureCloud",
+development-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "id": "9d8139ea-9976-4b23-84c7-44b592cb0018",
+development-webapi-1  |     "isDefault": false,
+development-webapi-1  |     "managedByTenants": [],
+development-webapi-1  |     "name": "COPILOT-STAGING",
+development-webapi-1  |     "state": "Enabled",
+development-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+development-webapi-1  |     "user": {
+development-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+development-webapi-1  |       "type": "user"
+development-webapi-1  |     }
+development-webapi-1  |   }
+development-webapi-1  | ]
+development-webapi-1  | + bash ./deploy-webapi.sh --subscription c05a12a6-0747-45f4-9154-3bace576db04 --resource-group use2-copilot-development-copilot-rg --deployment-name use2-copilot-development-copilot-rg
+development-webapi-1  | Getting Azure WebApp resource name...
+development-webapi-1  | WEB_API_URL: app-copichat-hi73jkpikgl5e-webapi.azurewebsites.net
+development-webapi-1  | WEB_API_NAME: app-copichat-hi73jkpikgl5e-webapi
+development-webapi-1  | PLUGIN_NAMES:
+development-webapi-1  | Configuring Azure WebApp to run from package...
+development-webapi-1  | Deploying './out/webapi.zip' to Azure WebApp 'app-copichat-hi73jkpikgl5e-webapi'...
+development-webapi-1  | WARNING: Getting scm site credentials for zip deployment
+development-webapi-1  | WARNING: Starting zip deployment. This operation can take a while to complete ...
+development-webapi-1  | WARNING: Deployment endpoint responded with status code 202
+development-webapi-1  | {
+development-webapi-1  |   "active": true,
+development-webapi-1  |   "author": "N/A",
+development-webapi-1  |   "author_email": "N/A",
+development-webapi-1  |   "complete": true,
+development-webapi-1  |   "deployer": "ZipDeploy",
+development-webapi-1  |   "end_time": "2024-03-26T14:59:57.4046671Z",
+development-webapi-1  |   "id": "92dfcb3d5db94cc0b14149bffa1c6cfc",
+development-webapi-1  |   "is_readonly": true,
+development-webapi-1  |   "is_temp": false,
+development-webapi-1  |   "last_success_end_time": "2024-03-26T14:59:57.4046671Z",
+development-webapi-1  |   "log_url": "https://app-copichat-hi73jkpikgl5e-webapi.scm.azurewebsites.net/api/deployments/latest/log",
+development-webapi-1  |   "message": "Created via a push deployment",
+development-webapi-1  |   "progress": "",
+development-webapi-1  |   "provisioningState": "Succeeded",
+development-webapi-1  |   "received_time": "2024-03-26T14:59:55.0140193Z",
+development-webapi-1  |   "site_name": "app-copichat-hi73jkpikgl5e-webapi",
+development-webapi-1  |   "start_time": "2024-03-26T14:59:55.5934253Z",
+development-webapi-1  |   "status": 4,
+development-webapi-1  |   "status_text": "",
+development-webapi-1  |   "url": "https://app-copichat-hi73jkpikgl5e-webapi.scm.azurewebsites.net/api/deployments/latest"
+development-webapi-1  | }
+development-webapi-1  | Ensuring 'https://app-copichat-hi73jkpikgl5e-webapi.azurewebsites.net' is included in AAD app registration's redirect URIs...
+development-webapi-1  | To verify your deployment, go to 'https://app-copichat-hi73jkpikgl5e-webapi.azurewebsites.net/' in your browser.
+development-webapi-1 exited with code 0
+
+C:\Users\simpkinj\source\repos\chat-copilot>docker compose up staging-webapi
+[+] Building 0.6s (10/10) FINISHED                                                                                        docker:default
+ => [staging-webapi internal] load build definition from Dockerfile                                                                 0.0s
+ => => transferring dockerfile: 511B                                                                                                0.0s
+ => [staging-webapi internal] load .dockerignore                                                                                    0.0s
+ => => transferring context: 69B                                                                                                    0.0s
+ => [staging-webapi internal] load metadata for mcr.microsoft.com/dotnet/sdk:8.0                                                    0.2s
+ => [staging-webapi internal] load build context                                                                                    0.2s
+ => => transferring context: 156.34kB                                                                                               0.1s
+ => [staging-webapi base 1/2] FROM mcr.microsoft.com/dotnet/sdk:8.0@sha256:9bb0d97c4361cc844f225c144ac2adb2b65fabfef21f95caedcf215  0.0s
+ => CACHED [staging-webapi base 2/2] RUN     apt-get update     && apt-get install -y curl jq zip azure-cli     && apt-get remove   0.0s
+ => CACHED [staging-webapi src 1/3] WORKDIR /tmp                                                                                    0.0s
+ => CACHED [staging-webapi src 2/3] COPY . .                                                                                        0.0s
+ => CACHED [staging-webapi src 3/3] WORKDIR /tmp/scripts/deploy                                                                     0.0s
+ => [staging-webapi] exporting to image                                                                                             0.0s
+ => => exporting layers                                                                                                             0.0s
+ => => writing image sha256:31c1f8420b29509487e247a14c6f1154ef53b1cb3eb40c84b7559e13f6837b0a                                        0.0s
+ => => naming to docker.io/library/chat-copilot-staging-webapi                                                                      0.0s
+time="2024-03-26T11:02:32-04:00" level=warning msg="Found orphan containers ([chat-copilot-deploy-webapi-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+[+] Running 1/1
+ ✔ Container chat-copilot-staging-webapi-1  Created                                                                                 0.1s
+Attaching to staging-webapi-1
+staging-webapi-1  | + bash ./package-webapi.sh
+staging-webapi-1  | Building backend executables...
+staging-webapi-1  | Build configuration: Release
+staging-webapi-1  | MSBuild version 17.9.6+a4ecab324 for .NET
+staging-webapi-1  |   Determining projects to restore...
+staging-webapi-1  |   Restored /tmp/shared/CopilotChatShared.csproj (in 1.15 min).
+staging-webapi-1  |   Restored /tmp/webapi/CopilotChatWebApi.csproj (in 1.15 min).
+staging-webapi-1  |   CopilotChatShared -> /tmp/shared/bin/Release/net6.0/CopilotChatShared.dll
+staging-webapi-1  |   CopilotChatWebApi -> /tmp/webapi/bin/Release/net6.0/win-x64/CopilotChatWebApi.dll
+staging-webapi-1  |   CopilotChatWebApi -> /tmp/scripts/deploy/publish/
+staging-webapi-1  | Building static frontend files...
+staging-webapi-1  | /tmp/webapp /tmp/scripts/deploy
+staging-webapi-1  | Installing yarn dependencies...
+staging-webapi-1  | yarn install v1.22.22
+staging-webapi-1  | warning package-lock.json found. Your project contains lock files generated by tools other than Yarn. It is advised not to mix package managers in order to avoid resolution inconsistencies caused by unsynchronized lock files. To clear this warning, remove package-lock.json.
+staging-webapi-1  | [1/4] Resolving packages...
+staging-webapi-1  | [2/4] Fetching packages...
+staging-webapi-1  | [3/4] Linking dependencies...
+staging-webapi-1  | warning " > @fluentui/react-components@9.46.7" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+staging-webapi-1  | warning "@fluentui/react-components > @fluentui/react-accordion@9.3.43" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+staging-webapi-1  | warning "@fluentui/react-components > @fluentui/react-avatar@9.6.16" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+staging-webapi-1  | warning "@fluentui/react-components > @fluentui/react-combobox@9.9.0" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+staging-webapi-1  | warning "@fluentui/react-components > @fluentui/react-menu@9.13.1" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+staging-webapi-1  | warning "@fluentui/react-components > @fluentui/react-overflow@9.1.12" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+staging-webapi-1  | warning "@fluentui/react-components > @fluentui/react-popover@9.8.40" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+staging-webapi-1  | warning "@fluentui/react-components > @fluentui/react-radio@9.2.9" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+staging-webapi-1  | warning "@fluentui/react-components > @fluentui/react-tabs@9.4.11" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+staging-webapi-1  | warning "@fluentui/react-components > @fluentui/react-accordion > @fluentui/react-context-selector@9.1.53" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+staging-webapi-1  | warning "@fluentui/react-components > @fluentui/react-positioning > @floating-ui/devtools@0.2.1" has incorrect peer dependency "@floating-ui/dom@>=1.5.4".
+staging-webapi-1  | warning " > @fluentui/react-northstar@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+staging-webapi-1  | warning " > @fluentui/react-northstar@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+staging-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+staging-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+staging-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings@0.66.5" has unmet peer dependency "scheduler@^0.19.0 || ^0.20.0".
+staging-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-component-nesting-registry@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+staging-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-component-nesting-registry@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+staging-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-icons-northstar@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+staging-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-icons-northstar@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+staging-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-northstar-styles-renderer@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+staging-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings > @fluentui/react-northstar-fela-renderer@0.66.5" has incorrect peer dependency "react@^16.8.0 || ^17".
+staging-webapi-1  | warning "@fluentui/react-northstar > @fluentui/react-bindings > @fluentui/react-northstar-fela-renderer@0.66.5" has incorrect peer dependency "react-dom@^16.8.0 || ^17".
+staging-webapi-1  | warning " > @babel/plugin-proposal-private-property-in-object@7.21.11" has unmet peer dependency "@babel/core@^7.0.0-0".
+staging-webapi-1  | warning "@babel/plugin-proposal-private-property-in-object > @babel/helper-create-class-features-plugin@7.22.9" has unmet peer dependency "@babel/core@^7.0.0".
+staging-webapi-1  | warning "@babel/plugin-proposal-private-property-in-object > @babel/plugin-syntax-private-property-in-object@7.14.5" has unmet peer dependency "@babel/core@^7.0.0-0".
+staging-webapi-1  | warning "@babel/plugin-proposal-private-property-in-object > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers@7.22.9" has unmet peer dependency "@babel/core@^7.0.0".
+staging-webapi-1  | warning "react-scripts > eslint-config-react-app > eslint-plugin-flowtype@8.0.3" has unmet peer dependency "@babel/plugin-syntax-flow@^7.14.5".
+staging-webapi-1  | warning "react-scripts > eslint-config-react-app > eslint-plugin-flowtype@8.0.3" has unmet peer dependency "@babel/plugin-transform-react-jsx@^7.14.9".
+staging-webapi-1  | [4/4] Building fresh packages...
+staging-webapi-1  | Done in 68.69s.
+staging-webapi-1  | Building webapp...
+staging-webapi-1  | yarn run v1.22.22
+staging-webapi-1  | $ react-scripts build
+staging-webapi-1  | Creating an optimized production build...
+staging-webapi-1  | Browserslist: caniuse-lite is outdated. Please run:
+staging-webapi-1  |   npx update-browserslist-db@latest
+staging-webapi-1  |   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+staging-webapi-1  | Browserslist: caniuse-lite is outdated. Please run:
+staging-webapi-1  |   npx update-browserslist-db@latest
+staging-webapi-1  |   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+staging-webapi-1  | Compiled successfully.
+staging-webapi-1  |
+staging-webapi-1  | File sizes after gzip:
+staging-webapi-1  |
+staging-webapi-1  |   552.1 kB (+66.61 kB)  build/static/js/main.e2f6bc30.js
+staging-webapi-1  |   279 B                 build/static/css/main.3f026dcf.css
+staging-webapi-1  |
+staging-webapi-1  | The bundle size is significantly larger than recommended.
+staging-webapi-1  | Consider reducing it with code splitting: https://goo.gl/9VhYWB
+staging-webapi-1  | You can also analyze the project dependencies: https://goo.gl/LeUzfb
+staging-webapi-1  |
+staging-webapi-1  | The project was built assuming it is hosted at /.
+staging-webapi-1  | You can control this with the homepage field in your package.json.
+staging-webapi-1  |
+staging-webapi-1  | The build folder is ready to be deployed.
+staging-webapi-1  | You may serve it with a static server:
+staging-webapi-1  |
+staging-webapi-1  |   yarn global add serve
+staging-webapi-1  |   serve -s build
+staging-webapi-1  |
+staging-webapi-1  | Find out more about deployment here:
+staging-webapi-1  |
+staging-webapi-1  |   https://cra.link/deployment
+staging-webapi-1  |
+staging-webapi-1  | Done in 94.12s.
+staging-webapi-1  | /tmp/scripts/deploy
+staging-webapi-1  | Copying frontend files to package
+staging-webapi-1  | /tmp/scripts/deploy/publish /tmp/scripts/deploy
+staging-webapi-1  | Compressing to /tmp/scripts/deploy/out/webapi.zip
+staging-webapi-1  | updating: Plugins/OpenApi/ (stored 0%)
+staging-webapi-1  | updating: Plugins/OpenApi/GitHubPlugin/openapi.json (deflated 91%)
+staging-webapi-1  | updating: Plugins/OpenApi/JiraPlugin/openapi.json (deflated 90%)
+staging-webapi-1  | updating: wwwroot/static/ (stored 0%)
+staging-webapi-1  | updating: wwwroot/asset-manifest.json (deflated 59%)
+staging-webapi-1  | updating: wwwroot/favicon.ico (deflated 38%)
+staging-webapi-1  | updating: wwwroot/index.html (deflated 31%)
+staging-webapi-1  | updating: wwwroot/static/css/main.3f026dcf.css (deflated 33%)
+staging-webapi-1  | updating: wwwroot/static/css/main.3f026dcf.css.map (deflated 42%)
+staging-webapi-1  | updating: wwwroot/static/js/main.49e0e17c.js (deflated 73%)
+staging-webapi-1  | updating: wwwroot/static/js/main.49e0e17c.js.LICENSE.txt (deflated 76%)
+staging-webapi-1  | updating: wwwroot/static/js/main.49e0e17c.js.map (deflated 79%)
+staging-webapi-1  | updating: wwwroot/static/media/add-plugin.67bd3a863550baa0c309.png (stored 0%)
+staging-webapi-1  | updating: wwwroot/static/media/ms-symbollockup_signin_light.e2f600a8cb97ce3efe4d3db463e6af48.svg (deflated 65%)
+staging-webapi-1  | updating: wwwroot/static/media/PennDNA.51bf0620833e5b81aafc.png (deflated 0%)
+staging-webapi-1  | updating: wwwroot/static/media/typing-balls-light.a859d2fb6345248c0471c6cde7d729fe.svg (deflated 75%)
+staging-webapi-1  | updating: x64/leptonica-1.82.0.dll (deflated 58%)
+staging-webapi-1  | updating: x64/tesseract50.dll (deflated 54%)
+staging-webapi-1  | updating: x86/leptonica-1.82.0.dll (deflated 59%)
+staging-webapi-1  | updating: x86/tesseract50.dll (deflated 53%)
+staging-webapi-1  | updating: api-ms-win-core-console-l1-1-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-core-console-l1-2-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-core-datetime-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-core-debug-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-core-errorhandling-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-core-fibers-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-core-file-l1-1-0.dll (deflated 71%)
+staging-webapi-1  | updating: api-ms-win-core-file-l1-2-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-core-file-l2-1-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-core-handle-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-core-heap-l1-1-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-core-interlocked-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-core-libraryloader-l1-1-0.dll (deflated 68%)
+staging-webapi-1  | updating: api-ms-win-core-localization-l1-2-0.dll (deflated 66%)
+staging-webapi-1  | updating: api-ms-win-core-memory-l1-1-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-core-namedpipe-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-core-processenvironment-l1-1-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-core-processthreads-l1-1-0.dll (deflated 66%)
+staging-webapi-1  | updating: api-ms-win-core-processthreads-l1-1-1.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-core-profile-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-core-rtlsupport-l1-1-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-core-string-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-core-synch-l1-1-0.dll (deflated 67%)
+staging-webapi-1  | updating: api-ms-win-core-synch-l1-2-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-core-sysinfo-l1-1-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-core-timezone-l1-1-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-core-util-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-crt-conio-l1-1-0.dll (deflated 68%)
+staging-webapi-1  | updating: api-ms-win-crt-convert-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-crt-environment-l1-1-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-crt-filesystem-l1-1-0.dll (deflated 66%)
+staging-webapi-1  | updating: api-ms-win-crt-heap-l1-1-0.dll (deflated 68%)
+staging-webapi-1  | updating: api-ms-win-crt-locale-l1-1-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-crt-math-l1-1-0.dll (deflated 68%)
+staging-webapi-1  | updating: api-ms-win-crt-multibyte-l1-1-0.dll (deflated 70%)
+staging-webapi-1  | updating: api-ms-win-crt-private-l1-1-0.dll (deflated 73%)
+staging-webapi-1  | updating: api-ms-win-crt-process-l1-1-0.dll (deflated 68%)
+staging-webapi-1  | updating: api-ms-win-crt-runtime-l1-1-0.dll (deflated 69%)
+staging-webapi-1  | updating: api-ms-win-crt-stdio-l1-1-0.dll (deflated 67%)
+staging-webapi-1  | updating: api-ms-win-crt-string-l1-1-0.dll (deflated 67%)
+staging-webapi-1  | updating: api-ms-win-crt-time-l1-1-0.dll (deflated 66%)
+staging-webapi-1  | updating: api-ms-win-crt-utility-l1-1-0.dll (deflated 68%)
+staging-webapi-1  | updating: appsettings.Development.json (deflated 55%)
+staging-webapi-1  | updating: appsettings.json (deflated 69%)
+staging-webapi-1  | updating: aspnetcorev2_inprocess.dll (deflated 54%)
+staging-webapi-1  | updating: Azure.AI.FormRecognizer.dll (deflated 67%)
+staging-webapi-1  | updating: Azure.AI.OpenAI.dll (deflated 70%)
+staging-webapi-1  | updating: Azure.Core.dll (deflated 58%)
+staging-webapi-1  | updating: Azure.Extensions.AspNetCore.Configuration.Secrets.dll (deflated 45%)
+staging-webapi-1  | updating: Azure.Identity.dll (deflated 62%)
+staging-webapi-1  | updating: Azure.Search.Documents.dll (deflated 66%)
+staging-webapi-1  | updating: Azure.Security.KeyVault.Certificates.dll (deflated 59%)
+staging-webapi-1  | updating: Azure.Security.KeyVault.Secrets.dll (deflated 56%)
+staging-webapi-1  | updating: Azure.Storage.Blobs.dll (deflated 67%)
+staging-webapi-1  | updating: Azure.Storage.Common.dll (deflated 52%)
+staging-webapi-1  | updating: Azure.Storage.Queues.dll (deflated 62%)
+staging-webapi-1  | updating: ClosedXML.dll (deflated 63%)
+staging-webapi-1  | updating: clretwrc.dll (deflated 78%)
+staging-webapi-1  | updating: clrjit.dll (deflated 45%)
+staging-webapi-1  | updating: CopilotChatShared.dll (deflated 59%)
+staging-webapi-1  | updating: CopilotChatShared.pdb (deflated 43%)
+staging-webapi-1  | updating: CopilotChatWebApi.deps.json (deflated 85%)
+staging-webapi-1  | updating: CopilotChatWebApi.dll (deflated 59%)
+staging-webapi-1  | updating: CopilotChatWebApi.exe (deflated 55%)
+staging-webapi-1  | updating: CopilotChatWebApi.pdb (deflated 50%)
+staging-webapi-1  | updating: CopilotChatWebApi.runtimeconfig.json (deflated 48%)
+staging-webapi-1  | updating: coreclr.dll (deflated 50%)
+staging-webapi-1  | updating: Cosmos.CRTCompat.dll (deflated 51%)
+staging-webapi-1  | updating: createdump.exe (deflated 47%)
+staging-webapi-1  | updating: dbgshim.dll (deflated 50%)
+staging-webapi-1  | updating: DocumentFormat.OpenXml.dll (deflated 75%)
+staging-webapi-1  | updating: ExcelNumberFormat.dll (deflated 54%)
+staging-webapi-1  | updating: Google.Apis.Core.dll (deflated 55%)
+staging-webapi-1  | updating: Google.Apis.CustomSearchAPI.v1.dll (deflated 64%)
+staging-webapi-1  | updating: Google.Apis.dll (deflated 55%)
+staging-webapi-1  | updating: Handlebars.dll (deflated 60%)
+staging-webapi-1  | updating: hostfxr.dll (deflated 54%)
+staging-webapi-1  | updating: hostpolicy.dll (deflated 54%)
+staging-webapi-1  | updating: HtmlAgilityPack.dll (deflated 62%)
+staging-webapi-1  | updating: Humanizer.dll (deflated 56%)
+staging-webapi-1  | updating: Irony.dll (deflated 56%)
+staging-webapi-1  | updating: JetBrains.Annotations.dll (deflated 77%)
+staging-webapi-1  | updating: Json.More.dll (deflated 53%)
+staging-webapi-1  | updating: JsonPointer.Net.dll (deflated 52%)
+staging-webapi-1  | updating: JsonSchema.Net.dll (deflated 63%)
+staging-webapi-1  | updating: JsonSchema.Net.Generation.dll (deflated 57%)
+staging-webapi-1  | updating: Microsoft.AI.DependencyCollector.dll (deflated 64%)
+staging-webapi-1  | updating: Microsoft.AI.EventCounterCollector.dll (deflated 53%)
+staging-webapi-1  | updating: Microsoft.AI.PerfCounterCollector.dll (deflated 62%)
+staging-webapi-1  | updating: Microsoft.AI.ServerTelemetryChannel.dll (deflated 59%)
+staging-webapi-1  | updating: Microsoft.AI.WindowsServer.dll (deflated 56%)
+staging-webapi-1  | updating: Microsoft.ApplicationInsights.AspNetCore.dll (deflated 57%)
+staging-webapi-1  | updating: Microsoft.ApplicationInsights.dll (deflated 60%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Antiforgery.dll (deflated 50%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Authentication.Abstractions.dll (deflated 48%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Authentication.Cookies.dll (deflated 50%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Authentication.Core.dll (deflated 54%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Authentication.dll (deflated 51%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Authentication.JwtBearer.dll (deflated 50%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Authentication.OAuth.dll (deflated 48%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Authentication.OpenIdConnect.dll (deflated 60%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Authorization.dll (deflated 49%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Authorization.Policy.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Components.Authorization.dll (deflated 47%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Components.dll (deflated 54%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Components.Forms.dll (deflated 47%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Components.Server.dll (deflated 58%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Components.Web.dll (deflated 54%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Connections.Abstractions.dll (deflated 48%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.CookiePolicy.dll (deflated 48%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Cors.dll (deflated 49%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Cryptography.Internal.dll (deflated 50%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Cryptography.KeyDerivation.dll (deflated 41%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.DataProtection.Abstractions.dll (deflated 44%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.DataProtection.dll (deflated 54%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.DataProtection.Extensions.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Diagnostics.Abstractions.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Diagnostics.dll (deflated 58%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Diagnostics.HealthChecks.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.HostFiltering.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Hosting.Abstractions.dll (deflated 48%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Hosting.dll (deflated 55%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Hosting.Server.Abstractions.dll (deflated 43%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Html.Abstractions.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Http.Abstractions.dll (deflated 50%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Http.Connections.Common.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Http.Connections.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Http.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Http.Extensions.dll (deflated 54%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Http.Features.dll (deflated 57%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Http.Results.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.HttpLogging.dll (deflated 49%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.HttpOverrides.dll (deflated 44%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.HttpsPolicy.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Identity.dll (deflated 54%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Localization.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Localization.Routing.dll (deflated 44%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Metadata.dll (deflated 41%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Abstractions.dll (deflated 55%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.ApiExplorer.dll (deflated 50%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Core.dll (deflated 58%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Cors.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.DataAnnotations.dll (deflated 51%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.dll (deflated 48%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Formatters.Json.dll (deflated 43%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Formatters.Xml.dll (deflated 51%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Localization.dll (deflated 50%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.Razor.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.RazorPages.dll (deflated 56%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.TagHelpers.dll (deflated 53%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Mvc.ViewFeatures.dll (deflated 55%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Razor.dll (deflated 48%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Razor.Runtime.dll (deflated 47%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.ResponseCaching.Abstractions.dll (deflated 43%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.ResponseCaching.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.ResponseCompression.dll (deflated 47%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Rewrite.dll (deflated 51%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Routing.Abstractions.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Routing.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Server.HttpSys.dll (deflated 53%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Server.IIS.dll (deflated 55%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Server.IISIntegration.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.Core.dll (deflated 58%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.Transport.Quic.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll (deflated 51%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.Session.dll (deflated 48%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.SignalR.Common.dll (deflated 48%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.SignalR.Core.dll (deflated 54%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.SignalR.dll (deflated 44%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.SignalR.Protocols.Json.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.StaticFiles.dll (deflated 56%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.WebSockets.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.AspNetCore.WebUtilities.dll (deflated 50%)
+staging-webapi-1  | updating: Microsoft.Azure.Cosmos.Client.dll (deflated 65%)
+staging-webapi-1  | updating: Microsoft.Azure.Cosmos.Core.dll (deflated 65%)
+staging-webapi-1  | updating: Microsoft.Azure.Cosmos.Direct.dll (deflated 69%)
+staging-webapi-1  | updating: Microsoft.Azure.Cosmos.Serialization.HybridRow.dll (deflated 63%)
+staging-webapi-1  | updating: Microsoft.Azure.Cosmos.ServiceInterop.dll (deflated 70%)
+staging-webapi-1  | updating: Microsoft.Bcl.AsyncInterfaces.dll (deflated 42%)
+staging-webapi-1  | updating: Microsoft.Bcl.HashCode.dll (deflated 44%)
+staging-webapi-1  | updating: Microsoft.Bcl.TimeProvider.dll (deflated 47%)
+staging-webapi-1  | updating: Microsoft.CSharp.dll (deflated 51%)
+staging-webapi-1  | updating: Microsoft.DiaSymReader.Native.amd64.dll (deflated 55%)
+staging-webapi-1  | updating: Microsoft.Extensions.Caching.Abstractions.dll (deflated 47%)
+staging-webapi-1  | updating: Microsoft.Extensions.Caching.Memory.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.Extensions.Configuration.Abstractions.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.Extensions.Configuration.Binder.dll (deflated 51%)
+staging-webapi-1  | updating: Microsoft.Extensions.Configuration.CommandLine.dll (deflated 44%)
+staging-webapi-1  | updating: Microsoft.Extensions.Configuration.dll (deflated 48%)
+staging-webapi-1  | updating: Microsoft.Extensions.Configuration.EnvironmentVariables.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.Extensions.Configuration.FileExtensions.dll (deflated 47%)
+staging-webapi-1  | updating: Microsoft.Extensions.Configuration.Ini.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.Extensions.Configuration.Json.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.Extensions.Configuration.KeyPerFile.dll (deflated 44%)
+staging-webapi-1  | updating: Microsoft.Extensions.Configuration.UserSecrets.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.Extensions.Configuration.Xml.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.Extensions.DependencyInjection.Abstractions.dll (deflated 56%)
+staging-webapi-1  | updating: Microsoft.Extensions.DependencyInjection.dll (deflated 54%)
+staging-webapi-1  | updating: Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.Extensions.Diagnostics.HealthChecks.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.Extensions.Features.dll (deflated 43%)
+staging-webapi-1  | updating: Microsoft.Extensions.FileProviders.Abstractions.dll (deflated 44%)
+staging-webapi-1  | updating: Microsoft.Extensions.FileProviders.Composite.dll (deflated 42%)
+staging-webapi-1  | updating: Microsoft.Extensions.FileProviders.Embedded.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.Extensions.FileProviders.Physical.dll (deflated 47%)
+staging-webapi-1  | updating: Microsoft.Extensions.FileSystemGlobbing.dll (deflated 48%)
+staging-webapi-1  | updating: Microsoft.Extensions.Hosting.Abstractions.dll (deflated 57%)
+staging-webapi-1  | updating: Microsoft.Extensions.Hosting.dll (deflated 54%)
+staging-webapi-1  | updating: Microsoft.Extensions.Http.dll (deflated 53%)
+staging-webapi-1  | updating: Microsoft.Extensions.Identity.Core.dll (deflated 58%)
+staging-webapi-1  | updating: Microsoft.Extensions.Identity.Stores.dll (deflated 54%)
+staging-webapi-1  | updating: Microsoft.Extensions.Localization.Abstractions.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.Extensions.Localization.dll (deflated 45%)
+staging-webapi-1  | updating: Microsoft.Extensions.Logging.Abstractions.dll (deflated 53%)
+staging-webapi-1  | updating: Microsoft.Extensions.Logging.ApplicationInsights.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.Extensions.Logging.Configuration.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.Extensions.Logging.Console.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.Extensions.Logging.Debug.dll (deflated 43%)
+staging-webapi-1  | updating: Microsoft.Extensions.Logging.dll (deflated 49%)
+staging-webapi-1  | updating: Microsoft.Extensions.Logging.EventLog.dll (deflated 43%)
+staging-webapi-1  | updating: Microsoft.Extensions.Logging.EventSource.dll (deflated 49%)
+staging-webapi-1  | updating: Microsoft.Extensions.Logging.TraceSource.dll (deflated 44%)
+staging-webapi-1  | updating: Microsoft.Extensions.ObjectPool.dll (deflated 43%)
+staging-webapi-1  | updating: Microsoft.Extensions.Options.ConfigurationExtensions.dll (deflated 44%)
+staging-webapi-1  | updating: Microsoft.Extensions.Options.DataAnnotations.dll (deflated 43%)
+staging-webapi-1  | updating: Microsoft.Extensions.Options.dll (deflated 53%)
+staging-webapi-1  | updating: Microsoft.Extensions.Primitives.dll (deflated 50%)
+staging-webapi-1  | updating: Microsoft.Extensions.WebEncoders.dll (deflated 47%)
+staging-webapi-1  | updating: Microsoft.Graph.Core.dll (deflated 56%)
+staging-webapi-1  | updating: Microsoft.Graph.dll (deflated 76%)
+staging-webapi-1  | updating: Microsoft.Identity.Abstractions.dll (deflated 53%)
+staging-webapi-1  | updating: Microsoft.Identity.Client.dll (deflated 67%)
+staging-webapi-1  | updating: Microsoft.Identity.Client.Extensions.Msal.dll (deflated 55%)
+staging-webapi-1  | updating: Microsoft.Identity.Web.Certificate.dll (deflated 49%)
+staging-webapi-1  | updating: Microsoft.Identity.Web.Certificateless.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.Identity.Web.Diagnostics.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.Identity.Web.dll (deflated 60%)
+staging-webapi-1  | updating: Microsoft.Identity.Web.TokenAcquisition.dll (deflated 59%)
+staging-webapi-1  | updating: Microsoft.Identity.Web.TokenCache.dll (deflated 55%)
+staging-webapi-1  | updating: Microsoft.IdentityModel.Abstractions.dll (deflated 43%)
+staging-webapi-1  | updating: Microsoft.IdentityModel.JsonWebTokens.dll (deflated 63%)
+staging-webapi-1  | updating: Microsoft.IdentityModel.Logging.dll (deflated 53%)
+staging-webapi-1  | updating: Microsoft.IdentityModel.LoggingExtensions.dll (deflated 41%)
+staging-webapi-1  | updating: Microsoft.IdentityModel.Protocols.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.IdentityModel.Protocols.OpenIdConnect.dll (deflated 65%)
+staging-webapi-1  | updating: Microsoft.IdentityModel.Tokens.dll (deflated 67%)
+staging-webapi-1  | updating: Microsoft.IdentityModel.Validators.dll (deflated 54%)
+staging-webapi-1  | updating: Microsoft.JSInterop.dll (deflated 50%)
+staging-webapi-1  | updating: Microsoft.KernelMemory.Client.dll (deflated 56%)
+staging-webapi-1  | updating: Microsoft.KernelMemory.Core.dll (deflated 60%)
+staging-webapi-1  | updating: Microsoft.Net.Http.Headers.dll (deflated 49%)
+staging-webapi-1  | updating: Microsoft.OpenApi.dll (deflated 60%)
+staging-webapi-1  | updating: Microsoft.OpenApi.Readers.dll (deflated 60%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Abstractions.dll (deflated 57%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Connectors.AI.OpenAI.dll (deflated 60%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Connectors.Memory.AzureCognitiveSearch.dll (deflated 57%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Connectors.Memory.Qdrant.dll (deflated 60%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Core.dll (deflated 56%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.dll (deflated 39%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Functions.OpenAPI.dll (deflated 64%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Planners.Core.dll (deflated 60%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.Core.dll (deflated 56%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.Memory.dll (deflated 53%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.MsGraph.dll (deflated 56%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Plugins.Web.dll (deflated 53%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.Reliability.Basic.dll (deflated 55%)
+staging-webapi-1  | updating: Microsoft.SemanticKernel.TemplateEngine.Basic.dll (deflated 55%)
+staging-webapi-1  | updating: Microsoft.VisualBasic.Core.dll (deflated 52%)
+staging-webapi-1  | updating: Microsoft.VisualBasic.dll (deflated 43%)
+staging-webapi-1  | updating: Microsoft.Win32.Primitives.dll (deflated 42%)
+staging-webapi-1  | updating: Microsoft.Win32.Registry.dll (deflated 46%)
+staging-webapi-1  | updating: Microsoft.Win32.SystemEvents.dll (deflated 51%)
+staging-webapi-1  | updating: mscordaccore_amd64_amd64_6.0.2023.32017.dll (deflated 57%)
+staging-webapi-1  | updating: mscordaccore.dll (deflated 56%)
+staging-webapi-1  | updating: mscordbi.dll (deflated 58%)
+staging-webapi-1  | updating: mscorlib.dll (deflated 63%)
+staging-webapi-1  | updating: mscorrc.dll (deflated 77%)
+staging-webapi-1  | updating: msquic.dll (deflated 50%)
+staging-webapi-1  | updating: msvcp140.dll (deflated 68%)
+staging-webapi-1  | updating: netstandard.dll (deflated 67%)
+staging-webapi-1  | updating: Newtonsoft.Json.dll (deflated 62%)
+staging-webapi-1  | updating: nuget.config (deflated 48%)
+staging-webapi-1  | updating: Polly.Core.dll (deflated 57%)
+staging-webapi-1  | updating: RabbitMQ.Client.dll (deflated 62%)
+staging-webapi-1  | updating: SharpToken.dll (deflated 57%)
+staging-webapi-1  | updating: SharpYaml.dll (deflated 59%)
+staging-webapi-1  | updating: SixLabors.Fonts.dll (deflated 76%)
+staging-webapi-1  | updating: Swashbuckle.AspNetCore.Swagger.dll (deflated 55%)
+staging-webapi-1  | updating: Swashbuckle.AspNetCore.SwaggerGen.dll (deflated 56%)
+staging-webapi-1  | updating: Swashbuckle.AspNetCore.SwaggerUI.dll (deflated 70%)
+staging-webapi-1  | updating: System.AppContext.dll (deflated 40%)
+staging-webapi-1  | updating: System.Buffers.dll (deflated 40%)
+staging-webapi-1  | updating: System.Collections.Concurrent.dll (deflated 49%)
+staging-webapi-1  | updating: System.Collections.dll (deflated 51%)
+staging-webapi-1  | updating: System.Collections.Immutable.dll (deflated 56%)
+staging-webapi-1  | updating: System.Collections.NonGeneric.dll (deflated 53%)
+staging-webapi-1  | updating: System.Collections.Specialized.dll (deflated 49%)
+staging-webapi-1  | updating: System.ComponentModel.Annotations.dll (deflated 54%)
+staging-webapi-1  | updating: System.ComponentModel.DataAnnotations.dll (deflated 43%)
+staging-webapi-1  | updating: System.ComponentModel.dll (deflated 43%)
+staging-webapi-1  | updating: System.ComponentModel.EventBasedAsync.dll (deflated 47%)
+staging-webapi-1  | updating: System.ComponentModel.Primitives.dll (deflated 51%)
+staging-webapi-1  | updating: System.ComponentModel.TypeConverter.dll (deflated 54%)
+staging-webapi-1  | updating: System.Configuration.ConfigurationManager.dll (deflated 61%)
+staging-webapi-1  | updating: System.Configuration.dll (deflated 47%)
+staging-webapi-1  | updating: System.Console.dll (deflated 51%)
+staging-webapi-1  | updating: System.Core.dll (deflated 51%)
+staging-webapi-1  | updating: System.Data.Common.dll (deflated 53%)
+staging-webapi-1  | updating: System.Data.DataSetExtensions.dll (deflated 42%)
+staging-webapi-1  | updating: System.Data.dll (deflated 52%)
+staging-webapi-1  | updating: System.Diagnostics.Contracts.dll (deflated 40%)
+staging-webapi-1  | updating: System.Diagnostics.Debug.dll (deflated 40%)
+staging-webapi-1  | updating: System.Diagnostics.DiagnosticSource.dll (deflated 56%)
+staging-webapi-1  | updating: System.Diagnostics.EventLog.dll (deflated 58%)
+staging-webapi-1  | updating: System.Diagnostics.EventLog.Messages.dll (deflated 99%)
+staging-webapi-1  | updating: System.Diagnostics.FileVersionInfo.dll (deflated 47%)
+staging-webapi-1  | updating: System.Diagnostics.PerformanceCounter.dll (deflated 55%)
+staging-webapi-1  | updating: System.Diagnostics.Process.dll (deflated 50%)
+staging-webapi-1  | updating: System.Diagnostics.StackTrace.dll (deflated 45%)
+staging-webapi-1  | updating: System.Diagnostics.TextWriterTraceListener.dll (deflated 47%)
+staging-webapi-1  | updating: System.Diagnostics.Tools.dll (deflated 40%)
+staging-webapi-1  | updating: System.Diagnostics.TraceSource.dll (deflated 52%)
+staging-webapi-1  | updating: System.Diagnostics.Tracing.dll (deflated 41%)
+staging-webapi-1  | updating: System.dll (deflated 62%)
+staging-webapi-1  | updating: System.Drawing.Common.dll (deflated 61%)
+staging-webapi-1  | updating: System.Drawing.dll (deflated 47%)
+staging-webapi-1  | updating: System.Drawing.Primitives.dll (deflated 54%)
+staging-webapi-1  | updating: System.Dynamic.Runtime.dll (deflated 42%)
+staging-webapi-1  | updating: System.Formats.Asn1.dll (deflated 49%)
+staging-webapi-1  | updating: System.Globalization.Calendars.dll (deflated 40%)
+staging-webapi-1  | updating: System.Globalization.dll (deflated 40%)
+staging-webapi-1  | updating: System.Globalization.Extensions.dll (deflated 39%)
+staging-webapi-1  | updating: System.IdentityModel.Tokens.Jwt.dll (deflated 59%)
+staging-webapi-1  | updating: System.IO.Compression.Brotli.dll (deflated 47%)
+staging-webapi-1  | updating: System.IO.Compression.dll (deflated 49%)
+staging-webapi-1  | updating: System.IO.Compression.FileSystem.dll (deflated 41%)
+staging-webapi-1  | updating: System.IO.Compression.Native.dll (deflated 54%)
+staging-webapi-1  | updating: System.IO.Compression.ZipFile.dll (deflated 44%)
+staging-webapi-1  | updating: System.IO.dll (deflated 41%)
+staging-webapi-1  | updating: System.IO.FileSystem.AccessControl.dll (deflated 48%)
+staging-webapi-1  | updating: System.IO.FileSystem.dll (deflated 48%)
+staging-webapi-1  | updating: System.IO.FileSystem.DriveInfo.dll (deflated 46%)
+staging-webapi-1  | updating: System.IO.FileSystem.Primitives.dll (deflated 39%)
+staging-webapi-1  | updating: System.IO.FileSystem.Watcher.dll (deflated 46%)
+staging-webapi-1  | updating: System.IO.Hashing.dll (deflated 47%)
+staging-webapi-1  | updating: System.IO.IsolatedStorage.dll (deflated 50%)
+staging-webapi-1  | updating: System.IO.MemoryMappedFiles.dll (deflated 47%)
+staging-webapi-1  | updating: System.IO.Packaging.dll (deflated 58%)
+staging-webapi-1  | updating: System.IO.Pipelines.dll (deflated 48%)
+staging-webapi-1  | updating: System.IO.Pipes.AccessControl.dll (deflated 40%)
+staging-webapi-1  | updating: System.IO.Pipes.dll (deflated 50%)
+staging-webapi-1  | updating: System.IO.UnmanagedMemoryStream.dll (deflated 39%)
+staging-webapi-1  | updating: System.Linq.Async.dll (deflated 66%)
+staging-webapi-1  | updating: System.Linq.dll (deflated 55%)
+staging-webapi-1  | updating: System.Linq.Expressions.dll (deflated 65%)
+staging-webapi-1  | updating: System.Linq.Parallel.dll (deflated 58%)
+staging-webapi-1  | updating: System.Linq.Queryable.dll (deflated 65%)
+staging-webapi-1  | updating: System.Memory.Data.dll (deflated 46%)
+staging-webapi-1  | updating: System.Memory.dll (deflated 49%)
+staging-webapi-1  | updating: System.Net.dll (deflated 44%)
+staging-webapi-1  | updating: System.Net.Http.dll (deflated 53%)
+staging-webapi-1  | updating: System.Net.Http.Json.dll (deflated 52%)
+staging-webapi-1  | updating: System.Net.HttpListener.dll (deflated 51%)
+staging-webapi-1  | updating: System.Net.Mail.dll (deflated 51%)
+staging-webapi-1  | updating: System.Net.NameResolution.dll (deflated 47%)
+staging-webapi-1  | updating: System.Net.NetworkInformation.dll (deflated 50%)
+staging-webapi-1  | updating: System.Net.Ping.dll (deflated 45%)
+staging-webapi-1  | updating: System.Net.Primitives.dll (deflated 46%)
+staging-webapi-1  | updating: System.Net.Quic.dll (deflated 51%)
+staging-webapi-1  | updating: System.Net.Requests.dll (deflated 50%)
+staging-webapi-1  | updating: System.Net.Security.dll (deflated 53%)
+staging-webapi-1  | updating: System.Net.ServicePoint.dll (deflated 46%)
+staging-webapi-1  | updating: System.Net.Sockets.dll (deflated 51%)
+staging-webapi-1  | updating: System.Net.WebClient.dll (deflated 52%)
+staging-webapi-1  | updating: System.Net.WebHeaderCollection.dll (deflated 48%)
+staging-webapi-1  | updating: System.Net.WebProxy.dll (deflated 44%)
+staging-webapi-1  | updating: System.Net.WebSockets.Client.dll (deflated 47%)
+staging-webapi-1  | updating: System.Net.WebSockets.dll (deflated 48%)
+staging-webapi-1  | updating: System.Numerics.dll (deflated 41%)
+staging-webapi-1  | updating: System.Numerics.Tensors.dll (deflated 62%)
+staging-webapi-1  | updating: System.Numerics.Vectors.dll (deflated 41%)
+staging-webapi-1  | updating: System.ObjectModel.dll (deflated 51%)
+staging-webapi-1  | updating: System.Private.CoreLib.dll (deflated 56%)
+staging-webapi-1  | updating: System.Private.DataContractSerialization.dll (deflated 56%)
+staging-webapi-1  | updating: System.Private.Uri.dll (deflated 44%)
+staging-webapi-1  | updating: System.Private.Xml.dll (deflated 55%)
+staging-webapi-1  | updating: System.Private.Xml.Linq.dll (deflated 52%)
+staging-webapi-1  | updating: System.Reflection.DispatchProxy.dll (deflated 46%)
+staging-webapi-1  | updating: System.Reflection.dll (deflated 40%)
+staging-webapi-1  | updating: System.Reflection.Emit.dll (deflated 40%)
+staging-webapi-1  | updating: System.Reflection.Emit.ILGeneration.dll (deflated 41%)
+staging-webapi-1  | updating: System.Reflection.Emit.Lightweight.dll (deflated 41%)
+staging-webapi-1  | updating: System.Reflection.Extensions.dll (deflated 40%)
+staging-webapi-1  | updating: System.Reflection.Metadata.dll (deflated 56%)
+staging-webapi-1  | updating: System.Reflection.Primitives.dll (deflated 40%)
+staging-webapi-1  | updating: System.Reflection.TypeExtensions.dll (deflated 50%)
+staging-webapi-1  | updating: System.Resources.Reader.dll (deflated 40%)
+staging-webapi-1  | updating: System.Resources.ResourceManager.dll (deflated 40%)
+staging-webapi-1  | updating: System.Resources.Writer.dll (deflated 44%)
+staging-webapi-1  | updating: System.Runtime.CompilerServices.Unsafe.dll (deflated 47%)
+staging-webapi-1  | updating: System.Runtime.CompilerServices.VisualC.dll (deflated 44%)
+staging-webapi-1  | updating: System.Runtime.dll (deflated 59%)
+staging-webapi-1  | updating: System.Runtime.Extensions.dll (deflated 42%)
+staging-webapi-1  | updating: System.Runtime.Handles.dll (deflated 39%)
+staging-webapi-1  | updating: System.Runtime.InteropServices.dll (deflated 48%)
+staging-webapi-1  | updating: System.Runtime.InteropServices.RuntimeInformation.dll (deflated 45%)
+staging-webapi-1  | updating: System.Runtime.Intrinsics.dll (deflated 41%)
+staging-webapi-1  | updating: System.Runtime.Loader.dll (deflated 40%)
+staging-webapi-1  | updating: System.Runtime.Numerics.dll (deflated 45%)
+staging-webapi-1  | updating: System.Runtime.Serialization.dll (deflated 43%)
+staging-webapi-1  | updating: System.Runtime.Serialization.Formatters.dll (deflated 49%)
+staging-webapi-1  | updating: System.Runtime.Serialization.Json.dll (deflated 41%)
+staging-webapi-1  | updating: System.Runtime.Serialization.Primitives.dll (deflated 47%)
+staging-webapi-1  | updating: System.Runtime.Serialization.Xml.dll (deflated 41%)
+staging-webapi-1  | updating: System.Security.AccessControl.dll (deflated 50%)
+staging-webapi-1  | updating: System.Security.Claims.dll (deflated 52%)
+staging-webapi-1  | updating: System.Security.Cryptography.Algorithms.dll (deflated 56%)
+staging-webapi-1  | updating: System.Security.Cryptography.Cng.dll (deflated 52%)
+staging-webapi-1  | updating: System.Security.Cryptography.Csp.dll (deflated 49%)
+staging-webapi-1  | updating: System.Security.Cryptography.Encoding.dll (deflated 49%)
+staging-webapi-1  | updating: System.Security.Cryptography.OpenSsl.dll (deflated 51%)
+staging-webapi-1  | updating: System.Security.Cryptography.Pkcs.dll (deflated 60%)
+staging-webapi-1  | updating: System.Security.Cryptography.Primitives.dll (deflated 50%)
+staging-webapi-1  | updating: System.Security.Cryptography.ProtectedData.dll (deflated 48%)
+staging-webapi-1  | updating: System.Security.Cryptography.X509Certificates.dll (deflated 53%)
+staging-webapi-1  | updating: System.Security.Cryptography.Xml.dll (deflated 53%)
+staging-webapi-1  | updating: System.Security.dll (deflated 45%)
+staging-webapi-1  | updating: System.Security.Permissions.dll (deflated 60%)
+staging-webapi-1  | updating: System.Security.Principal.dll (deflated 39%)
+staging-webapi-1  | updating: System.Security.Principal.Windows.dll (deflated 47%)
+staging-webapi-1  | updating: System.Security.SecureString.dll (deflated 39%)
+staging-webapi-1  | updating: System.ServiceModel.Web.dll (deflated 43%)
+staging-webapi-1  | updating: System.ServiceProcess.dll (deflated 41%)
+staging-webapi-1  | updating: System.Text.Encoding.CodePages.dll (deflated 31%)
+staging-webapi-1  | updating: System.Text.Encoding.dll (deflated 40%)
+staging-webapi-1  | updating: System.Text.Encoding.Extensions.dll (deflated 41%)
+staging-webapi-1  | updating: System.Text.Encodings.Web.dll (deflated 56%)
+staging-webapi-1  | updating: System.Text.Json.dll (deflated 64%)
+staging-webapi-1  | updating: System.Text.RegularExpressions.dll (deflated 49%)
+staging-webapi-1  | updating: System.Threading.Channels.dll (deflated 49%)
+staging-webapi-1  | updating: System.Threading.dll (deflated 46%)
+staging-webapi-1  | updating: System.Threading.Overlapped.dll (deflated 41%)
+staging-webapi-1  | updating: System.Threading.Tasks.Dataflow.dll (deflated 54%)
+staging-webapi-1  | updating: System.Threading.Tasks.dll (deflated 41%)
+staging-webapi-1  | updating: System.Threading.Tasks.Extensions.dll (deflated 40%)
+staging-webapi-1  | updating: System.Threading.Tasks.Parallel.dll (deflated 51%)
+staging-webapi-1  | updating: System.Threading.Thread.dll (deflated 40%)
+staging-webapi-1  | updating: System.Threading.ThreadPool.dll (deflated 41%)
+staging-webapi-1  | updating: System.Threading.Timer.dll (deflated 39%)
+staging-webapi-1  | updating: System.Transactions.dll (deflated 42%)
+staging-webapi-1  | updating: System.Transactions.Local.dll (deflated 59%)
+staging-webapi-1  | updating: System.ValueTuple.dll (deflated 39%)
+staging-webapi-1  | updating: System.Web.dll (deflated 40%)
+staging-webapi-1  | updating: System.Web.HttpUtility.dll (deflated 43%)
+staging-webapi-1  | updating: System.Windows.dll (deflated 41%)
+staging-webapi-1  | updating: System.Windows.Extensions.dll (deflated 48%)
+staging-webapi-1  | updating: System.Xml.dll (deflated 52%)
+staging-webapi-1  | updating: System.Xml.Linq.dll (deflated 42%)
+staging-webapi-1  | updating: System.Xml.ReaderWriter.dll (deflated 50%)
+staging-webapi-1  | updating: System.Xml.Serialization.dll (deflated 41%)
+staging-webapi-1  | updating: System.Xml.XDocument.dll (deflated 40%)
+staging-webapi-1  | updating: System.Xml.XmlDocument.dll (deflated 40%)
+staging-webapi-1  | updating: System.Xml.XmlSerializer.dll (deflated 45%)
+staging-webapi-1  | updating: System.Xml.XPath.dll (deflated 41%)
+staging-webapi-1  | updating: System.Xml.XPath.XDocument.dll (deflated 42%)
+staging-webapi-1  | updating: Tesseract.dll (deflated 70%)
+staging-webapi-1  | updating: ucrtbase.dll (deflated 54%)
+staging-webapi-1  | updating: UglyToad.PdfPig.Core.dll (deflated 56%)
+staging-webapi-1  | updating: UglyToad.PdfPig.dll (deflated 67%)
+staging-webapi-1  | updating: UglyToad.PdfPig.DocumentLayoutAnalysis.dll (deflated 60%)
+staging-webapi-1  | updating: UglyToad.PdfPig.Fonts.dll (deflated 75%)
+staging-webapi-1  | updating: UglyToad.PdfPig.Package.dll (deflated 67%)
+staging-webapi-1  | updating: UglyToad.PdfPig.Tokenization.dll (deflated 49%)
+staging-webapi-1  | updating: UglyToad.PdfPig.Tokens.dll (deflated 57%)
+staging-webapi-1  | updating: vcruntime140_1.dll (deflated 46%)
+staging-webapi-1  | updating: vcruntime140.dll (deflated 46%)
+staging-webapi-1  | updating: web.config (deflated 39%)
+staging-webapi-1  | updating: WindowsBase.dll (deflated 42%)
+staging-webapi-1  | updating: XLParser.dll (deflated 60%)
+staging-webapi-1  |   adding: Plugins/ (stored 0%)
+staging-webapi-1  |   adding: Plugins/OpenApi/GitHubPlugin/ (stored 0%)
+staging-webapi-1  |   adding: Plugins/OpenApi/JiraPlugin/ (stored 0%)
+staging-webapi-1  |   adding: wwwroot/ (stored 0%)
+staging-webapi-1  |   adding: wwwroot/static/js/ (stored 0%)
+staging-webapi-1  |   adding: wwwroot/static/js/main.e2f6bc30.js.LICENSE.txt (deflated 70%)
+staging-webapi-1  |   adding: wwwroot/static/js/main.e2f6bc30.js.map (deflated 79%)
+staging-webapi-1  |   adding: wwwroot/static/js/main.e2f6bc30.js (deflated 75%)
+staging-webapi-1  |   adding: wwwroot/static/media/ (stored 0%)
+staging-webapi-1  |   adding: wwwroot/static/css/ (stored 0%)
+staging-webapi-1  |   adding: x64/ (stored 0%)
+staging-webapi-1  |   adding: x86/ (stored 0%)
+staging-webapi-1  |   adding: Microsoft.KernelMemory.MemoryDb.Redis.dll (deflated 55%)
+staging-webapi-1  |   adding: Microsoft.SemanticKernel.Connectors.Qdrant.dll (deflated 57%)
+staging-webapi-1  |   adding: Microsoft.SemanticKernel.Connectors.OpenAI.dll (deflated 59%)
+staging-webapi-1  |   adding: Microsoft.KernelMemory.AI.AzureOpenAI.dll (deflated 54%)
+staging-webapi-1  |   adding: Microsoft.KernelMemory.MemoryDb.AzureAISearch.dll (deflated 56%)
+staging-webapi-1  |   adding: StackExchange.Redis.dll (deflated 55%)
+staging-webapi-1  |   adding: Microsoft.KernelMemory.Orchestration.RabbitMQ.dll (deflated 51%)
+staging-webapi-1  |   adding: Microsoft.KernelMemory.Orchestration.AzureQueues.dll (deflated 57%)
+staging-webapi-1  |   adding: Microsoft.SemanticKernel.Connectors.AzureAISearch.dll (deflated 54%)
+staging-webapi-1  |   adding: Microsoft.KernelMemory.MemoryDb.Qdrant.dll (deflated 57%)
+staging-webapi-1  |   adding: System.ClientModel.dll (deflated 44%)
+staging-webapi-1  |   adding: Pgvector.dll (deflated 52%)
+staging-webapi-1  |   adding: Microsoft.Extensions.Diagnostics.dll (deflated 46%)
+staging-webapi-1  |   adding: Microsoft.KernelMemory.DataFormats.AzureAIDocIntel.dll (deflated 51%)
+staging-webapi-1  |   adding: NetTopologySuite.dll (deflated 59%)
+staging-webapi-1  |   adding: Microsoft.KernelMemory.Abstractions.dll (deflated 57%)
+staging-webapi-1  |   adding: Npgsql.dll (deflated 66%)
+staging-webapi-1  |   adding: NRedisStack.dll (deflated 63%)
+staging-webapi-1  |   adding: Microsoft.KernelMemory.AI.OpenAI.dll (deflated 62%)
+staging-webapi-1  |   adding: Microsoft.Extensions.Diagnostics.Abstractions.dll (deflated 49%)
+staging-webapi-1  |   adding: Pipelines.Sockets.Unofficial.dll (deflated 44%)
+staging-webapi-1  |   adding: Microsoft.SemanticKernel.Plugins.OpenApi.dll (deflated 56%)
+staging-webapi-1  |   adding: Microsoft.KernelMemory.ContentStorage.AzureBlobs.dll (deflated 57%)
+staging-webapi-1  |   adding: Microsoft.KernelMemory.Postgres.dll (deflated 61%)
+staging-webapi-1  |   adding: mscordaccore_amd64_amd64_6.0.2824.12007.dll (deflated 56%)
+staging-webapi-1  | /tmp/scripts/deploy
+staging-webapi-1  | + az login --use-device-code
+staging-webapi-1  | To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code BMX8MPE7W to authenticate.
+staging-webapi-1  | [
+staging-webapi-1  |   {
+staging-webapi-1  |     "cloudName": "AzureCloud",
+staging-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "id": "c05a12a6-0747-45f4-9154-3bace576db04",
+staging-webapi-1  |     "isDefault": true,
+staging-webapi-1  |     "managedByTenants": [],
+staging-webapi-1  |     "name": "COPILOT-DEVELOPMENT",
+staging-webapi-1  |     "state": "Enabled",
+staging-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "user": {
+staging-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+staging-webapi-1  |       "type": "user"
+staging-webapi-1  |     }
+staging-webapi-1  |   },
+staging-webapi-1  |   {
+staging-webapi-1  |     "cloudName": "AzureCloud",
+staging-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "id": "fdce12c3-7da1-4cea-af42-32388c941559",
+staging-webapi-1  |     "isDefault": false,
+staging-webapi-1  |     "managedByTenants": [
+staging-webapi-1  |       {
+staging-webapi-1  |         "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+staging-webapi-1  |       }
+staging-webapi-1  |     ],
+staging-webapi-1  |     "name": "DATASCIENCE-DEVELOPMENT",
+staging-webapi-1  |     "state": "Enabled",
+staging-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "user": {
+staging-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+staging-webapi-1  |       "type": "user"
+staging-webapi-1  |     }
+staging-webapi-1  |   },
+staging-webapi-1  |   {
+staging-webapi-1  |     "cloudName": "AzureCloud",
+staging-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "id": "b43be16a-9f27-4a0d-8370-3088ac9974e0",
+staging-webapi-1  |     "isDefault": false,
+staging-webapi-1  |     "managedByTenants": [],
+staging-webapi-1  |     "name": "DATASCIENCE-PRODUCTION",
+staging-webapi-1  |     "state": "Enabled",
+staging-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "user": {
+staging-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+staging-webapi-1  |       "type": "user"
+staging-webapi-1  |     }
+staging-webapi-1  |   },
+staging-webapi-1  |   {
+staging-webapi-1  |     "cloudName": "AzureCloud",
+staging-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "id": "e18944c8-cbf1-4087-9c69-9149bdfcb8e6",
+staging-webapi-1  |     "isDefault": false,
+staging-webapi-1  |     "managedByTenants": [
+staging-webapi-1  |       {
+staging-webapi-1  |         "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+staging-webapi-1  |       }
+staging-webapi-1  |     ],
+staging-webapi-1  |     "name": "CHCI-CH",
+staging-webapi-1  |     "state": "Enabled",
+staging-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "user": {
+staging-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+staging-webapi-1  |       "type": "user"
+staging-webapi-1  |     }
+staging-webapi-1  |   },
+staging-webapi-1  |   {
+staging-webapi-1  |     "cloudName": "AzureCloud",
+staging-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "id": "a0e1180c-5639-44b0-848a-998313609ccf",
+staging-webapi-1  |     "isDefault": false,
+staging-webapi-1  |     "managedByTenants": [],
+staging-webapi-1  |     "name": "COPILOT-PRODUCTION",
+staging-webapi-1  |     "state": "Enabled",
+staging-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "user": {
+staging-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+staging-webapi-1  |       "type": "user"
+staging-webapi-1  |     }
+staging-webapi-1  |   },
+staging-webapi-1  |   {
+staging-webapi-1  |     "cloudName": "AzureCloud",
+staging-webapi-1  |     "homeTenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "id": "9d8139ea-9976-4b23-84c7-44b592cb0018",
+staging-webapi-1  |     "isDefault": false,
+staging-webapi-1  |     "managedByTenants": [],
+staging-webapi-1  |     "name": "COPILOT-STAGING",
+staging-webapi-1  |     "state": "Enabled",
+staging-webapi-1  |     "tenantId": "58e32bb7-141e-4bae-af01-f29f2a6613c2",
+staging-webapi-1  |     "user": {
+staging-webapi-1  |       "name": "SimpkinJ@pennmedicine.upenn.edu",
+staging-webapi-1  |       "type": "user"
+staging-webapi-1  |     }
+staging-webapi-1  |   }
+staging-webapi-1  | ]
+staging-webapi-1  | + bash ./deploy-webapi.sh --subscription 9d8139ea-9976-4b23-84c7-44b592cb0018 --resource-group use2-copilot-staging-copilot-rg --deployment-name use2-copilot-staging-copilot-rg
+staging-webapi-1  | Getting Azure WebApp resource name...
+staging-webapi-1  | WEB_API_URL: app-copichat-z5kccvfqmfbuo-webapi.azurewebsites.net
+staging-webapi-1  | WEB_API_NAME: app-copichat-z5kccvfqmfbuo-webapi
+staging-webapi-1  | PLUGIN_NAMES:
+staging-webapi-1  | Configuring Azure WebApp to run from package...
+staging-webapi-1  | Deploying './out/webapi.zip' to Azure WebApp 'app-copichat-z5kccvfqmfbuo-webapi'...
+staging-webapi-1  | WARNING: Getting scm site credentials for zip deployment
+staging-webapi-1  | WARNING: Starting zip deployment. This operation can take a while to complete ...
+staging-webapi-1  | WARNING: Deployment endpoint responded with status code 202
+staging-webapi-1  | {
+staging-webapi-1  |   "active": true,
+staging-webapi-1  |   "author": "N/A",
+staging-webapi-1  |   "author_email": "N/A",
+staging-webapi-1  |   "complete": true,
+staging-webapi-1  |   "deployer": "ZipDeploy",
+staging-webapi-1  |   "end_time": "2024-03-26T15:13:37.0675194Z",
+staging-webapi-1  |   "id": "f2f20bfd74434f2bbe9b8a03f9194965",
+staging-webapi-1  |   "is_readonly": true,
+staging-webapi-1  |   "is_temp": false,
+staging-webapi-1  |   "last_success_end_time": "2024-03-26T15:13:37.0675194Z",
+staging-webapi-1  |   "log_url": "https://app-copichat-z5kccvfqmfbuo-webapi.scm.azurewebsites.net/api/deployments/latest/log",
+staging-webapi-1  |   "message": "Created via a push deployment",
+staging-webapi-1  |   "progress": "",
+staging-webapi-1  |   "provisioningState": "Succeeded",
+staging-webapi-1  |   "received_time": "2024-03-26T15:13:36.6212031Z",
+staging-webapi-1  |   "site_name": "app-copichat-z5kccvfqmfbuo-webapi",
+staging-webapi-1  |   "start_time": "2024-03-26T15:13:36.745818Z",
+staging-webapi-1  |   "status": 4,
+staging-webapi-1  |   "status_text": "",
+staging-webapi-1  |   "url": "https://app-copichat-z5kccvfqmfbuo-webapi.scm.azurewebsites.net/api/deployments/latest"
+staging-webapi-1  | }
+staging-webapi-1  | Ensuring 'https://app-copichat-z5kccvfqmfbuo-webapi.azurewebsites.net' is included in AAD app registration's redirect URIs...
+staging-webapi-1  | To verify your deployment, go to 'https://app-copichat-z5kccvfqmfbuo-webapi.azurewebsites.net/' in your browser.
+staging-webapi-1 exited with code 0
+
+C:\Users\simpkinj\source\repos\chat-copilot>

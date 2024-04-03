@@ -157,6 +157,7 @@ public class ChatHistoryController : ControllerBase
             ChatSession? chat = null;
             if (await this._sessionRepository.TryFindByIdAsync(chatParticipant.ChatId, callback: v => chat = v))
             {
+                if (chat.Deleted) { continue; }
                 chats.Add(chat!);
             }
             else
