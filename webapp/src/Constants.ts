@@ -6,7 +6,7 @@ export const Constants = {
         name: 'Penn AI Chat',
         updateCheckIntervalSeconds: 60 * 5,
         CONNECTION_ALERT_ID: 'connection-alert',
-        importTypes: '.txt,.pdf,.docx,.md,.jpg,.jpeg,.png,.tif,.tiff,.bmp,.gif',
+        importTypes: '.txt,.json,.xlsx,.pdf,.docx,.md,.jpg,.jpeg,.png,.tif,.tiff,.bmp,.gif',
     },
     msal: {
         method: 'redirect', // 'redirect' | 'popup'
