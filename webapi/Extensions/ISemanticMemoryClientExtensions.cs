@@ -99,9 +99,9 @@ internal static class ISemanticMemoryClientExtensions
                 indexName,
                 filter,
                 null,
-                0,
+                relevanceThreshold, // minRelevance param
                 resultCount,
-                cancellationToken);
+                cancellationToken: cancellationToken);
 
         return searchResult;
     }
@@ -128,7 +128,7 @@ internal static class ISemanticMemoryClientExtensions
         uploadRequest.Tags.Add(MemoryTags.TagChatId, chatId);
         uploadRequest.Tags.Add(MemoryTags.TagMemory, memoryName);
 
-        await memoryClient.ImportDocumentAsync(uploadRequest, cancellationToken);
+        await memoryClient.ImportDocumentAsync(uploadRequest, cancellationToken: cancellationToken);
     }
 
     public static Task StoreMemoryAsync(
@@ -154,7 +154,7 @@ internal static class ISemanticMemoryClientExtensions
         using var stream = new MemoryStream();
         using var writer = new StreamWriter(stream);
         await writer.WriteAsync(memory);
-        await writer.FlushAsync();
+        await writer.FlushAsync(cancellationToken);
         stream.Position = 0;
 
         var uploadRequest = new DocumentUploadRequest
@@ -173,7 +173,7 @@ internal static class ISemanticMemoryClientExtensions
         uploadRequest.Tags.Add(MemoryTags.TagChatId, chatId);
         uploadRequest.Tags.Add(MemoryTags.TagMemory, memoryName);
 
-        await memoryClient.ImportDocumentAsync(uploadRequest, cancellationToken);
+        await memoryClient.ImportDocumentAsync(uploadRequest, cancellationToken: cancellationToken);
     }
 
     public static async Task RemoveChatMemoriesAsync(
@@ -183,7 +183,7 @@ internal static class ISemanticMemoryClientExtensions
         CancellationToken cancellationToken = default)
     {
         var memories = await memoryClient.SearchMemoryAsync(indexName, "*", 0.0F, chatId, cancellationToken: cancellationToken);
-        var documentIds = memories.Results.Select(memory => memory.Link.Split('/').First()).Distinct().ToArray();
+        var documentIds = memories.Results.Select(memory => memory.DocumentId).Distinct().ToArray();
         var tasks = documentIds.Select(documentId => memoryClient.DeleteDocumentAsync(documentId, indexName, cancellationToken)).ToArray();
 
         Task.WaitAll(tasks, cancellationToken);

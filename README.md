@@ -22,7 +22,7 @@ To deploy the sample to Azure, please view [Deploying Chat Copilot](./scripts/de
 
 You will need the following items to run the sample:
 
-- [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0) _(via Setup install.\* script)_
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) _(via Setup install.\* script)_
 - [Node.js](https://nodejs.org/en/download) _(via Setup install.\* script)_
 - [Yarn](https://classic.yarnpkg.com/docs/install) _(via Setup install.\* script)_
 - [Git](https://www.git-scm.com/downloads)
@@ -30,7 +30,7 @@ You will need the following items to run the sample:
 
 | AI Service   | Requirement                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Azure OpenAI | - [Access](https://aka.ms/oai/access)<br>- [Resource](https://learn.microsoft.com/azure/ai-services/openai/how-to/create-resource?pivots=web-portal#create-a-resource)<br>- [Deployed models](https://learn.microsoft.com/azure/ai-services/openai/how-to/create-resource?pivots=web-portal#deploy-a-model) (`gpt-35-turbo` and `text-embedding-ada-002`) <br>- [Endpoint](https://learn.microsoft.com/azure/ai-services/openai/tutorials/embeddings?tabs=command-line#retrieve-key-and-endpoint)<br>- [API key](https://learn.microsoft.com/azure/ai-services/openai/tutorials/embeddings?tabs=command-line#retrieve-key-and-endpoint) |
+| Azure OpenAI | - [Access](https://aka.ms/oai/access)<br>- [Resource](https://learn.microsoft.com/azure/ai-services/openai/how-to/create-resource?pivots=web-portal#create-a-resource)<br>- [Deployed models](https://learn.microsoft.com/azure/ai-services/openai/how-to/create-resource?pivots=web-portal#deploy-a-model) (`gpt-4o` and `text-embedding-ada-002`) <br>- [Endpoint](https://learn.microsoft.com/azure/ai-services/openai/tutorials/embeddings?tabs=command-line#retrieve-key-and-endpoint)<br>- [API key](https://learn.microsoft.com/azure/ai-services/openai/tutorials/embeddings?tabs=command-line#retrieve-key-and-endpoint) |
 | OpenAI       | - [Account](https://platform.openai.com/docs/overview)<br>- [API key](https://platform.openai.com/api-keys)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 # Instructions
@@ -66,7 +66,7 @@ You will need the following items to run the sample:
    - `API_KEY`: The `API key` for Azure OpenAI or for OpenAI.
    - `AZURE_OPENAI_ENDPOINT`: The Azure OpenAI resource `Endpoint` address. This is only required when using Azure OpenAI, omit `-Endpoint` if using OpenAI.
 
-   - > **IMPORTANT:** For `AzureOpenAI`, if you deployed models `gpt-35-turbo` and `text-embedding-ada-002` with custom names (instead of the default names), also use the parameters:
+   - > **IMPORTANT:** For `AzureOpenAI`, if you deployed models `gpt-4o` and `text-embedding-ada-002` with custom names (instead of the default names), also use the parameters:
 
      ```powershell
      -CompletionModel {DEPLOYMENT_NAME} -EmbeddingModel {DEPLOYMENT_NAME}
@@ -142,7 +142,7 @@ You will need the following items to run the sample:
       - `AZURE_OPENAI_ENDPOINT`: The Azure OpenAI resource `Endpoint` address.
       - `API_KEY`: The `API key` for Azure OpenAI.
 
-      **IMPORTANT:** If you deployed models `gpt-35-turbo` and `text-embedding-ada-002`
+      **IMPORTANT:** If you deployed models `gpt-4o` and `text-embedding-ada-002`
       with custom names (instead of the default names), you need to specify
       the deployment names with three additional parameters:
 
@@ -281,6 +281,28 @@ By default, Chat Copilot runs locally without authentication, using a guest user
    ```bash
    ./start.sh
    ```
+
+## Optional Configuration: [Ms Graph API Plugin with On-Behalf-Of Flow](./plugins/OBO/README.md)
+
+This native plugin enables the execution of Microsoft Graph APIs using the On-Behalf-Of (OBO) flow with delegated permissions.
+
+The OBO flows is used to ensure that the backend APIs are consumed with the identity of the user, not the managed identity or service principal of the middle-tier application (in this case the WebApi).
+
+Also, this ensures that consent is given, so that the client app (WebApp) can call the middle-tier app (WebApi), and the middle-tier app has permission to call the back-end resource (MSGraph).
+
+This sample does not implement incremental consent in the UI so all the Graph scopes to be used need to have "Administrator Consent" given in the middle-tier app registration.
+
+More information in the [OBO readme.md](./plugins/OBO/README.md).
+
+### Requirements
+
+Backend authentication via Azure AD must be enabled. Detailed instructions for enabling backend authentication are provided below.
+
+### Limitations
+
+- Currently, the plugin only supports GET operations. Future updates may add support for other types of operations.
+- Graph queries that return large results, may reach the token limit for the AI model, producing an error.
+- Incremental consent is not implemented in this sample.
 
 # Troubleshooting
 
